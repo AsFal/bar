@@ -3,9 +3,9 @@ import IngredientList from "./IngredientList.jsx";
 
 // Nothing in this page is functional as of yet
 function IngredientListToggleButton(props) {
+
     return(
-        // onclick={props.changeList}
-        <div >
+        <div onClick={props.changeList}>
             {props.name}
         </div>
     )
@@ -24,10 +24,15 @@ function IngredientListNameAdd(props) {
 
 // Does not yet create the actual view
 function IngredientListNames(props) {
-    props.listNames.forEach((name)=>{
 
+    
+
+    let ingredientListToggleButtons = props.listNames.map((name)=> {
+        // We wrap the changeList with the key
+        let key = name;
+        let wrappedChangeList = ()=>{props.changeList(key)};
+        return <IngredientListToggleButton key={key} name={name} changeList={wrappedChangeList} />
     })
-    let ingredientListToggleButtons = props.listNames.map((name)=><IngredientListToggleButton key={name} name={name}/>)
     return(
         <div>
             {ingredientListToggleButtons}
@@ -59,28 +64,32 @@ export default class IngredientIventory extends Component {
         this.handleNewList = this.handleNewList.bind(this);
 
         this.state = {
-            displayedList: "main",
-            listNames: ["main"]
+            displayedListKey: "main",
+            listNames: ["main", "second"]
         }
     }
 
     render() {
-
+        console.log("being rerendered")
         return(
         <div>
-            <IngredientListNames listNames={this.state.listNames} handleNewList={this.handleNewList}/>
-            <IngredientList name={this.state.displayedList} />
+            <IngredientListNames listNames={this.state.listNames} 
+            handleNewList={this.handleNewList} changeList={this.changeList}/>
+            <IngredientList name={this.state.displayedListKey} />
         </div>)
-    }
+        }
 
-    changeList(event) {
-        
+    changeList(newKey) {
+       //For every Group tag element, the function is wrapped witht the group key
+       this.setState({
+            displayedListKey: newKey
+        })
     }
 
     handleNewList(event) {
 
         event.preventDefault();
-        console.log(event.target);
+
         let form = event.target;
         let newName = form.name.value;
         // Do thing with dataBase

@@ -12,11 +12,5 @@ export default function IngredientAdd(props) {
                 <div><input type="text" name="quantity" placeholder="Remaining Quantity"/></div>
             </form>
         </li>
-
-
-
-
-
-
     )
 }

@@ -16,21 +16,30 @@ export default class IngredientList extends  Component {
     constructor(props) {
         super(props);
         this.state = {
-            ingredients: [
-                {
-                    name: "Test Ingredient",
-                    type: "Vodka",
-                    abv : "40%",
-                    quantity: 5,
-                    _id: "f9faljf9f"
-                }
-            ]
-        };
+            ingredients: []
+        }
         this.handleIngredientAdd = this.handleIngredientAdd.bind(this);
     }
+    
+    componentWillMount() {
+        let ingredients = this.fetchIngredients("main");
+        this.setState({
+            ingredients: ingredients
+        })
+    }
 
+    componentWillReceiveProps(props) {
+        // Only triggers on prop change
+        console.log(props.name);
+        let groupName = props.name;
+        let ingredients = this.fetchIngredients(groupName);
+        this.setState({
+            ingredients: ingredients
+        })
+    }
 
     render() {
+
         let ingredientRows = this.state.ingredients.map((ingredient)=>
             (<IngredientRow key={ingredient._id} ingredient={ingredient}/>)
         );
@@ -78,6 +87,30 @@ export default class IngredientList extends  Component {
             type: formNode.type.value,
             abv : formNode.abv.value,
             quantity : formNode.quantity.value
+        }
+    }
+
+    fetchIngredients(groupName) {
+        if (groupName == "main") {
+            return  [
+                {
+                    name: "Test Ingredient",
+                    type: "Vodka",
+                    abv : "40%",
+                    quantity: 5,
+                    _id: "f9faljf9f"
+                }
+            ];
+        } else if (groupName == "second") {
+            return  [
+                {
+                    name: "Not Main",
+                    type: "Gin",
+                    abv : "40%",
+                    quantity: 5,
+                    _id: "33o4ufi398f4"
+                }
+            ]
         }
     }
 }
