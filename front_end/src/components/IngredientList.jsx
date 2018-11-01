@@ -16,30 +16,42 @@ export default class IngredientList extends  Component {
     constructor(props) {
         super(props);
         this.state = {
-            ingredients: []
+            ingredients: [],
+            listName: ""
         }
         this.handleIngredientAdd = this.handleIngredientAdd.bind(this);
-    }
-    
-    componentWillMount() {
-        let ingredients = this.fetchIngredients("main");
-        this.setState({
-            ingredients: ingredients
-        })
     }
 
     componentWillReceiveProps(props) {
         // Only triggers on prop change
-        console.log(props.name);
         let groupName = props.name;
         let ingredients = this.fetchIngredients(groupName);
         this.setState({
-            ingredients: ingredients
+            ingredients: ingredients,
+            listName: groupName 
+        })
+    }
+
+    // Could also be achieved witht he PureComponent
+    // this decides if the component will rerender or not
+    shouldComponentUpdate(nextProps, nextState) {
+        if (this.props.name == nextProps.name) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    componentDidMount() {
+        let ingredients = this.fetchIngredients("main");
+        this.setState({
+            ingredients: ingredients,
+            listName: "main"
         })
     }
 
     render() {
-
+        console.log("I am being rerendred")
         let ingredientRows = this.state.ingredients.map((ingredient)=>
             (<IngredientRow key={ingredient._id} ingredient={ingredient}/>)
         );
