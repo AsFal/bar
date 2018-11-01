@@ -1,13 +1,14 @@
 import React, {Component} from "react";
+import IngredientAdd from "./IngredientAdd.jsx";
 
 let IngredientRow = (props)=>{
     return (
-        <tr>
-            <td>{props.ingredient.name}</td>
-            <td>{props.ingredient.type}</td>
-            <td>{props.ingredient.abv}</td>
-            <td>{props.ingredient.quantity}</td>
-        </tr>
+        <li>
+            <div>{props.ingredient.name}</div>
+            <div>{props.ingredient.type}</div>
+            <div>{props.ingredient.abv}</div>
+            <div>{props.ingredient.quantity}</div>
+        </li>
     )
 }
 
@@ -25,6 +26,7 @@ export default class IngredientList extends  Component {
                 }
             ]
         };
+        this.handleIngredientAdd = this.handleIngredientAdd.bind(this);
     }
 
 
@@ -36,20 +38,46 @@ export default class IngredientList extends  Component {
         return(
         <div>
             <h1> Ingredient List</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <td>Ingredient Name</td>
-                        <td>Alcohol Type</td>
-                        <td>ABV</td>
-                        <td>Quantity</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {ingredientRows}
-                </tbody>
-            </table>
+            <ul>
+                <li>
+                    <div>Ingredient Name</div>
+                    <div>Alcohol Type</div>
+                    <div>ABV</div>
+                    <div>Quantity</div>
+                </li>
+                {ingredientRows}
+                <IngredientAdd handleIngredientAdd={this.handleIngredientAdd}> </IngredientAdd>
+            </ul>
         </div>
         );
+    }
+
+    handleIngredientAdd(event) {
+        event.preventDefault();
+        let form = event.target;
+
+        // In the real application, thi the Id will be given when the app receives the response from 
+        // The db, here we will just generate an Id
+        let ingredient = this.extractIngredientFromForm(form);
+        ingredient._id = Math.floor(Math.random()*10000).toString();
+        // For free redux
+        let oldIngredients = this.state.ingredients;
+        // Returns a shallow copy of the array
+        let newIngredients = oldIngredients.slice();
+        newIngredients.push(ingredient);
+        
+        this.setState({
+            ingredients : newIngredients
+        });
+        
+    }
+    
+    extractIngredientFromForm(formNode) {
+        return {
+            name: formNode.name.value,
+            type: formNode.type.value,
+            abv : formNode.abv.value,
+            quantity : formNode.quantity.value
+        }
     }
 }

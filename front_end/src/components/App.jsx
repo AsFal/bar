@@ -2,7 +2,8 @@ import React, {Component} from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import ErrorPage from "./Error.jsx";
 import Navbar from "./Navbar.jsx";
-import IngredientList from "./IngredientList.jsx";
+import IngredientInventory from "./IngredientInventory.jsx";
+import RecipeBook from "./RecipeBook.jsx";
 
 import '../styles/App.css';
 
@@ -13,7 +14,8 @@ export default class RoutedApp extends Component {
                 <div>
                     <Navbar/>
                     <Switch>
-                        <Route path="/" component={IngredientList} exact/>
+                        <Route path="/ingredients" component={IngredientInventory} exact/>
+                        <Route path="/recipes" component={RecipeBook} exact></Route>
                         <Route  component={ErrorPage}/>
                     </Switch>
                 </div>
