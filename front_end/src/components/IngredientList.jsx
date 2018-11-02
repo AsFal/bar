@@ -51,7 +51,7 @@ export default class IngredientList extends  Component {
     }
 
     render() {
-        console.log("I am being rerendred")
+        console.log(this.state.ingredients);
         let ingredientRows = this.state.ingredients.map((ingredient)=>
             (<IngredientRow key={ingredient._id} ingredient={ingredient}/>)
         );
@@ -102,8 +102,9 @@ export default class IngredientList extends  Component {
         }
     }
 
-    fetchIngredients(groupName) {
-        if (groupName == "main") {
+    fetchIngredients(ListKey) {
+        // main
+        if (groupName == "b75bi345") {
             return  [
                 {
                     name: "Test Ingredient",
@@ -113,7 +114,8 @@ export default class IngredientList extends  Component {
                     _id: "f9faljf9f"
                 }
             ];
-        } else if (groupName == "second") {
+        //second
+        } else if (groupName == "lk3j4h5") {
             return  [
                 {
                     name: "Not Main",
@@ -121,6 +123,17 @@ export default class IngredientList extends  Component {
                     abv : "40%",
                     quantity: 5,
                     _id: "33o4ufi398f4"
+                }
+            ]
+        //myNeckHurts
+        } else if (groupKey == "rl2kj432lkb") {
+            return [
+                {
+                    name: "Neck reliever",
+                    type: "Absynthe",
+                    abv : "90%",
+                    quantity: 3,
+                    _id: "f90fdslf09f"
                 }
             ]
         }

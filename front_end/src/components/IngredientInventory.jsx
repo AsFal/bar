@@ -25,11 +25,11 @@ function IngredientListNameAdd(props) {
 // Does not yet create the actual view
 function IngredientListNames(props) {
 
-    
-
-    let ingredientListToggleButtons = props.listNames.map((name)=> {
+    let ingredientListToggleButtons = props.lists.map((list)=> {
         // We wrap the changeList with the key
-        let key = name;
+        let key = list._id;
+        let name = list.name;
+        /**@todo: propage the key is id change to the INgredients list */
         let wrappedChangeList = ()=>{props.changeList(key)};
         return <IngredientListToggleButton key={key} name={name} changeList={wrappedChangeList} />
     })
@@ -64,16 +64,55 @@ export default class IngredientIventory extends Component {
         this.handleNewList = this.handleNewList.bind(this);
 
         this.state = {
+            /** @todo: this needs to be prapagated (key is now _id) */
             displayedListKey: "main",
-            listNames: ["main", "second"]
+            lists: []
         }
+    }
+    /**
+     * @todo: repair the following bug
+     * Bug Id, repair
+     * When the page gets loaded for the first time, the listName displaylist Key has 
+     * a value of main, which the Ignredient List recognizes.
+     * When the page gets loaded for the second time, the displayListKey becomes some random
+     * Ingredient key does not recognize, thus no ingredient information is being sent to the 
+     * component, which causes an error to be thrown.
+     * The placeholder key
+     * 
+     * To do the test, I need
+     * the ids from the lists in the db, to replace those ones witht the ones in Ingredient List
+     * there for testing and to change the function that changes displaedListKey to load the key 
+     * into the diusplayedListKey instead of the name
+     * 
+     * The list keys are as follow
+     * "main" : b75bi345
+     * "second": lk3j4h5
+     * "myNeckHurts" : rl2kj432lkb
+     * 
+     *  */
+    
+    componentDidMount() {
+        fetch("/api/inventory")
+        .then(res=>res.json())
+        .then((json)=>{
+            console.log(json);
+            //need a for loop that breaks to find the main key
+            // Put main key here, else the view change will not work
+            
+            this.setState({
+                displayedListKey: "b75bi345",
+                lists : json
+            });
+        })
+        .catch((err)=>{
+            console.log(err);
+        });
     }
 
     render() {
-        console.log("being rerendered")
         return(
         <div>
-            <IngredientListNames listNames={this.state.listNames} 
+            <IngredientListNames lists={this.state.lists} 
             handleNewList={this.handleNewList} changeList={this.changeList}/>
             <IngredientList name={this.state.displayedListKey} />
         </div>)
@@ -92,10 +131,14 @@ export default class IngredientIventory extends Component {
 
         let form = event.target;
         let newName = form.name.value;
+        let newId = Math.floor(Math.random()*10000).toString();
         // Do thing with dataBase
-        let oldListNames = this.state.listNames;
-        let newListNames = oldListNames.slice();
-        newListNames.push(newName);
+        let oldLists = this.state.lists;
+        let newLists = oldLists.slice();
+        newLists.push({
+            name: newName,
+            _id: newId
+        });
 
         // I just want it to rerender the group tags
         // Don't know how yet
@@ -103,9 +146,7 @@ export default class IngredientIventory extends Component {
 
         // This will eventually make a request to the db
         this.setState( {
-            listNames : newListNames
+            lists : newLists
         });
     }
-
-
 }

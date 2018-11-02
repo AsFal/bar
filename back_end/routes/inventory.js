@@ -24,12 +24,13 @@ var Ingredient = require("../models/ingredient.js");
 /** GET request to generate the page the first time */
 router.get("/", (req, res)=> {
     // Will require some kind of parser to convert json body to object
+    console.log("I have got gotten");
     fetchLists()
     .then((lists)=>{
         listNames = lists.map((list)=>{
             return {
                 name: list.name,
-                id: list._id
+                _id: list._id
             }
         });
         
