@@ -13,45 +13,68 @@ let IngredientRow = (props)=>{
 }
 
 export default class IngredientList extends  Component {
+    
     constructor(props) {
         super(props);
         this.state = {
             ingredients: [],
-            listName: ""
+            listKey: ""
         }
         this.handleIngredientAdd = this.handleIngredientAdd.bind(this);
     }
 
     componentWillReceiveProps(props) {
-        // Only triggers on prop change
-        let groupName = props.name;
-        let ingredients = this.fetchIngredients(groupName);
-        this.setState({
-            ingredients: ingredients,
-            listName: groupName 
-        })
+        if(props.listKey != this.state.listKey) {
+            // Only triggers on prop change
+            let listKey = props.listKey;
+
+            console.log(props);
+            fetch(`/api/inventory/ingredient_list/${listKey}`, {
+                method: 'GET',
+            })
+            .then(res=>res.json())
+            .then(ingredients=>{
+                this.setState({
+                    ingredients: ingredients,
+                    listKey: listKey
+                });
+            });
+        }
+
     }
 
     // Could also be achieved witht he PureComponent
     // this decides if the component will rerender or not
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.props.name == nextProps.name) {
-            return false;
+        // If there is a prop change or a state change, rerender
+        // If there is a state change, rerender
+        // Prop changes trigger the fetch event
+        // This is to handle the async, the actual determinanant
+        // If no new props have appeared, there should be no state change
+        if (this.state.listKey != nextState.listKey) {
+            return true;
         } else {
             return true;
         }
     }
 
-    componentDidMount() {
-        let ingredients = this.fetchIngredients("main");
-        this.setState({
-            ingredients: ingredients,
-            listName: "main"
-        })
-    }
+
+    /** since the fetch depends on info we get from the fetch in inventory mount, we should 
+     * fetch at mount, only at new prop arrival
+     */
+    // componentDidMount() {
+    //     console.log("mounting");
+    //     console.log(this.props);
+    //     //main key
+    //     let mainKey = "b75bi345";
+    //     // let keyObject = {
+    //     //     listKey : mainKey
+    //     // };
+    //     // let ingredients = this.fetchIngredients(mainKey);
+    // }
 
     render() {
-        console.log(this.state.ingredients);
+
         let ingredientRows = this.state.ingredients.map((ingredient)=>
             (<IngredientRow key={ingredient._id} ingredient={ingredient}/>)
         );
@@ -102,40 +125,42 @@ export default class IngredientList extends  Component {
         }
     }
 
-    fetchIngredients(ListKey) {
-        // main
-        if (groupName == "b75bi345") {
-            return  [
-                {
-                    name: "Test Ingredient",
-                    type: "Vodka",
-                    abv : "40%",
-                    quantity: 5,
-                    _id: "f9faljf9f"
-                }
-            ];
-        //second
-        } else if (groupName == "lk3j4h5") {
-            return  [
-                {
-                    name: "Not Main",
-                    type: "Gin",
-                    abv : "40%",
-                    quantity: 5,
-                    _id: "33o4ufi398f4"
-                }
-            ]
-        //myNeckHurts
-        } else if (groupKey == "rl2kj432lkb") {
-            return [
-                {
-                    name: "Neck reliever",
-                    type: "Absynthe",
-                    abv : "90%",
-                    quantity: 3,
-                    _id: "f90fdslf09f"
-                }
-            ]
-        }
+    fetchIngredients(listKey) {
+        return 
     }
 }
+
+ // // main
+        // if (listKey == "b75bi345") {
+        //     return  [
+        //         {
+        //             name: "Test Ingredient",
+        //             type: "Vodka",
+        //             abv : "40%",
+        //             quantity: 5,
+        //             _id: "f9faljf9f"
+        //         }
+        //     ];
+        // //second
+        // } else if (listKey == "lk3j4h5") {
+        //     return  [
+        //         {
+        //             name: "Not Main",
+        //             type: "Gin",
+        //             abv : "40%",
+        //             quantity: 5,
+        //             _id: "33o4ufi398f4"
+        //         }
+        //     ]
+        // //myNeckHurts
+        // } else if (listKey == "rl2kj432lkb") {
+        //     return [
+        //         {
+        //             name: "Neck reliever",
+        //             type: "Absynthe",
+        //             abv : "90%",
+        //             quantity: 3,
+        //             _id: "f90fdslf09f"
+        //         }
+        //     ]
+        // }

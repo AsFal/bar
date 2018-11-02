@@ -24,7 +24,6 @@ var Ingredient = require("../models/ingredient.js");
 /** GET request to generate the page the first time */
 router.get("/", (req, res)=> {
     // Will require some kind of parser to convert json body to object
-    console.log("I have got gotten");
     fetchLists()
     .then((lists)=>{
         listNames = lists.map((list)=>{
@@ -34,7 +33,7 @@ router.get("/", (req, res)=> {
             }
         });
         
-        res.send(JSON.stringify(listNames));
+        res.json(listNames);
     })
     .catch(err=>{
         console.log(err);
@@ -43,10 +42,11 @@ router.get("/", (req, res)=> {
     // Look in book to find out more about error handling
 });
 
-router.get("/ingrdient_list", (req,res) =>{
-    fetchIngredientList(req.body.listId)
+router.get("/ingredient_list/:list_key", (req,res) =>{
+
+    fetchIngredientList(req.params.list_key)
     .then((ingredientList)=>{
-        res.send(JSON.stringify(ingredientList));
+        res.json(ingredientList)
     })
     .catch(err=>{
         console.log(err);
@@ -71,8 +71,6 @@ function fetchLists() {
             _id : "rl2kj432lkb"
         }
     ];
-    console.log(lists);
-    console.log("============================")
     return new Promise(function(fulfill, reject) {
         fulfill(lists)
     });
@@ -87,67 +85,76 @@ function fetchIngredientList(groupName) {
 
 function chooseIngredientTest(groupName) {
     switch (groupName) {
-        case "main":
+        case "b75bi345":
             return [
                 {
                     name: "Malibu Coconut",
                     type: "Rum",
                     abv : 21,
-                    quantity: 750
+                    quantity: 750,
+                    _id: "1klj13"
                 },
                 {
                     name: "Jamaican Strong",
                     type: "Rum",
                     abv : 40,
-                    quantity: 750
+                    quantity: 750,
+                    _id: "2gkvsdj1"
                 },
                 {
                     name: "Kraken",
                     type: "Rum",
                     abv : 48,
-                    quantity: 750
+                    quantity: 750,
+                    _id: "23lfj2"
                 }
             ]
-        case "second":
+        case "lk3j4h5":
             return [
                 {
-                    name: "Malibu Coconut",
-                    type: "Rum",
+                    name: "Russian Delight",
+                    type: "Vodka",
                     abv : 21,
-                    quantity: 750
+                    quantity: 750,
+                    _id: "f2lb2gg4"
                 },
                 {
                     name: "Jamaican Strong",
                     type: "Rum",
                     abv : 40,
-                    quantity: 750
+                    quantity: 750,
+                    _id: "asdlkjh4"
                 },
                 {
                     name: "Kraken",
                     type: "Rum",
                     abv : 48,
-                    quantity: 750
+                    quantity: 750,
+                    _id: "234l2t"
                 }
             ]
-        case "myNeckHurts" :
+        case "rl2kj432lkb" :
             return [
                 {
-                    name: "Malibu Coconut",
-                    type: "Rum",
+                    name: "Something completely different",
+                    type: "yomama",
                     abv : 21,
-                    quantity: 750
+                    quantity: 750,
+                    _id: "kj32h"
                 },
                 {
                     name: "Jamaican Strong",
                     type: "Rum",
                     abv : 40,
-                    quantity: 750
+                    quantity: 750,
+                    _id: "kjasdfasgash"
                 },
                 {
                     name: "Kraken",
                     type: "Rum",
                     abv : 48,
-                    quantity: 750
+                    quantity: 750,
+                    _id: "23lrh32"
                 }
             ]
         default:

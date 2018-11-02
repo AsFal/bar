@@ -65,7 +65,7 @@ export default class IngredientIventory extends Component {
 
         this.state = {
             /** @todo: this needs to be prapagated (key is now _id) */
-            displayedListKey: "main",
+            displayedListKey: "",
             lists: []
         }
     }
@@ -92,10 +92,10 @@ export default class IngredientIventory extends Component {
      *  */
     
     componentDidMount() {
+
         fetch("/api/inventory")
         .then(res=>res.json())
         .then((json)=>{
-            console.log(json);
             //need a for loop that breaks to find the main key
             // Put main key here, else the view change will not work
             
@@ -110,11 +110,12 @@ export default class IngredientIventory extends Component {
     }
 
     render() {
+        console.log("inventory render");
         return(
         <div>
             <IngredientListNames lists={this.state.lists} 
             handleNewList={this.handleNewList} changeList={this.changeList}/>
-            <IngredientList name={this.state.displayedListKey} />
+            <IngredientList listKey={this.state.displayedListKey} />
         </div>)
         }
 
