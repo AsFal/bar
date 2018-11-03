@@ -98,22 +98,32 @@ export default class IngredientList extends  Component {
 
     handleIngredientAdd(event) {
         event.preventDefault();
-        let form = event.target;
 
-        // In the real application, thi the Id will be given when the app receives the response from 
-        // The db, here we will just generate an Id
+        let form = event.target;
         let ingredient = this.extractIngredientFromForm(form);
-        ingredient._id = Math.floor(Math.random()*10000).toString();
-        // For free redux
-        let oldIngredients = this.state.ingredients;
-        // Returns a shallow copy of the array
-        let newIngredients = oldIngredients.slice();
-        newIngredients.push(ingredient);
-        
-        this.setState({
-            ingredients : newIngredients
-        });
-        
+        console.log(ingredient)
+        console.log(JSON.stringify(ingredient))
+
+        fetch("/api/inventory/ingredient", {
+            method: "POST",
+            headers : {
+                "Content-Type" : "application/json ; charset=utf-8 "
+            },
+            body: JSON.stringify(ingredient)
+        })
+        .then(res=>res.json())
+        .then((ingredientDoc)=>{
+            let oldIngredients = this.state.ingredients;
+            let newIngredients = oldIngredients.slice();
+            newIngredients.push(ingredientDoc);
+            this.setState({
+                ingredients: newIngredients
+            })
+        })
+        .catch((err)=>{
+            // I need better error handling
+            console.log(err)
+        })
     }
     
     extractIngredientFromForm(formNode) {

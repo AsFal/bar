@@ -132,22 +132,25 @@ export default class IngredientIventory extends Component {
 
         let form = event.target;
         let newName = form.name.value;
-        let newId = Math.floor(Math.random()*10000).toString();
-        // Do thing with dataBase
-        let oldLists = this.state.lists;
-        let newLists = oldLists.slice();
-        newLists.push({
-            name: newName,
-            _id: newId
-        });
-
-        // I just want it to rerender the group tags
-        // Don't know how yet
-        //(if entire thing is rerendered, INgredient list gets remounted, fetch gets sent, blah blah)
-
-        // This will eventually make a request to the db
-        this.setState( {
-            lists : newLists
-        });
+        fetch("/api/inventory/list", {
+            method: "POST",
+            headers: {"Content-Type": "application/json; charset=utf-8"},
+            body: JSON.stringify({name:newName})
+        })
+        .then((res)=>res.json())
+        .then((listDoc)=>{
+            let oldLists = this.state.lists;
+            let newLists = oldLists.slice();
+            newLists.push(listDoc);
+            this.setState(
+                {
+                    lists: newLists
+                }
+            )
+        })
+        .catch((err)=>{
+            // I need better erro handling
+            console.log(err);
+        })
     }
 }
