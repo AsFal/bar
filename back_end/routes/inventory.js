@@ -21,6 +21,10 @@ var Ingredient = require("../models/ingredient.js");
  * Have a way to send this information to db
  */
 
+function newId() {
+    return Math.floor(Math.random()*100000).toString();
+}
+
 /** GET request to generate the page the first time */
 router.get("/", (req, res)=> {
     // Will require some kind of parser to convert json body to object
@@ -50,11 +54,41 @@ router.get("/ingredient_list/:list_key", (req,res) =>{
     })
     .catch(err=>{
         console.log(err);
-        send(err);
+        res.status(422).json({errorMessage: err});
         // Look in book to find out more about error handling
     });
 });
 
+router.post("/ingredient", (req, res)=>{
+    let ingredient = req.body;
+    createIngredient(ingredient)
+    .then((ingredientDoc)=>{
+
+        res.json(ingredientDoc);
+    })
+    .catch((err)=>{
+        console.log(err);
+        res.status(422).json({errorMessage: err});
+    })
+})
+
+router.post("/list", (req, res)=> {
+
+    // "Validation Could be done on the fron-end or the back-end"
+    /** @todo: research best spot for this */
+    let list = req.body;
+
+    createList(list)
+    .then((listDoc)=>{
+        res.json(listDoc)
+    })
+    .catch((err)=>{
+        console.log(err);
+        res.send(err);
+    })
+
+
+})
 
 function fetchLists() {
     let lists = [
@@ -162,6 +196,21 @@ function chooseIngredientTest(groupName) {
     }
 }
 
+
+function createList(list) {
+    return new Promise(function(fulfill, reject) {
+        list._id = newId();
+        fulfill(list);
+    });
+}
+
+function createIngredient(ingredient) {
+    return new Promise(function(fulfill, reject) {
+        let ingredientDoc = ingredient;
+        ingredientDoc._id = newId();
+        fulfill(ingredientDoc);
+    })
+}
 // router.get("/", (req, res)=> {
 //     "use strict";
 
