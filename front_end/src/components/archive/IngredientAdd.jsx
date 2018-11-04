@@ -1,8 +1,10 @@
 import React from "react";
 
-export default function IngredientAdd(props) {
+import "../styles/IngredientList.css"
+
+function IngredientAdd(props) {
     return(
-        <li>
+        <div>
             <form name="ingredientAdd" onSubmit={props.handleIngredientAdd}> 
                 <div>
                     <button type="submit"></button>
@@ -11,6 +13,6 @@ export default function IngredientAdd(props) {
                 <div><input type="text" name="abv" placeholder="Abv"/></div>
                 <div><input type="text" name="quantity" placeholder="Remaining Quantity"/></div>
             </form>
-        </li>
+        </div>
     )
 }

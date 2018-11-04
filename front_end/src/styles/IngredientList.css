@@ -1,0 +1,55 @@
+:root {
+    /* colors from the color palet I chose */
+    --wine : #7D0D0D;
+    --light-wine : #C95252;
+    --light-brown: #C98852;
+    --brown: #A4622B;
+    --grape : #A14278;
+    --dark-gray:#707070;
+    --light-gray: #E8E8E8;
+}
+
+.ingredient-list {
+    border:3px solid var(--light-brown);
+}
+
+.ingredient-list > :nth-child(2n) {
+    background-color: var(--light-brown);
+}
+
+.ingredient-list > :nth-child(2n+1) {
+    background-color: var(--brown);
+}
+
+.ingredient-row {
+    height: 20px;
+    display: flex;
+}
+
+.ingredient-row > div {
+    flex: 1;
+}
+
+
+.ingredient-add-container:hover .ingredient-add {
+    
+}
+
+.ingredient-add input {
+    border: none;
+    width:100%;
+    height: 15px; /*(20px of height from ingredient-row - 5 for default padding)*/
+    border-bottom:1px solid black;
+}
+
+.ingredient-add > :first-child input {
+    width:80%;
+    height:100%;
+}
+
+.ingredient-add > :first-child button {
+   background-color: green;
+   border:none; 
+   padding:0px;
+   width:20%;
+}

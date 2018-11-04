@@ -1,0 +1,95 @@
+:root{
+    --input-background :  blue;
+}
+
+.list-bookmarks {
+    display: flex;
+    /* overflow: hidden; */
+}
+
+.ingredient-list-bookmark {
+    border-radius: 0px 8px 0px 0px;
+    background-color: brown;
+    border: 1px solid black;
+    float:left;
+    max-width: 100px;
+    height: 30px;
+    font-size: 20px;
+    flex:1;
+
+
+}
+
+.ingredient-list-bookmark > div {
+    /* I would have 30px of height max here */
+    padding: 6px 5px 4px 5px;
+    overflow: hidden;
+    height: 20px;
+}
+
+
+.ingredient-list-add {
+
+    border-radius: 0px 8px 0px 0px;
+    background-color: brown;
+    border: 1px solid black;
+
+    max-width: 100px;
+    flex: 1;
+    height: 30px;
+
+    /* Feel like this can be hoisted up somehow */
+    font-size: 20px;
+
+    transition: 0.4s linear;
+    position: relative;
+    left: -78px;
+
+    z-index: -1;
+    padding: 0px;
+}
+
+/* .ingredient-list-add:hover {
+    position: relative;
+    
+} */
+
+
+/* Animation */
+.ingredient-add-container {
+    /* height: 50px; */
+
+    
+    /* overflow-x:hidden; */
+}
+
+.ingredient-add-container:hover {
+    width: 100px;
+}
+
+.ingredient-add-container:hover .ingredient-list-add {
+    left: 0px;
+}
+
+
+
+.ingredient-list-add input {
+    z-index: -2;
+    position: relative;
+    top: -10px;
+    left: 0px;
+    background-color: var(--input-background);
+    border: none;
+    height: 100%;
+    width: 70%;
+}
+
+.ingredient-list-add button {
+    z-index: -2;
+    width:30%;
+    height: 100%;
+    background-color:green;
+    border-radius: inherit;
+}
+/* font-size 20 for all */
+/* Should be a root variable */

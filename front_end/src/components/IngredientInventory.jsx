@@ -1,24 +1,29 @@
 import React, {Component} from "react";
 import IngredientList from "./IngredientList.jsx";
+import "../styles/IngredientInventory.css"
 
 // Nothing in this page is functional as of yet
 function IngredientListToggleButton(props) {
 
     return(
-        <div onClick={props.changeList}>
-            {props.name}
+        <div className="ingredient-list-bookmark" onClick={props.changeList}>
+            <div>
+              {props.name}    
+            </div>
         </div>
     )
 }
 
 function IngredientListNameAdd(props) {
     return(
-        <div>
-            <form onSubmit={props.handleNewList}>
-                <input type="text" name="name"/>
-                <button type="submit"></button>
-            </form>
-        </div>
+        <form onSubmit={props.handleNewList}>
+            <div className="ingredient-add-container">
+                <div className="ingredient-list-add ">
+                        <input type="text" name="name"/>
+                        <button type="submit"></button>
+                </div>
+            </div>
+        </form> 
     )
 }
 
@@ -34,7 +39,7 @@ function IngredientListNames(props) {
         return <IngredientListToggleButton key={key} name={name} changeList={wrappedChangeList} />
     })
     return(
-        <div>
+        <div className="list-bookmarks">
             {ingredientListToggleButtons}
             <IngredientListNameAdd handleNewList = {props.handleNewList}/>
         </div>

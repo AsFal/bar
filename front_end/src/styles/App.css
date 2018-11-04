@@ -1,4 +1,29 @@
+:root {
+    /* colors from the color palet I chose */
+    --wine : #7D0D0D;
+    --light-wine : #C95252;
+    --light-brown: #C98852;
+    --brown: #A4622B;
+    --grape : #A14278;
+    --dark-gray:#707070;
+    --light-gray: #E8E8E8;
+}
+
+input, button { 
+    border:none; 
+    background-color:none;
+    padding:none;
+}
+
+body {
+    background-color: var(--goldenrod);
+}
 h1 {
     color: #254356;
     text-align: center;
 }
+
+ul {
+    list-style-type: none;
+}
+

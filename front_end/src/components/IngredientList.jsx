@@ -1,14 +1,31 @@
 import React, {Component} from "react";
-import IngredientAdd from "./IngredientAdd.jsx";
+// import IngredientAdd from "./IngredientAdd.jsx";
+
+import "../styles/IngredientList.css"
 
 let IngredientRow = (props)=>{
     return (
-        <li>
+        <div className="ingredient-row">
             <div>{props.ingredient.name}</div>
             <div>{props.ingredient.type}</div>
             <div>{props.ingredient.abv}</div>
             <div>{props.ingredient.quantity}</div>
-        </li>
+        </div>
+    )
+}
+
+function IngredientAdd(props) {
+    return(
+        <form  name="ingredientAdd" onSubmit={props.handleIngredientAdd}> 
+            <div className="ingredient-row ingredient-add">
+                <div>
+                    <button type="submit"></button>
+                    <input type="text" name="name" placeholder="Ingredient Bro"/></div>
+                <div><input type="text" name="type" placeholder="Alcohol Type"/></div>
+                <div><input type="text" name="abv" placeholder="Abv"/></div>
+                <div><input type="text" name="quantity" placeholder="Remaining Quantity"/></div>
+            </div>
+        </form>
     )
 }
 
@@ -80,18 +97,15 @@ export default class IngredientList extends  Component {
         );
 
         return(
-        <div>
-            <h1> Ingredient List</h1>
-            <ul>
-                <li>
-                    <div>Ingredient Name</div>
-                    <div>Alcohol Type</div>
-                    <div>ABV</div>
-                    <div>Quantity</div>
-                </li>
-                {ingredientRows}
-                <IngredientAdd handleIngredientAdd={this.handleIngredientAdd}> </IngredientAdd>
-            </ul>
+        <div className="ingredient-list">
+            <div className="ingredient-row header">
+                <div>Ingredient Name</div>
+                <div>Alcohol Type</div>
+                <div>ABV</div>
+                <div>Quantity</div>
+            </div>
+            {ingredientRows}
+            <IngredientAdd handleIngredientAdd={this.handleIngredientAdd}> </IngredientAdd>
         </div>
         );
     }
@@ -101,8 +115,6 @@ export default class IngredientList extends  Component {
 
         let form = event.target;
         let ingredient = this.extractIngredientFromForm(form);
-        console.log(ingredient)
-        console.log(JSON.stringify(ingredient))
 
         fetch("/api/inventory/ingredient", {
             method: "POST",
@@ -138,6 +150,7 @@ export default class IngredientList extends  Component {
     fetchIngredients(listKey) {
         return 
     }
+
 }
 
  // // main
