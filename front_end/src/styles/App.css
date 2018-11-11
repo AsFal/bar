@@ -13,6 +13,7 @@
 
 a {
     all:unset;
+    cursor: pointer;
 }
 
 input, button { 
