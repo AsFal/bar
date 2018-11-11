@@ -1,12 +1,14 @@
 import React, {Component} from "react";
 import IngredientList from "./IngredientList.jsx";
 import "../styles/IngredientInventory.css"
+import kegs from "../images/kegs.jpg";
 
 // Nothing in this page is functional as of yet
 function IngredientListToggleButton(props) {
 
+    let className = props.active ? "ingredient-list-bookmark on" : "ingredient-list-bookmark";
     return(
-        <div className="ingredient-list-bookmark" onClick={props.changeList}>
+        <div className={className} onClick={props.changeList}>
             <div>
               {props.name}    
             </div>
@@ -20,7 +22,6 @@ function IngredientListNameAdd(props) {
             <div className="ingredient-add-container">
                 <div className="ingredient-list-add ">
                         <input type="text" name="name"/>
-                        <button type="submit"></button>
                 </div>
             </div>
         </form> 
@@ -34,9 +35,10 @@ function IngredientListNames(props) {
         // We wrap the changeList with the key
         let key = list._id;
         let name = list.name;
+        let active = key == props.activeListKey;
         /**@todo: propage the key is id change to the INgredients list */
         let wrappedChangeList = ()=>{props.changeList(key)};
-        return <IngredientListToggleButton key={key} name={name} changeList={wrappedChangeList} />
+        return <IngredientListToggleButton active = {active} key={key} name={name} changeList={wrappedChangeList} />
     })
     return(
         <div className="list-bookmarks">
@@ -70,7 +72,7 @@ export default class IngredientIventory extends Component {
 
         this.state = {
             /** @todo: this needs to be prapagated (key is now _id) */
-            displayedListKey: "",
+            activeListKey: "",
             lists: []
         }
     }
@@ -105,7 +107,7 @@ export default class IngredientIventory extends Component {
             // Put main key here, else the view change will not work
             
             this.setState({
-                displayedListKey: "b75bi345",
+                activeListKey: "b75bi345",
                 lists : json
             });
         })
@@ -116,18 +118,30 @@ export default class IngredientIventory extends Component {
 
     render() {
         console.log("inventory render");
+
+        let styles = {
+            width: "100vw",
+            height:"100vh",
+            backgroundImage:  `url(${kegs})`,
+            backgroundSize : "cover",
+            zIndex: "-10"
+        }
+
+
+
         return(
-        <div>
+        <div  id="ingredient-inventory" style={styles}>
             <IngredientListNames lists={this.state.lists} 
-            handleNewList={this.handleNewList} changeList={this.changeList}/>
-            <IngredientList listKey={this.state.displayedListKey} />
+            handleNewList={this.handleNewList} changeList={this.changeList} 
+            activeListKey={this.state.activeListKey}/>
+            <IngredientList listKey={this.state.activeListKey} />
         </div>)
         }
 
     changeList(newKey) {
        //For every Group tag element, the function is wrapped witht the group key
        this.setState({
-            displayedListKey: newKey
+            activeListKey: newKey
         })
     }
 

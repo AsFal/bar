@@ -1,12 +1,18 @@
 :root {
     /* colors from the color palet I chose */
-    --wine : #7D0D0D;
-    --light-wine : #C95252;
-    --light-brown: #C98852;
-    --brown: #A4622B;
-    --grape : #A14278;
-    --dark-gray:#707070;
-    --light-gray: #E8E8E8;
+    /* font-family: 'Montserrat', sans-serif;
+    font-family: 'Arvo', serif; */
+    font-family: 'Arvo', serif;
+
+    /* colors from the color palet I chose */
+    --coal: rgb(38, 40, 43);
+    --coal-alpha: rgba(38, 40, 43, 0.8);
+    --cream: #fcfad6;
+    --bar-blue: #1b1b35;
+}
+
+a {
+    all:unset;
 }
 
 input, button { 
@@ -15,12 +21,11 @@ input, button {
     padding:none;
 }
 
-body {
-    background-color: var(--goldenrod);
-}
-h1 {
-    color: #254356;
-    text-align: center;
+body, html {
+    margin:unset;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
 }
 
 ul {

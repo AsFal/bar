@@ -14,7 +14,7 @@ export default class RoutedApp extends Component {
                 <div>
                     <Navbar/>
                     <Switch>
-                        <Route path="/ingredients" component={IngredientInventory} exact/>
+                        <Route path="/inventory" component={IngredientInventory} exact/>
                         <Route path="/recipes" component={RecipeBook} exact></Route>
                         <Route  component={ErrorPage}/>
                     </Switch>

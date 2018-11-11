@@ -1,55 +1,61 @@
-:root {
-    /* colors from the color palet I chose */
-    --wine : #7D0D0D;
-    --light-wine : #C95252;
-    --light-brown: #C98852;
-    --brown: #A4622B;
-    --grape : #A14278;
-    --dark-gray:#707070;
-    --light-gray: #E8E8E8;
-}
-
 .ingredient-list {
-    border:3px solid var(--light-brown);
+    /* border:3px solid var(--cream); */
+    margin: 0% 4% 1% 4%;
+    background-color: var(--coal-alpha);
+    max-height: 600px;
+    font-family: 'Arvo', serif;
+    /* overflow-x: scroll; */ /* SOlution*/
 }
 
-.ingredient-list > :nth-child(2n) {
-    background-color: var(--light-brown);
-}
-
-.ingredient-list > :nth-child(2n+1) {
-    background-color: var(--brown);
+.ingredient-list > :first-child {
+    border-top: 1px solid cream;
+    height: 35px;
+    font-weight: 700;
+    padding-top: 8px;
+    background-color: var(--cream);
+    color: var(--coal);
 }
 
 .ingredient-row {
-    height: 20px;
+    height: 25px;
     display: flex;
+    color:var(--cream);
 }
 
 .ingredient-row > div {
     flex: 1;
+    padding: 4px 2px 0px 8px;
+    overflow: hidden;
+    border-bottom: 1px solid var(--cream);
+    border-left: 1px solid var(--cream);
 }
 
+.ingredient-row > div:last-child {
+    border-right: 1px solid var(--cream);
+}
 
-.ingredient-add-container:hover .ingredient-add {
-    
+.ingredient-add {
+    padding-top:none;
 }
 
 .ingredient-add input {
-    border: none;
+    all: unset;
     width:100%;
-    height: 15px; /*(20px of height from ingredient-row - 5 for default padding)*/
-    border-bottom:1px solid black;
 }
 
 .ingredient-add > :first-child input {
-    width:80%;
-    height:100%;
+
+    all: unset;
+    display: inline-block;
+    width:90%;
+    /* height:100%; */
 }
 
 .ingredient-add > :first-child button {
-   background-color: green;
-   border:none; 
-   padding:0px;
-   width:20%;
+    all: unset;
+    display: inline-block;
+
+   width:0%;
+   /* height: 100%; */
+   background-color: var(--bar-blue); 
 }

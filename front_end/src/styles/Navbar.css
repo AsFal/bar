@@ -1,0 +1,54 @@
+.navbar {
+    background-color: var(--bar-blue);
+    padding: 2px 4px 2px 4px;
+    height: 40px;
+    color: var(--cream);
+
+    /* Variables for the navbar */
+    --nav-padding: 6px 10px 6px;
+    --nav-margin: 6px 0px 2px;
+    --nav-border: 1px solid var(--cream);
+    --nav-no-border: 1px solid transparent;
+}
+
+.active-link {
+    all:unset;
+    cursor: pointer;
+}
+
+.navbar > .left {
+    float: left;
+}
+
+.navbar > .left > div {
+    float:left;
+    padding: var(--nav-padding);
+    border-left:var(--nav-border);
+    margin: var(--nav-margin);
+}
+
+.navbar > .right {
+    float:right;
+}
+
+.navbar > .right > div {
+    float:right;
+    padding: var(--nav-padding);
+    border-right:var(--nav-border);
+    margin: var(--nav-margin);
+}
+
+.navbar > .left > :first-child {
+    border-left:var(--nav-no-border);
+    margin-left: 10px;
+}
+
+/* This is fucked, it's because they float to the right */
+.navbar > .right > :first-child {
+    border-right:var(--nav-no-border);
+}
+
+.navbar .brand {
+    font-size: 24px;
+    padding: 2px 0px 2px !important; 
+}
