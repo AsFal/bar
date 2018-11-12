@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import IngredientList from "./IngredientList.jsx";
-import "../styles/IngredientInventory.css"
-import kegs from "../images/kegs.jpg";
+import "../../styles/IngredientInventory.css"
+import kegs from "../../images/kegs.jpg";
 
 // Nothing in this page is functional as of yet
 function IngredientListToggleButton(props) {

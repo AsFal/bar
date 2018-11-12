@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import {BrowserRouter, Route, Switch} from "react-router-dom";
 import ErrorPage from "./Error.jsx";
-import Home from "./Home.jsx";
+import Home from "./home/Home.jsx";
 import Navbar from "./Navbar.jsx";
-import IngredientInventory from "./IngredientInventory.jsx";
-import RecipeBook from "./RecipeBook.jsx";
+import IngredientInventory from "./inventory/IngredientInventory.jsx";
+import RecipeBook from "./recipes/RecipeBook.jsx";
 
 import '../styles/App.css';
 

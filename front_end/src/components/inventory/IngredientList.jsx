@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 // import IngredientAdd from "./IngredientAdd.jsx";
 
-import "../styles/IngredientList.css"
+import "../../styles/IngredientList.css"
 
 let IngredientRow = (props)=>{
     return (

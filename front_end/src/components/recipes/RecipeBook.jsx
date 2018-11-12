@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import Recipe from "./Recipe.jsx";
 
 export default class RecipeBook extends Component {
     constructor(props) {
@@ -8,9 +9,7 @@ export default class RecipeBook extends Component {
     render() {
         return (
             <div>
-                <p>
-                    This is the Recipe Book
-                </p>
+                <Recipe/>
             </div>
         )
     }

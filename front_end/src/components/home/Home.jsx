@@ -1,8 +1,8 @@
 import React from "react";
 
-import "../styles/Home.css";
+import "../../styles/Home.css";
 
-import BarImage from "../images/bar.jpg";
+import BarImage from "../../images/bar.jpg";
 
 
 export default function Home(props) {
