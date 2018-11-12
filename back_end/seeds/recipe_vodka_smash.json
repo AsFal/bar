@@ -15,7 +15,7 @@
                 "type": "Vodka",
                 "abv" : 21,
                 "quantity": 750,
-                "id" : "q0429h3"
+                "_id" : "q0429h3"
             }
         },
         {
@@ -30,7 +30,7 @@
                 "type": "Vodka",
                 "abv" : 40,
                 "quantity": 750,
-                "id": "2243qdj1"
+                "_id": "2243qdj1"
             }
         },
         {
@@ -46,7 +46,7 @@
                 "type": "Vodka",
                 "abv" : 42,
                 "quantity": 800,
-                "id": "2303q8hglfj2"
+                "_id": "2303q8hglfj2"
             }
         }
     ],

@@ -16,7 +16,7 @@
                 "type": "Gin",
                 "abv" : 40,
                 "quantity": 750,
-                "id" : "1kljg3q0985"
+                "_id" : "1kljg3q0985"
             }
         },
         {
@@ -32,7 +32,7 @@
                 "type": "Gin",
                 "abv" : 40,
                 "quantity": 750,
-                "id": "2gk324h513qhsdj1"
+                "_id": "2gk324h513qhsdj1"
             }
         },
         {
