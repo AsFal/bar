@@ -1,0 +1,23 @@
+[
+    {
+        "name": "Malibu Coconut",
+        "type": "Rum",
+        "abv" : 21,
+        "quantity": 750,
+        "id" : "1klj13"
+    },
+    {
+        "name": "Jamaican Strong",
+        "type": "Rum",
+        "abv" : 40,
+        "quantity": 750,
+        "id": "2gkvsdj1"
+    },
+    {
+        "name": "Kraken",
+        "type": "Rum",
+        "abv" : 48,
+        "quantity": 750,
+        "id": "23lfj2"
+    }
+]

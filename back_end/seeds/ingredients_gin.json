@@ -1,0 +1,23 @@
+[
+    {
+        "name": "London Dry",
+        "type": "Gin",
+        "abv" : 40,
+        "quantity": 750,
+        "id" : "1kljg3q0985"
+    },
+    {
+        "name": "Tom Collins",
+        "type": "Gin",
+        "abv" : 40,
+        "quantity": 750,
+        "id": "2gk324h513qhsdj1"
+    },
+    {
+        "name": "Fancy",
+        "type": "Gin",
+        "abv" : 44,
+        "quantity": 750,
+        "id": "2asdfasgj2"
+    }
+]

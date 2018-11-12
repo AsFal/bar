@@ -10,10 +10,15 @@ var Ingredient = require("../models/ingredient.js");
 
 
 /**
- * @todo: A GET request to handle the page init (needs to send back all of the group names)
- * @todo: A GET request that receives a table name and returns a list of ingredients
- * @todo: a POST request that creates a new object (need  database for this)
- * @todo: a POST request to create a new empty catategory
+ * 
+ * @event: A GET request to handle the page init (needs to send back all of the group names)
+ * @event: A GET request that receives a table name and returns a list of ingredients
+ * @event: a POST request that creates a new object (need  database for this)
+ * @event: a POST request to create a new empty catategory
+ * @todo: a PUT request that modifies an ingredient
+ * @todo: a PUT request for a table
+ * @todo: a DELETE request for an ingredient
+ * @todo: a DELETE request for a table
  * 
  * All ingredients should be in the main page
  * Have an ingredient selection option (with search filtering capacities) so the user can create
@@ -120,77 +125,11 @@ function fetchIngredientList(groupName) {
 function chooseIngredientTest(groupName) {
     switch (groupName) {
         case "b75bi345":
-            return [
-                {
-                    name: "Malibu Coconut",
-                    type: "Rum",
-                    abv : 21,
-                    quantity: 750,
-                    _id: "1klj13"
-                },
-                {
-                    name: "Jamaican Strong",
-                    type: "Rum",
-                    abv : 40,
-                    quantity: 750,
-                    _id: "2gkvsdj1"
-                },
-                {
-                    name: "Kraken",
-                    type: "Rum",
-                    abv : 48,
-                    quantity: 750,
-                    _id: "23lfj2"
-                }
-            ]
+            return require("../seeds/ingredients_rum.json")
         case "lk3j4h5":
-            return [
-                {
-                    name: "Russian Delight",
-                    type: "Vodka",
-                    abv : 21,
-                    quantity: 750,
-                    _id: "f2lb2gg4"
-                },
-                {
-                    name: "Jamaican Strong",
-                    type: "Rum",
-                    abv : 40,
-                    quantity: 750,
-                    _id: "asdlkjh4"
-                },
-                {
-                    name: "Kraken",
-                    type: "Rum",
-                    abv : 48,
-                    quantity: 750,
-                    _id: "234l2t"
-                }
-            ]
+            return require("../seeds/ingredients_gin.json")
         case "rl2kj432lkb" :
-            return [
-                {
-                    name: "Something completely different",
-                    type: "yomama",
-                    abv : 21,
-                    quantity: 750,
-                    _id: "kj32h"
-                },
-                {
-                    name: "Jamaican Strong",
-                    type: "Rum",
-                    abv : 40,
-                    quantity: 750,
-                    _id: "kjasdfasgash"
-                },
-                {
-                    name: "Kraken",
-                    type: "Rum",
-                    abv : 48,
-                    quantity: 750,
-                    _id: "23lrh32"
-                }
-            ]
+            return require("../seeds/ingredients_vodka.json")
         default:
             break;
     }
@@ -213,192 +152,12 @@ function createIngredient(ingredient) {
     })
 }
 
-// router.get("/", (req, res)=> {
-//     "use strict";
+function addIngredientTo(tableId) {
 
-//     /**Information that needs to be sent back:
-//      * All of the ingredients in the database for the given user (main page) 
-//      * The name of all of the users categories (for now all of the categories in the db)
-//      */
+}
 
-//      let resObject = {};
-//      fetchCategoryNames()
-//      .then((tableNames)=>{
-//          resObject.tableNames=tableNames;
-//          return fetchAllIngredients();
-//      })
-//      .then((ingredientList)=> {
-//          resObject.ingredientList=ingredientList;
-//          res.json(resObject);
-//      })
-//      .catch((err)=>{
-//         console.log("==============================")
-//         console.log("Generate first table GET error:")
-//         console.log("==============================")
-//         console.log(err);
-//      });
+function addIngredientToMain() {
 
-// })
-
-// /** GET request to change the ingredient category */
-// // router.get("/changeTable", (req, res)=>{
-// //     fetchIngredientList(req.body.tableName)
-// //     .then((ingredientList)=>{
-// //         res.json(ingredientList);
-// //     })
-// // });
-
-// /** POST request for creating a new ingredient */
-// router.post("/ingredient", (req,res)=> {
-//     "use strict";
-//     addIngredientToDb(req,body.ingredient)
-//     .catch(err=>{
-//         console.log(err);
-//     });
-
-// });
-
-
-// /** POST request to create a new Table */
-
-// router.post("/table", (req,res)=>{
-//     "use strict";
-//     let table = req.body.table;
-//     Table.create({
-//         name: table.name, 
-//     },(err)=>{
-//         console.log(err);
-//     });  
-// })
-
-
-// /** PUT request to add existing ingredient to a catgory list */
-
-// router.put("/existingToTable", (req,res)=>{
-    
-//     fetchIngredientId(req.body.ingredient.name)
-//     .then((ingredientId)=>{
-//         addIngredientToTable(req.body.table.name, ingredientId)
-//     })
-// });
-
-// /** PUT request to add new ingredient to a table (while also adding it to the main) */
-// router.put("/newToTable", (req,res)=>{
-//     addNewIngredientTodb()
-//     .then((ingredientId=>{
-//         addIngredientToTable(req.body.table.name, ingredientId);
-//     }))
-// })
-
-// /** PUT request to modify an ingredient from anywhere in the app */
-// router.put("/ingredient", (req,res)=>{
-//     Ingredient.findOneAndUpdate({name:req.body.oldName}, req.body.ingredient);
-// })
-
-// /** DELETE request to delete an ingredient from a table */
-
-// router.delete("/ingredientFromTable", (req,res)=> {
-//     Table.findOne({name:req.body.table.name}, (err, table)=>{
-//         removeFromArray(table, req.body.ingredient._id);
-//         table.save();
-//     })
-// })
-
-// router.delete("/ingredient", (req,res)=> {
-//     Ingredient.findOneAndDelete({name:req.body.ingredient.name});
-// })
-
-// router.delete("/table", (req,res)=> {
-//     Table.findOneAndDelete({name:req.body.table.name});
-// })
-
-
-// /** Database fetch helper functions */
-
-// function fetchCategoryNames()
-// {
-//     "use strict";
-//     return new Promise(function(fulfill, reject){
-//         Table.find({}, (err, tableList)=> {
-//             let tableNames = [];
-//             tableList.forEach((table)=> {
-//                 tableNames.push(table.name);
-//             });
-//             fulfill(tableNames);
-//         })
-//     })
-// }
-
-
-
-// function fetchAllIngredients(){
-//     "use strict";
-//     return new Promise(function(fulfill, reject){
-//         Ingredient.find({}, (err,ingredientList)=>{
-//             if(err) {
-//                 console.log(err);
-//             }
-//             else {
-//                 fulfill(ingredientList);
-//             }
-//         });
-//     });
-// }
-
-
-
-// function fetchIngredientList(tableName) 
-// {
-//     "use strict";
-//     return new Promise(function(fulfill, reject){
-//         Table.findOne({name:tableName}).populate().exec((err, table)=>{
-//             if(err){
-//                 console.log(err);
-//             }
-//             else{
-//                 fulfill(table.ingredients);
-//             }
-//         });
-//     });
-// }
-
-// /** Data insertion helper functions */
-
-// function addIngredientToDb(ingredient) {
-//     "use strict";
-//     return new Promise(function(fulfill, reject){
-//         Ingredient.create({
-//             name : ingredient.name,
-//             type: ingredient.type,
-//             abv: ingredient.abv,
-//             quantity: ingredient.quantity
-//         }, function(err, ingredient){
-//             fulfill(ingredient._id);
-//         })
-//     })
-// }
-
-// /** Helper function that fetches an ingredient Id from a name */
-// function fetchIngredientId(name) {
-//     "use strict";
-//     return new Promise(function(fulfill, reject) {
-//         Ingredient.findOne({name:name}, (err, ingredient) => fulfill(ingredient._id));
-//     });
-// }
-
-// /** Helper function that adds an ingredient to a table */
-// function addIngredientToTable(tableName, ingredientId) {
-//     "use strict";
-//     return new Promise(function(fulfill, reject) {
-//         Table.findOne({name:tableName}, (err, table)=>{
-//             table.ingredients.push(ingredientId);
-//             table.save(function(err){
-//                 fulfill();
-//             });
-//         })
-//     })
-// }
-
-/** Helper function remove from Array */
+}
 
 module.exports = router;
