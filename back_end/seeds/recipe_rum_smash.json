@@ -1,0 +1,50 @@
+{
+    "price": 16.8,
+    "portions": 1,
+    "ingredients": [
+        {
+            "quantity":30,
+            "unitOfMeasure": "ml",
+            "ingredient":{
+                "name": "Malibu Coconut",
+                "price": {
+                    "cost": 0.23,
+                    "unitOfMeasure" : "mL"
+                },
+                "type": "Rum",
+                "abv" : 21,
+                "quantity": 750,
+                "id" : "1klj13"}
+        },
+        {
+            "quantity":30,
+            "unitOfMeasure": "ml",
+            "ingredient": {
+                "name": "Jamaican Strong",
+                "price": {
+                    "cost": 0.15,
+                    "unitOfMeasure" : "mL"
+                },
+                "type": "Rum",
+                "abv" : 40,
+                "quantity": 750,
+                "id": "2gkvsdj1"}
+        },
+        {
+            "quantity":30,
+            "unitOfMeasure": "ml",
+            "ingredient": {
+                "name": "Kraken",
+                "price": {
+                    "cost": 0.18,
+                    "unitOfMeasure" : "mL"
+                },
+                "type": "Rum",
+                "abv" : 48,
+                "quantity": 750,
+                "id": "23lfj2"}
+        }
+    ]
+       
+
+}
