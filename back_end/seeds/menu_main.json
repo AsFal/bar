@@ -1,0 +1,10 @@
+{
+    "name": "Main",
+    "theme" : "Testing",
+    "season" : "Winter",
+    "drinks": [
+        "rum_smash",
+        "vodka_smash",
+        "gin_smash"
+    ]
+}

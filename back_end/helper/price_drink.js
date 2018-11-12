@@ -34,6 +34,9 @@ function pricePortion(recipe) {
 
 module.exports = pricePortion;
 
+console.log(pricePortion(require("../seeds/recipe_vodka_smash.json")));
+console.log(pricePortion(require("../seeds/recipe_gin_smash.json")));
+
 // Need to use jest for this
 // function testPriceDrink() {
 //     let test_recipe = require("../seeds/recipe_rum_smash.json");

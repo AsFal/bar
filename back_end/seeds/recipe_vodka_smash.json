@@ -1,49 +1,54 @@
 {
-    "price": 16.8,
+    "price": 6,
     "portions": 1,
     "ingredients": [
         {
             "quantity":30,
             "unitOfMeasure": "ml",
-            "ingredient":{
-                "name": "Malibu Coconut",
+            "ingredient":
+            {
+                "name": "Grey Goose",
                 "price": {
-                    "cost": 0.23,
+                    "cost": 0.06,
                     "unitOfMeasure" : "mL"
                 },
-                "type": "Rum",
+                "type": "Vodka",
                 "abv" : 21,
                 "quantity": 750,
-                "id" : "1klj13"}
+                "id" : "q0429h3"
+            }
         },
         {
             "quantity":30,
             "unitOfMeasure": "ml",
             "ingredient": {
-                "name": "Jamaican Strong",
+                "name": "Smirnoff",
                 "price": {
-                    "cost": 0.15,
+                    "cost": 0.01,
                     "unitOfMeasure" : "mL"
                 },
-                "type": "Rum",
+                "type": "Vodka",
                 "abv" : 40,
                 "quantity": 750,
-                "id": "2gkvsdj1"}
+                "id": "2243qdj1"
+            }
         },
         {
             "quantity":30,
             "unitOfMeasure": "ml",
-            "ingredient": {
-                "name": "Kraken",
+            "ingredient": 
+            {
+                "name": "Skull",
                 "price": {
-                    "cost": 0.18,
+                    "cost": 0.13,
                     "unitOfMeasure" : "mL"
                 },
-                "type": "Rum",
-                "abv" : 48,
-                "quantity": 750,
-                "id": "23lfj2"}
+                "type": "Vodka",
+                "abv" : 42,
+                "quantity": 800,
+                "id": "2303q8hglfj2"
+            }
         }
     ],
-    "_id" : "rum_smash"
+    "_id" : "vodka_smash"
 }

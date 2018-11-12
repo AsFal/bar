@@ -10,7 +10,6 @@ var Ingredient = require("../models/ingredient.js");
 
 
 /**
- * 
  * @event: A GET request to handle the page init (needs to send back all of the group names)
  * @event: A GET request that receives a table name and returns a list of ingredients
  * @event: a POST request that creates a new object (need  database for this)

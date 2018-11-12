@@ -42,14 +42,27 @@ function fetchRecipe(recipeId) {
          * @todo: figure out if its better to have more client side operations and send more data
          * or have more back-end operations
          */
-
-        let recipe = require("../seeds/greek_salad.json");
-        fulfill(recipe);
+        switch (recipeId) {
+            case "rum_smash":
+                fulfill(require("../seeds/recipe_rum_smash.json"));
+            case "gin_smash":
+                fulfill(require("../seeds/recipe_gin_smash.json"));
+            case "vodka_smash":
+                fulfill(require("../seeds/recipe_vodka_smash.json"));
+            default:
+                fulfill(require("../seeds/recipe_vodka_smash.json"));
+        }
     });
 }
 
-
-
+function fetchMenu(menuId) {
+    return new Promise(function(fulfill, reject) {
+        if(menuId == "main") {
+            let menu = require("../seeds/menu_main.json");
+            fulfill(menu);
+        }
+    })
+}
 
 
 module.exports = router;

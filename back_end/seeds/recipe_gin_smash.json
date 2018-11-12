@@ -1,49 +1,56 @@
 {
-    "price": 16.8,
+    "price": 7.5,
+    "abv": 41,
     "portions": 1,
     "ingredients": [
         {
             "quantity":30,
             "unitOfMeasure": "ml",
-            "ingredient":{
-                "name": "Malibu Coconut",
+            "ingredient":    
+            {
+                "name": "London Dry",
                 "price": {
-                    "cost": 0.23,
+                    "cost": 0.02,
                     "unitOfMeasure" : "mL"
                 },
-                "type": "Rum",
-                "abv" : 21,
-                "quantity": 750,
-                "id" : "1klj13"}
-        },
-        {
-            "quantity":30,
-            "unitOfMeasure": "ml",
-            "ingredient": {
-                "name": "Jamaican Strong",
-                "price": {
-                    "cost": 0.15,
-                    "unitOfMeasure" : "mL"
-                },
-                "type": "Rum",
+                "type": "Gin",
                 "abv" : 40,
                 "quantity": 750,
-                "id": "2gkvsdj1"}
+                "id" : "1kljg3q0985"
+            }
         },
         {
             "quantity":30,
             "unitOfMeasure": "ml",
-            "ingredient": {
-                "name": "Kraken",
+            "ingredient": 
+            {
+                "name": "Tom Collins",
+                "price": {
+                    "cost": 0.05,
+                    "unitOfMeasure" : "mL"
+                },
+                "type": "Gin",
+                "abv" : 40,
+                "quantity": 750,
+                "id": "2gk324h513qhsdj1"
+            }
+        },
+        {
+            "quantity":30,
+            "unitOfMeasure": "ml",
+            "ingredient": 
+            {
+                "name": "Fancy",
                 "price": {
                     "cost": 0.18,
                     "unitOfMeasure" : "mL"
                 },
-                "type": "Rum",
-                "abv" : 48,
+                "type": "Gin",
+                "abv" : 43,
                 "quantity": 750,
-                "id": "23lfj2"}
+                "id": "2asdfasgj2"
+            }
         }
     ],
-    "_id" : "rum_smash"
+    "_id" : "gin_smash"
 }

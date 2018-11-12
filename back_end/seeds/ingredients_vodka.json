@@ -1,6 +1,10 @@
 [
     {
         "name": "Grey Goose",
+        "price": {
+            "cost": 0.06,
+            "unitOfMeasure" : "mL"
+        },
         "type": "Vodka",
         "abv" : 21,
         "quantity": 750,
@@ -8,6 +12,10 @@
     },
     {
         "name": "Smirnoff",
+        "price": {
+            "cost": 0.01,
+            "unitOfMeasure" : "mL"
+        },
         "type": "Vodka",
         "abv" : 40,
         "quantity": 750,
@@ -15,6 +23,10 @@
     },
     {
         "name": "Skull",
+        "price": {
+            "cost": 0.13,
+            "unitOfMeasure" : "mL"
+        },
         "type": "Vodka",
         "abv" : 42,
         "quantity": 800,
