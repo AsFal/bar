@@ -63,7 +63,7 @@ router.post("/ingredient", (req, res)=>{
     let ingredient = req.body;
     createIngredient(ingredient)
     .then((ingredientDoc)=>{
-
+        console.log(ingredientDoc)
         res.json(ingredientDoc);
     })
     .catch((err)=>{
@@ -73,11 +73,9 @@ router.post("/ingredient", (req, res)=>{
 })
 
 router.post("/list", (req, res)=> {
-
     // "Validation Could be done on the fron-end or the back-end"
     /** @todo: research best spot for this */
     let list = req.body;
-
     createList(list)
     .then((listDoc)=>{
         res.json(listDoc)
@@ -90,6 +88,7 @@ router.post("/list", (req, res)=> {
 
 })
 
+/** @todo: INject Mongoose here */
 function fetchLists() {
     let lists = [
         {
@@ -110,6 +109,7 @@ function fetchLists() {
     });
 }
 
+/** @todo: INject Mongoose here */
 function fetchIngredientList(groupName) {
     let ingredients = chooseIngredientTest(groupName);
     return new Promise(function(fulfill, reject) {
@@ -196,7 +196,7 @@ function chooseIngredientTest(groupName) {
     }
 }
 
-
+/** @todo: Mongoose here */
 function createList(list) {
     return new Promise(function(fulfill, reject) {
         list._id = newId();
@@ -204,6 +204,7 @@ function createList(list) {
     });
 }
 
+/** @todo: Mongoose here */
 function createIngredient(ingredient) {
     return new Promise(function(fulfill, reject) {
         let ingredientDoc = ingredient;
@@ -211,6 +212,7 @@ function createIngredient(ingredient) {
         fulfill(ingredientDoc);
     })
 }
+
 // router.get("/", (req, res)=> {
 //     "use strict";
 

@@ -19,7 +19,7 @@ app.use(bodyParser.json())
 
 
 app.use('/api/inventory', inventoryRouter);
-// app.use('/api/recipes', recipesRouter);
+app.use('/api/recipes', recipesRouter);
 
 
 // catch 404 and forward to error handler

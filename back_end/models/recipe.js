@@ -4,6 +4,7 @@ var recipeSchema = new mongoose.Schema({
   name:String,
   ingredients : [
     {
+      unitOfMeasure: String,
       quantity: Number,
       ingredient: {
         type: mongoose.Schema.Types.ObjectId,

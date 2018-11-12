@@ -9,6 +9,7 @@ let menuSchema = new mongoose.Schema(
       type: mongoose.Schema.types.ObjectId,
       ref: "Recipe"
     }],
+    // This functionality will need to be thought out, not exactly sure what I want here tbh
     ingredients: [{
       type: mongoose.Schema.types.ObjectId,
       ref: "Ingredient"
