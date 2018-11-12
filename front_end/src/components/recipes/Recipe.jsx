@@ -55,36 +55,28 @@ export default class Recipe extends Component {
     }
 
     getRecipe() {
-        return new Promise(function(fulfill, reject) {
-            fulfill(
-                {
-                    ingredientList: [
-                        {
-                            name: "Vagues",
-                            unitOfMeasure: "mL",
-                            quantity: 30,
-                            _id: Math.floor(Math.random()*10000).toString()
-                        },
-                        {
-                            name: "Rum",
-                            unitOfMeasure: "mL",
-                            quantity: 30,
-                            _id: Math.floor(Math.random()*10000).toString()
-                        },
-                        {
-                            name: "Antything, litteraly",
-                            unitOfMeasure: "mL",
-                            quantity: 30,
-                            _id: Math.floor(Math.random()*10000).toString()
-                        },
-                    ],
-                    instructionList: [
-                        "In order, this should be one",
-                        "If this aint two, then I don't know what the fuck is going on",
-                        "Oh shit, we at three already"
-                    ]
-                }
-            )
+        return new Promise((fulfill, reject) =>{
+            let id = this.state.recipeId;
+            fetch(`/api/recipes/${id}`)
+            .then(res=>res.json())
+            .then((recipe)=>{
+                let ingredientList = recipe.ingredients.map((ingredient)=>
+                ({
+                    name:ingredient.ingredient.name,
+                    unitOfMeasure: ingredient.unitOfMeasure,
+                    quantity: ingredient.quantity,
+                    _id: ingredient.ingredient._id
+                }));
+
+                fulfill({
+                    name: recipe.name,
+                    ingredientList: ingredientList,
+                    instructionList: recipe.instructions
+                });
+            })
+            .catch((err)=>{
+                console.log(err);
+            }) 
         })
     }
 
