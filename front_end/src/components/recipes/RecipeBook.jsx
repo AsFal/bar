@@ -1,11 +1,39 @@
 import React, {Component} from "react";
 import Recipe from "./Recipe.jsx";
+import AddRecipe from "./AddRecipe.jsx";
 
 export default class RecipeBook extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            name: "",
+            theme: "",
+            recipeIds : [],
+            nextRecipeIndex : 0,
+            displayAddRecipeForm: false
+        }
+
+        this.nextRecipe = this.nextRecipe.bind(this);
     }
 
+
+    componentDidMount() {
+        let menuId = "main";
+        fetch(`/api/recipes/menu/${menuId}`)
+        .then(res=>res.json())
+        .then((menu)=> {
+            this.setState( {
+                name: menu.name,
+                theme: menu.theme,
+                season: menu.season,
+                recipeIds: menu.drinks
+            })
+        })
+    }
+
+    // componentWillUpdate(newProps, newState) {
+    //     if(this.state.)
+    // }
     // The animation that I want
     // I want the Recipe book to load with A title page, giving a brief description of the menu
     //This page is on the right and there is clearly a slot on the left for another page
@@ -34,10 +62,61 @@ export default class RecipeBook extends Component {
     // New recipe form is at the end of the recipe booklet, with option to go to the end of the booklet
 
     render() {
+        // Next recipe should not be rendered
+        let recipes = [];
+        for (let index = 0; index < this.state.nextRecipeIndex; index++) {
+            let currentId = this.state.recipeIds[index];
+            // Implement a style change depending on the position
+            // Last should have right style (class in css)
+            // All left should have a left page class
+            // Left page classes should be modified by position
+            // style = {
+
+            // }
+
+            recipes.push(
+                <Recipe key={currentId} _id={currentId}/>
+            )
+        }
+
+        if(this.state.displayAddRecipeForm) {
+            recipes.push(<AddRecipe/>)
+        }
+        console.log("rerendered");
+        console.log(recipes);
+        console.log(this.state.lastRecipeIndex);
+        console.log(this.state.recipeIds);
+        
         return (
             <div>
-                <Recipe/>
+                {recipes}
+                <button onClick={this.nextRecipe}> NextRecipe</button>
             </div>
-        )
+            
+        ) 
     }
+
+    nextRecipe() {
+        // If so, we have reached the end of the recipes for this menu
+        // The desired effect is to have a new recipe form after all of this
+        if (this.state.nextRecipeIndex < this.state.recipeIds.length) {
+            let newNextRecipeIndex = this.state.nextRecipeIndex + 1;
+            this.setState({
+                nextRecipeIndex: newNextRecipeIndex
+            })
+        }
+        // If you are the end of the recipes and there are no displayed forms, display form
+        else if(! this.state.displayAddRecipeForm) {
+            console.log(this);
+            this.setState(
+                {
+                    displayAddRecipeForm: true
+                }
+            )
+        }
+        
+        // Do nothing if neither of those cases are true
+
+    } 
+
 }

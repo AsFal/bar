@@ -8,7 +8,7 @@ export default class Recipe extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            recipeId : props.key,
+            recipeId : props._id,
             ingredientList: [],
             instructionList: []
         }
@@ -30,11 +30,8 @@ export default class Recipe extends Component {
     // }
 
     componentDidMount() {
-        console.log("mounted");
         this.getRecipe(this.state)
         .then((recipe)=>{
-            console.log(recipe);
-            console.log(recipe.ingredientList);
             this.setState({
                 ingredientList: recipe.ingredientList,
                 instructionList: recipe.instructionList
@@ -60,6 +57,13 @@ export default class Recipe extends Component {
             fetch(`/api/recipes/${id}`)
             .then(res=>res.json())
             .then((recipe)=>{
+                if(!recipe.ingredients) {
+                    recipe.ingredients=[]
+                }
+                if(!recipe.instructions) {
+                    recipe.instructions = [];
+                }
+
                 let ingredientList = recipe.ingredients.map((ingredient)=>
                 ({
                     name:ingredient.ingredient.name,
@@ -67,7 +71,7 @@ export default class Recipe extends Component {
                     quantity: ingredient.quantity,
                     _id: ingredient.ingredient._id
                 }));
-
+                
                 fulfill({
                     name: recipe.name,
                     ingredientList: ingredientList,
