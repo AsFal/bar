@@ -14,6 +14,7 @@ export default class RecipeBook extends Component {
         }
 
         this.nextRecipe = this.nextRecipe.bind(this);
+        this.submitRecipe = this.submitRecipe.bind(this);
     }
 
 
@@ -80,7 +81,7 @@ export default class RecipeBook extends Component {
         }
 
         if(this.state.displayAddRecipeForm) {
-            recipes.push(<AddRecipe/>)
+            recipes.push(<AddRecipe onSubmit={this.onSubmit}/>)
         }
         console.log("rerendered");
         console.log(recipes);
@@ -107,7 +108,7 @@ export default class RecipeBook extends Component {
         }
         // If you are the end of the recipes and there are no displayed forms, display form
         else if(! this.state.displayAddRecipeForm) {
-            console.log(this);
+
             this.setState(
                 {
                     displayAddRecipeForm: true
@@ -118,5 +119,26 @@ export default class RecipeBook extends Component {
         // Do nothing if neither of those cases are true
 
     } 
+
+    submitRecipe(event) {
+        event.preventDefault();
+        let form = event.form;
+
+        let recipe = {};
+        fetch("api/recipes", 
+        {method: "POST",
+        header: {
+            contentType : "application/JSON"
+        },
+        body:JSON.stringify(recipe)}
+        )
+        .then(res=>res.json())
+        .then(newRecipe=>{
+            console.log(newRecipe);
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }
 
 }

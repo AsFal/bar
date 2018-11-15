@@ -39,7 +39,7 @@ export default class AddRecipe extends Component{
         return (
             <div>
                 <h3>New Recipe</h3>
-                <form name="newRecipe" onSubmit={submitRecipe}>
+                <form name="newRecipe" onSubmit={this.props.onSubmit}>
                     <div>
                         <input type="text" name="name" placeholder="name"/>
                         <h4>Ingredients</h4>
@@ -71,11 +71,4 @@ export default class AddRecipe extends Component{
         })
     }
 
-    submitRecipe(event) {
-        event.preventDefault();
-        let form = event.form;
-        fetch("api/recipes", 
-        {method: "POST"})
-
-    }
 }
