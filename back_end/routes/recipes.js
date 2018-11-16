@@ -1,15 +1,9 @@
 let express = require("express");
 let router = express.Router();
-let inventoryDb = require("../db_interaction/ingredient.js");
+let inventoryDb = require("../db_interaction/inventory.js");
 let recipeDb = require("../db_interaction/recipe.js");
 
 let pricePortion = require("../helper/price_drink.js");
-
-function newId() {
-    return Math.floor(Math.random()*100000).toString();
-}
-
-
 
 router.get("/:recipe_id", function(req,res){
     recipeDb.fetchRecipe(req.params.recipe_id)
@@ -31,19 +25,24 @@ router.get("/menu/:menu_id", function(req,res){
     // })
 })
 
+// functional
+// Receives object of form
+// 
 router.post("/", function(req,res){
     let recipe=req.body;
+    console.log(recipe);
     let ingredients = recipe.ingredients;
 
     let ingredientCreationPromises = [];
     ingredients.forEach((ingredient)=>{
-        
-        ingredientCreationPromises.push(inventoryDb.createIngredient(ingredient)
+        if(!ingredient._id) {
+            // Make mongodb ingredient function with this in mind
+            ingredientCreationPromises.push(inventoryDb.createIngredient(ingredient)
             .then((ingredientDoc)=>{
                 // theoretically points to the same ingredient contained in recipe
                 ingredient._id = ingredientDoc._id;
-            })
-            .catch((err)=>{console.log(err)}));
+            }));
+        }
     })
     Promise.all(ingredientCreationPromises)
     .then((promiseAnswer)=>{
@@ -52,7 +51,7 @@ router.post("/", function(req,res){
         recipe.ingredients = recipe.ingredients.map((ingredient)=>({
             quantity:ingredient.quantity,
             unitOfMeasure:ingredient.unitOfMeasure,
-            ingredient:ingredient.ingredient._id
+            ingredient:ingredient._id
         }))
         // Price drink here
         // Calculate ABV

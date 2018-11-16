@@ -25,10 +25,6 @@ var inventoryDb = require("../db_interaction/inventory.js");
  * Have a way to send this information to db
  */
 
-function newId() {
-    return Math.floor(Math.random()*100000).toString();
-}
-
 /** GET request to generate the page the first time */
 router.get("/", (req, res)=> {
     // Will require some kind of parser to convert json body to object
