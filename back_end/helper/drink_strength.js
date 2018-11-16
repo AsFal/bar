@@ -1,15 +1,4 @@
-function drinkAbv(recipeDoc) {
-    let abv = 0;
-    let drinkVolume = 0;
-    recipeDoc.ingredients.forEach((ingredient)=>{
-        /**
-         * @todo: make conversion verifications
-         */
-        drinkVolume += ingredient.quantity;
-        abv += ingredient.ingredient.abv;
-    })
-    return abv/drinkAbv;
-} 
+
 
 // function testDrinkAbv(recipeDoc) {
 //     if (recipeDoc.abv != drinkAbv(recipeDoc))

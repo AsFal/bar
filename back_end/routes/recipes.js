@@ -3,7 +3,6 @@ let router = express.Router();
 let inventoryDb = require("../db_interaction/inventory.js");
 let recipeDb = require("../db_interaction/recipe.js");
 
-let pricePortion = require("../helper/price_drink.js");
 
 router.get("/:recipe_id", function(req,res){
     recipeDb.fetchRecipe(req.params.recipe_id)

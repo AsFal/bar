@@ -4,12 +4,20 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 var inventoryRouter = require('./routes/inventory.js');
 var recipesRouter = require('./routes/recipes.js');
 
 var app = express();
 
+mongoose.connect("mongodb://localhost/bar_app", { useNewUrlParser: true });
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log("connected to database");
+});
 
 app.use(logger('dev'));
 // app.use(express.json());

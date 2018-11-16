@@ -46,9 +46,9 @@ router.get("/", (req, res)=> {
     // Look in book to find out more about error handling
 });
 
-router.get("/ingredient_list/:list_key", (req,res) =>{
+router.get("/:list_id", (req,res) =>{
 
-    inventoryDb.fetchIngredientList(req.params.list_key)
+    inventoryDb.fetchIngredientList(req.params.list_id)
     .then((ingredientList)=>{
         res.json(ingredientList)
     })

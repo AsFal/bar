@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www localhost 3000"
+    "start": "nodemon ./bin/www localhost 3000",
+    "test": "jest"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -15,6 +16,17 @@
     "morgan": "~1.9.0"
   },
   "nodemonConfig": {
-    "ignore": ["test/*", "docs/*"]
+    "ignore": [
+      "test/*",
+      "docs/*"
+    ]
+  },
+  "jest": {
+    "name": "back-end",
+    "jest": {
+    }
+  },
+  "devDependencies": {
+    "jest": "^23.6.0"
   }
 }
