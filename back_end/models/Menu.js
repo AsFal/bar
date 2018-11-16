@@ -6,12 +6,12 @@ let menuSchema = new mongoose.Schema(
     theme:String,
     season:String,
     drinks: [{
-      type: mongoose.Schema.types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Recipe"
     }],
     // This functionality will need to be thought out, not exactly sure what I want here tbh
     ingredients: [{
-      type: mongoose.Schema.types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "Ingredient"
     }]
 })

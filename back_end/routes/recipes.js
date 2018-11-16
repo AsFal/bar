@@ -28,6 +28,7 @@ router.get("/menu/:menu_id", function(req,res){
 // Receives object of form
 // 
 router.post("/", function(req,res){
+    // Recipe will need to be added to the recipe book
     let recipe=req.body;
     console.log(recipe);
     let ingredients = recipe.ingredients;
@@ -55,10 +56,10 @@ router.post("/", function(req,res){
         // Price drink here
         // Calculate ABV
         // Fill recip with pertinent information
-        return recipeDb.createRecipe(recipe);
+        return recipeDb.createRecipe(recipe._id);
     })
     .then((recipeDoc)=>{
-        res.json(recipeDoc._id);
+        res.json(recipeDoc);
     })
     .catch((err)=>{
         res.json(err);

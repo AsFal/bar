@@ -15,6 +15,6 @@ var recipeSchema = new mongoose.Schema({
   instructions : [String]
 });
 
-var Card = mongoose.model("Card", cardSchema)
+var Recipe = mongoose.model("Recipe", recipeSchema)
 
-module.exports = Card;
+module.exports = Recipe;
