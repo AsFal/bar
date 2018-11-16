@@ -1,5 +1,7 @@
 let express = require("express");
 let router = express.Router();
+let inventoryDb = require("../db_interaction/ingredient.js");
+let recipeDb = require("../db_interaction/recipe.js");
 
 let pricePortion = require("../helper/price_drink.js");
 
@@ -10,7 +12,7 @@ function newId() {
 
 
 router.get("/:recipe_id", function(req,res){
-    fetchRecipe(req.params.recipe_id)
+    recipeDb.fetchRecipe(req.params.recipe_id)
     .then((recipeDoc)=>{
         res.json(recipeDoc);
     })
@@ -20,7 +22,7 @@ router.get("/:recipe_id", function(req,res){
 })
 
 router.get("/menu/:menu_id", function(req,res){
-    fetchMenu(req.params.menu_id)
+    recipeDb.fetchMenu(req.params.menu_id)
     .then((menuDoc)=>{
         res.json(menuDoc);
     })
@@ -30,39 +32,41 @@ router.get("/menu/:menu_id", function(req,res){
 })
 
 router.post("/", function(req,res){
-    recipe=req.body;
-    // ...
+    let recipe=req.body;
+    let ingredients = recipe.ingredients;
+
+    let ingredientCreationPromises = [];
+    ingredients.forEach((ingredient)=>{
+        
+        ingredientCreationPromises.push(inventoryDb.createIngredient(ingredient)
+            .then((ingredientDoc)=>{
+                // theoretically points to the same ingredient contained in recipe
+                ingredient._id = ingredientDoc._id;
+            })
+            .catch((err)=>{console.log(err)}));
+    })
+    Promise.all(ingredientCreationPromises)
+    .then((promiseAnswer)=>{
+
+        // Change Ingredient to contain only Id
+        recipe.ingredients = recipe.ingredients.map((ingredient)=>({
+            quantity:ingredient.quantity,
+            unitOfMeasure:ingredient.unitOfMeasure,
+            ingredient:ingredient.ingredient._id
+        }))
+        // Price drink here
+        // Calculate ABV
+        // Fill recip with pertinent information
+        return recipeDb.createRecipe(recipe);
+    })
+    .then((recipeDoc)=>{
+        res.json(recipeDoc._id);
+    })
+    .catch((err)=>{
+        res.json(err);
+    })    // ...
 })
 
-
-function fetchRecipe(recipeId) {
-    return new Promise(function(fulfill, reject) {
-        
-        /**
-         * @todo: figure out if its better to have more client side operations and send more data
-         * or have more back-end operations
-         */
-        switch (recipeId) {
-            case "rum_smash":
-                fulfill(require("../seeds/recipe_rum_smash.json"));
-            case "gin_smash":
-                fulfill(require("../seeds/recipe_gin_smash.json"));
-            case "vodka_smash":
-                fulfill(require("../seeds/recipe_vodka_smash.json"));
-            default:
-                fulfill(require("../seeds/recipe_vodka_smash.json"));
-        }
-    });
-}
-
-function fetchMenu(menuId) {
-    return new Promise(function(fulfill, reject) {
-        if(menuId == "main") {
-            let menu = require("../seeds/menu_main.json");
-            fulfill(menu);
-        }
-    })
-}
 
 
 module.exports = router;

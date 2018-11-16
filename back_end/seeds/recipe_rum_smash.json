@@ -1,5 +1,6 @@
 {
     "price": 16.8,
+    "name" : "Rum Smash",
     "portions": 1,
     "ingredients": [
         {
@@ -14,7 +15,7 @@
                 "type": "Rum",
                 "abv" : 21,
                 "quantity": 750,
-                "id" : "1klj13"}
+                "_id" : "1klj13"}
         },
         {
             "quantity":30,
@@ -28,7 +29,7 @@
                 "type": "Rum",
                 "abv" : 40,
                 "quantity": 750,
-                "id": "2gkvsdj1"}
+                "_id": "2gkvsdj1"}
         },
         {
             "quantity":30,
@@ -42,8 +43,14 @@
                 "type": "Rum",
                 "abv" : 48,
                 "quantity": 750,
-                "id": "23lfj2"}
+                "_id": "23lfj2"}
         }
+    ],
+    "instructions":
+    [
+        "Step one is to give up trying to look cool",
+        "sTep two is to start using the word suave",
+        "Step three is to count the days until block hacks"
     ],
     "_id" : "rum_smash"
 }
