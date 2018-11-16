@@ -14,7 +14,8 @@ export default class RecipeBook extends Component {
         }
 
         this.nextRecipe = this.nextRecipe.bind(this);
-        this.submitRecipe = this.submitRecipe.bind(this);
+        this.newRecipeId = this.newRecipeId.bind(this);
+        // this.submitRecipe = this.submitRecipe.bind(this);
     }
 
 
@@ -81,16 +82,12 @@ export default class RecipeBook extends Component {
         }
 
         if(this.state.displayAddRecipeForm) {
-            recipes.push(<AddRecipe onSubmit={this.onSubmit}/>)
+            recipes.push(<AddRecipe newRecipeId={this.newRecipeId}/>)
         }
-        console.log("rerendered");
-        console.log(recipes);
-        console.log(this.state.lastRecipeIndex);
-        console.log(this.state.recipeIds);
-        
+        // {recipes}
         return (
             <div>
-                {recipes}
+                <AddRecipe newRecipeId={this.newRecipeId}/>
                 <button onClick={this.nextRecipe}> NextRecipe</button>
             </div>
             
@@ -120,25 +117,33 @@ export default class RecipeBook extends Component {
 
     } 
 
-    submitRecipe(event) {
-        event.preventDefault();
-        let form = event.form;
-
-        let recipe = {};
-        fetch("api/recipes", 
-        {method: "POST",
-        header: {
-            contentType : "application/JSON"
-        },
-        body:JSON.stringify(recipe)}
-        )
-        .then(res=>res.json())
-        .then(newRecipe=>{
-            console.log(newRecipe);
-        })
-        .catch((err)=>{
-            console.log(err);
+    newRecipeId(recipeId) {
+        oldRecipeIds = this.state.recipeIds;
+        newRecipeIds = oldRecipeIds.slice();
+        newRecipeIds.push(recipeId);
+        this.setState({
+            recipeIds: newRecipeIds
         })
     }
+    // submitRecipe(event) {
+    //     event.preventDefault();
+    //     let form = event.form;
+
+    //     let recipe = {};
+    //     fetch("api/recipes", 
+    //     {method: "POST",
+    //     header: {
+    //         contentType : "application/JSON"
+    //     },
+    //     body:JSON.stringify(recipe)}
+    //     )
+    //     .then(res=>res.json())
+    //     .then(newRecipe=>{
+    //         console.log(newRecipe);
+    //     })
+    //     .catch((err)=>{
+    //         console.log(err);
+    //     })
+    // }
 
 }
