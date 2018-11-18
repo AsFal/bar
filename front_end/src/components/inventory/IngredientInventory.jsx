@@ -21,7 +21,8 @@ function IngredientListNameAdd(props) {
         <form onSubmit={props.handleNewList}>
             <div className="ingredient-add-container">
                 <div className="ingredient-list-add ">
-                        <input type="text" name="name"/>
+                        <input type="text" name="name" value={props.value}
+                        onChange={props.onChange}/>
                 </div>
             </div>
         </form> 
@@ -43,7 +44,8 @@ function IngredientListNames(props) {
     return(
         <div className="list-bookmarks">
             {ingredientListToggleButtons}
-            <IngredientListNameAdd handleNewList = {props.handleNewList}/>
+            <IngredientListNameAdd handleNewList = {props.handleNewList}
+            onChange = {props.onChange} value={props.value}/>
         </div>
     )
 }
@@ -69,12 +71,15 @@ export default class IngredientIventory extends Component {
 
         this.changeList = this.changeList.bind(this);
         this.handleNewList = this.handleNewList.bind(this);
+        this.onChange = this.onChange.bind(this);
 
         this.state = {
             /** @todo: this needs to be prapagated (key is now _id) */
             activeListKey: "",
-            lists: []
+            lists: [],
+            newListName :""
         }
+
     }
     /**
      * @todo: repair the following bug
@@ -128,14 +133,13 @@ export default class IngredientIventory extends Component {
             zIndex: "-10"
         }
 
-
-
         return(
         <div  id="ingredient-inventory" style={styles}>
             <IngredientListNames lists={this.state.lists} 
             handleNewList={this.handleNewList} changeList={this.changeList} 
             activeListKey={this.state.activeListKey}/>
-            <IngredientList listKey={this.state.activeListKey} />
+            <IngredientList listKey={this.state.activeListKey}
+            value={this.state.newListName} onChange={this.onChange} />
         </div>)
         }
 
@@ -177,4 +181,12 @@ export default class IngredientIventory extends Component {
     getMainId(listDocs) {
         return listDocs.filter((listDoc)=>(listDoc.name == "Main"))[0]._id;
     }
+
+    onChange(event) {
+        event.preventDefault();
+        let newValue = event.target.value;
+        this.setState({
+           newListName:newValue 
+        });
+    }   
 }
