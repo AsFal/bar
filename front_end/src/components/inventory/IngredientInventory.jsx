@@ -102,13 +102,14 @@ export default class IngredientIventory extends Component {
 
         fetch("/api/inventory")
         .then(res=>res.json())
-        .then((json)=>{
+        .then((listDocs)=>{
             //need a for loop that breaks to find the main key
             // Put main key here, else the view change will not work
             
+            let activeListKey = this.getMainId(listDocs);
             this.setState({
-                activeListKey: "b75bi345",
-                lists : json
+                activeListKey: activeListKey,
+                lists : listDocs
             });
         })
         .catch((err)=>{
@@ -171,5 +172,9 @@ export default class IngredientIventory extends Component {
             // I need better erro handling
             console.log(err);
         })
+    }
+
+    getMainId(listDocs) {
+        return listDocs.filter((listDoc)=>(listDoc.name == "Main"))[0]._id;
     }
 }

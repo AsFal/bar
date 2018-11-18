@@ -46,7 +46,7 @@ export default class IngredientList extends  Component {
             let listKey = props.listKey;
 
             console.log(props);
-            fetch(`/api/inventory/ingredient_list/${listKey}`, {
+            fetch(`/api/inventory/${listKey}`, {
                 method: 'GET',
             })
             .then(res=>res.json())
