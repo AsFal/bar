@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import IngredientAdd from "./IngredientAdd.jsx";
 // import IngredientAdd from "./IngredientAdd.jsx";
 
 import "../../styles/IngredientList.css"
@@ -14,20 +15,6 @@ let IngredientRow = (props)=>{
     )
 }
 
-function IngredientAdd(props) {
-    return(
-        <form  name="ingredientAdd" onSubmit={props.handleIngredientAdd}> 
-            <div className="ingredient-row ingredient-add">
-                <div>
-                    <button type="submit"></button>
-                    <input type="text" name="name" placeholder="Ingredient Name ..."/></div>
-                <div><input type="text" name="type" placeholder="Alcohol Type ..."/></div>
-                <div><input type="text" name="abv" placeholder="Abv ..."/></div>
-                <div><input type="text" name="quantity" placeholder="Remaining Quantity ..."/></div>
-            </div>
-        </form>
-    )
-}
 
 export default class IngredientList extends  Component {
     
@@ -37,7 +24,8 @@ export default class IngredientList extends  Component {
             ingredients: [],
             listKey: ""
         }
-        this.handleIngredientAdd = this.handleIngredientAdd.bind(this);
+        // this.handleIngredientAdd = this.handleIngredientAdd.bind(this);
+        this.updateParentList = this.updateParentList.bind(this);
     }
 
     componentWillReceiveProps(props) {
@@ -105,51 +93,60 @@ export default class IngredientList extends  Component {
                 <div>Quantity</div>
             </div>
             {ingredientRows}
-            <IngredientAdd handleIngredientAdd={this.handleIngredientAdd}> </IngredientAdd>
+            <IngredientAdd updateParentList={this.updateParentList}
+            listId={this.state.listKey}> </IngredientAdd>
         </div>
         );
     }
 
-    handleIngredientAdd(event) {
-        event.preventDefault();
-
-        let form = event.target;
-        let ingredient = this.extractIngredientFromForm(form);
-
-        fetch("/api/inventory/ingredient", {
-            method: "POST",
-            headers : {
-                "Content-Type" : "application/json ; charset=utf-8 "
-            },
-            body: JSON.stringify(ingredient)
-        })
-        .then(res=>res.json())
-        .then((ingredientDoc)=>{
-            let oldIngredients = this.state.ingredients;
-            let newIngredients = oldIngredients.slice();
-            newIngredients.push(ingredientDoc);
-            this.setState({
-                ingredients: newIngredients
-            })
-        })
-        .catch((err)=>{
-            // I need better error handling
-            console.log(err)
+    updateParentList(newIngredientDoc) {
+        let oldIngredients = this.state.ingredients;
+        let newIngredients = oldIngredients.slice();
+        newIngredients.push(newIngredientDoc);
+        this.setState({
+            ingredients: newIngredients
         })
     }
+
+    // handleIngredientAdd(event) {
+    //     event.preventDefault();
+
+    //     let form = event.target;
+    //     let ingredient = this.extractIngredientFromForm(form);
+
+    //     fetch("/api/inventory/ingredient", {
+    //         method: "POST",
+    //         headers : {
+    //             "Content-Type" : "application/json ; charset=utf-8 "
+    //         },
+    //         body: JSON.stringify(ingredient)
+    //     })
+    //     .then(res=>res.json())
+    //     .then((ingredientDoc)=>{
+    //         let oldIngredients = this.state.ingredients;
+    //         let newIngredients = oldIngredients.slice();
+    //         newIngredients.push(ingredientDoc);
+    //         this.setState({
+    //             ingredients: newIngredients
+    //         })
+    //     })
+    //     .catch((err)=>{
+    //         // I need better error handling
+    //         console.log(err)
+    //     })
+    // }
     
-    extractIngredientFromForm(formNode) {
-        return {
-            name: formNode.name.value,
-            type: formNode.type.value,
-            abv : formNode.abv.value,
-            quantity : formNode.quantity.value
-        }
-    }
+    // extractIngredientFromForm(formNode) {
+    //     return {
+    //         name: formNode.name.value,
+    //         type: formNode.type.value,
+    //         abv : formNode.abv.value,
+    //         quantity : formNode.quantity.value
+    //     }
+    // }
 
-    fetchIngredients(listKey) {
-        return 
-    }
+
+
 
 }
 
