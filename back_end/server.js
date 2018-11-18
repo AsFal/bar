@@ -1,3 +1,7 @@
+const config = {
+  seed:true
+}
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -17,6 +21,10 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log("connected to database");
+  if(config.seed) {
+    let seed = require("./seeding/seedExec");
+    seed.exec();
+  }
 });
 
 app.use(logger('dev'));

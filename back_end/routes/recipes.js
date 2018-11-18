@@ -44,6 +44,8 @@ router.post("/", function(req,res){
             }));
         }
     })
+    // This calls for a small refactor: we should avoid modifying state and instead 
+    // use the promiseAnswer method to fill in
     Promise.all(ingredientCreationPromises)
     .then((promiseAnswer)=>{
 

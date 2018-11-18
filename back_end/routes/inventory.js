@@ -47,7 +47,8 @@ router.get("/", (req, res)=> {
 });
 
 router.get("/:list_id", (req,res) =>{
-
+    console.log("is this working")
+    console.log(req.params.list_id);
     inventoryDb.fetchIngredientList(req.params.list_id)
     .then((ingredientList)=>{
         res.json(ingredientList)
