@@ -22,8 +22,12 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log("connected to database");
   if(config.seed) {
-    let seed = require("./seeding/seedExec");
-    seed.exec();
+    const seed = require("./seeding/seedExec");
+    seed.exec()
+    .catch((err)=>{
+      // console.log("caught");
+      console.log(err);
+    });
   }
 });
 

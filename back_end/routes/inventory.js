@@ -47,8 +47,7 @@ router.get("/", (req, res)=> {
 });
 
 router.get("/:list_id", (req,res) =>{
-    console.log("is this working")
-    console.log(req.params.list_id);
+
     inventoryDb.fetchIngredientList(req.params.list_id)
     .then((ingredientList)=>{
         res.json(ingredientList)
@@ -62,11 +61,18 @@ router.get("/:list_id", (req,res) =>{
 
 router.post("/ingredient", (req, res)=>{
     let ingredient = req.body;
+    // let addToMain = req.query.addToMain == "true";
+    let tableId = req.query.tableId;
+    console.log(tableId);
+    // This is cheating
+    let resIngredient = null;
+
     inventoryDb.createIngredient(ingredient)
     .then((ingredientDoc)=>{
-        console.log(ingredientDoc)
-        res.json(ingredientDoc);
+        resIngredient = ingredientDoc;
+        return inventoryDb.addToTable(tableId, [ingredientDoc])
     })
+    .then((tableDoc)=>res.json(resIngredient))
     .catch((err)=>{
         console.log(err);
         res.status(422).json({errorMessage: err});
@@ -90,13 +96,5 @@ router.post("/list", (req, res)=> {
 })
 
 
-
-function addIngredientTo(tableId) {
-
-}
-
-function addIngredientToMain() {
-
-}
 
 module.exports = router;
