@@ -1,0 +1,166 @@
+
+/* Everything else depends from here, so we can make the page responsive from
+this point */
+.recipe {
+    position: fixed;
+    top:5px;
+    left:5px;
+    width: 400px;
+    height: 600px;
+    background-color:#461F00;
+    overflow: hidden;
+}
+
+.inner-page {
+    position: absolute;
+    left: 2.29%;
+    right: 2.29%;
+    top: 1.44%;
+    bottom: 1.44%;
+    
+    background: #FCFAD6;
+}
+
+.recipe-image {
+    position: absolute;
+    left: 4.01%;
+    right: 4.3%;
+    top: 2.67%;
+    bottom: 48.41%;
+    background: url(https://assets.punchdrink.com/wp-content/uploads/2017/07/Recipe-Saturn-Nick-Vorderman.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.recipe-analytics {
+    position: absolute;
+    left: 4.01%;
+    right: 4.3%;
+    top: 59.47%;
+    bottom: 34.98%;
+
+    font-family: Arvo;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 12px;
+    text-align: center;
+}
+
+.analytics-price {
+    position: absolute;
+    width: 97px;
+    height: 15px;
+    left: 0px;
+    top: 6px;
+}
+
+.analytics-portions {
+    position: absolute;
+    width: 74px;
+    height: 12px;
+    left: 123px;
+    top: 6px;
+}
+
+.analytics-abv {
+    position: absolute;
+    width: 54px;
+    height: 15px;
+    left: 239px;
+    top: 6px;
+}
+
+
+
+.recipe-title {
+    position: absolute;
+    left: 10.03%;
+    right: 10.03%;
+    top: 52.67%;
+    bottom: 43%;
+
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    font-size: 24px;
+    text-align: center;
+
+    color: #000000;
+}
+
+.seperator {
+    position: absolute;
+left: 4.01%;
+right: 4.3%;
+top: 59.26%;
+bottom: 40.74%;
+
+border: 1px solid #000000;
+}
+
+
+/* This div wraps the ingredients and the instructions */
+.ingredients-instructions-wrapper {
+    position: absolute;
+    left: 4.01%;
+    right: 4.3%;
+    top: 63.79%;
+}
+
+.recipe-sub-title {
+
+
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    font-size: 12px;
+
+    color: #000000;
+}
+
+.recipe-ingredients {
+
+}
+
+.recipe-ingredients ul {
+    all:unset;
+}
+
+.recipe-ingredient {
+    all:unset;
+    display: list-item;
+    padding-left: 6%;
+
+    font-family: Arvo;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 12px;
+
+    color: #000000;
+}
+
+.recipe-instructions {
+
+}
+
+.recipe-instructions ul{
+    /* all:unset; */
+}
+
+.recipe-instruction {
+
+    /* padding-left: 6%; */
+
+    /* all:unset; */
+    font-family: Arvo;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 12px;
+
+    color: #000000;
+}

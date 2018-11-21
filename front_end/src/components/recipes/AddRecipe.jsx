@@ -60,7 +60,8 @@ export default class AddRecipe extends Component{
         }
 
         return (
-            <div>
+            <div className="recipe">
+                <div className="frame"></div>
                 <h3>New Recipe</h3>
                 
                 <form name="newRecipe" onSubmit={this.submitRecipe}>

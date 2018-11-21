@@ -1,0 +1,118 @@
+/* Everything else depends from here, so we can make the page responsive from
+this point */
+.recipe {
+    position: absolute;
+    top: 15px;
+    /* left:5px; */
+    /* Left will be programmatically defined in regards */
+    transition-property: left;
+    transition-duration: 3s;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    
+    width: 400px;
+    height: 600px;
+    background-color:#461F00;
+    overflow: hidden;
+    box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.25);
+}
+
+.recipe > div {
+    position: absolute;
+    left: 2.29%;
+    right: 2.29%;
+    top: 1.44%;
+    bottom: 1.44%;
+    
+    background: #FCFAD6;
+}
+
+.recipe-image {
+    position: absolute;
+    left: 4.01%;
+    right: 4.3%;
+    top: 2.67%;
+    bottom: 48.41%;
+    background: url(https://assets.punchdrink.com/wp-content/uploads/2017/07/Recipe-Saturn-Nick-Vorderman.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.recipe-analytics {
+    position: absolute;
+    left: 4.01%;
+    right: 4.3%;
+    top: 59.47%;
+    bottom: 34.98%;
+
+    font-family: Arvo;
+    font-style: normal;
+    font-weight: normal;
+    line-height: normal;
+    font-size: 12px;
+    text-align: center;
+}
+
+.analytics-price {
+    position: absolute;
+    width: 97px;
+    height: 15px;
+    left: 0px;
+    top: 6px;
+}
+
+.analytics-portions {
+    position: absolute;
+    width: 74px;
+    height: 12px;
+    left: 123px;
+    top: 6px;
+}
+
+.analytics-abv {
+    position: absolute;
+    width: 54px;
+    height: 15px;
+    left: 239px;
+    top: 6px;
+}
+
+
+
+.recipe-title {
+    position: absolute;
+    left: 10.03%;
+    right: 10.03%;
+    top: 52.67%;
+    bottom: 43%;
+
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    font-size: 24px;
+    text-align: center;
+
+    color: #000000;
+}
+
+.seperator {
+    position: absolute;
+left: 4.01%;
+right: 4.3%;
+top: 59.26%;
+bottom: 40.74%;
+
+border: 1px solid #000000;
+}
+
+.recipe-ingredients {
+    width:100%;
+}
+
+.ingredient {
+    
+}
+
+.instructions {
+    width:100%;
+}

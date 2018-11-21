@@ -1,0 +1,15 @@
+.recipe-book {
+    /* position: relative; */
+    /* Make this a percentage */
+    width: 799px;
+    height: 516px;
+}
+
+.book-strap {
+    position: absolute;
+    left:47%;
+    right: 47%;
+    top: 0%;
+    bottom: 0%;
+    background: #502900;
+}

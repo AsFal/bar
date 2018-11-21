@@ -1,14 +1,19 @@
 import React from "react";
 
+import "../../styles/Recipe.css";
+
 export default function RecipeIngredients(props) {
     return(
-    <div>
+    <div className="recipe-ingredients">
+        <div className="recipe-sub-title">
+            Ingredients
+        </div>
         <ul>
             {props.ingredientList.map((ingredient)=> (
-                <li key={ingredient._id}>
-                    <div>{ingredient.name}</div>    
-                    <div>{ingredient.quantity}</div>    
-                    <div>{ingredient.unitOfMeasure}</div>       
+                <li className="recipe-ingredient" key={ingredient._id}>
+                    <span>{ingredient.name}</span>    
+                    <span>{ingredient.quantity}</span>    
+                    <span>{ingredient.unitOfMeasure}</span>       
                 </li>
             ))}
         </ul>

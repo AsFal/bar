@@ -86,7 +86,8 @@ export default class RecipeBook extends Component {
         }
         // {recipes}
         return (
-            <div>
+            <div className="recipe-book">
+                <div className="book-strap"></div>
                 <AddRecipe newRecipeId={this.newRecipeId}/>
                 <button onClick={this.nextRecipe}> NextRecipe</button>
             </div>

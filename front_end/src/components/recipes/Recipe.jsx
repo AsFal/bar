@@ -3,6 +3,8 @@ import RecipeIngredients from "./RecipeIngredients.jsx";
 import RecipeInstructions from "./RecipeInstructions.jsx";
 import { PassThrough } from "stream";
 
+import "../../styles/Recipe.css";
+
 
 export default class Recipe extends Component {
     constructor(props) {
@@ -43,10 +45,22 @@ export default class Recipe extends Component {
         console.log("rendering")
         console.log(this.state);
         return (
-        <div>
-            This is a recipe
-            <RecipeIngredients ingredientList = {this.state.ingredientList}/>
-            <RecipeInstructions instructionList = {this.state.instructionList}/>
+            <div className="recipe">
+                <div>
+                    <div className="recipe-image"></div>
+                    <div className="seperator"></div>
+                    <div className="recipe-title">Some Random Title</div>
+                    <div className="recipe-analytics">
+                        <div className="analytics-price">5$</div>
+                        <div className="analytics-portions">6</div>
+                        <div className="analytics-abv">70%</div>
+                    </div>
+                    <div className="other">
+                        <RecipeIngredients ingredientList = {this.state.ingredientList}/>
+                        <RecipeInstructions instructionList = {this.state.instructionList}/>
+                    </div>
+                </div>
+   
         </div>
         );
     }

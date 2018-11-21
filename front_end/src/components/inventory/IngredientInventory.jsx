@@ -137,9 +137,9 @@ export default class IngredientIventory extends Component {
         <div  id="ingredient-inventory" style={styles}>
             <IngredientListNames lists={this.state.lists} 
             handleNewList={this.handleNewList} changeList={this.changeList} 
-            activeListKey={this.state.activeListKey}/>
-            <IngredientList listKey={this.state.activeListKey}
-            value={this.state.newListName} onChange={this.onChange} />
+            activeListKey={this.state.activeListKey} 
+            value={this.state.newListName} onChange={this.onChange}/>
+            <IngredientList listKey={this.state.activeListKey}/>
         </div>)
         }
 
@@ -153,9 +153,7 @@ export default class IngredientIventory extends Component {
     handleNewList(event) {
 
         event.preventDefault();
-
-        let form = event.target;
-        let newName = form.name.value;
+        let newName = this.state.newListName;
         fetch("/api/inventory/list", {
             method: "POST",
             headers: {"Content-Type": "application/json; charset=utf-8"},
@@ -168,6 +166,7 @@ export default class IngredientIventory extends Component {
             newLists.push(listDoc);
             this.setState(
                 {
+                    newListName: "",
                     lists: newLists
                 }
             )
@@ -184,6 +183,7 @@ export default class IngredientIventory extends Component {
 
     onChange(event) {
         event.preventDefault();
+        console.log("changing")
         let newValue = event.target.value;
         this.setState({
            newListName:newValue 
