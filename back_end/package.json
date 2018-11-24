@@ -23,10 +23,10 @@
   },
   "jest": {
     "name": "back-end",
-    "jest": {
-    }
+    "jest": {}
   },
   "devDependencies": {
-    "jest": "^23.6.0"
+    "jest": "^23.6.0",
+    "jsdocs": "^1.0.0"
   }
 }

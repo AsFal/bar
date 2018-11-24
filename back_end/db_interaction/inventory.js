@@ -1,32 +1,63 @@
+//@ts-check
+/**
+ * @file
+ * @typedef {import("../models/Ingredient.js").IngredientDoc} IngredientDoc
+ * @typedef {import("../models/Table.js").TableDoc} TableDoc
+ */
+/// <reference path="../models/Ingredient.js" />
+
 var Ingredient = require("../models/Ingredient.js");
 var Table = require("../models/Table.js");
 
-
-/** @todo: INject Mongoose here */
+// Making interfaces of types in typescript
+/**
+ * @async
+ * @function fetchList
+ * @returns {Promise<Array<TableDoc>>}
+ */
 function fetchLists() {
     // Should return all lists
     return Table.find({}).exec()
 }
 
-/** @todo: INject Mongoose here */
+/**
+ * @async
+ * @function fetchIngredientList
+ * @param {String} listId 
+ * @returns {Promise}
+ */
 function fetchIngredientList(listId) {
-    
     return Table.findById(listId).populate("ingredients").exec()
     .then((listDoc)=>{
         return listDoc.ingredients});
 }
 
-/** Upon list create, the ingredients property will always be empty
- * A new list is not created with ingredients, but just a name */
+/**
+ * @async
+ * @function createList
+ * @param {Object} list
+ * @returns {Promise} 
+ */
 function createList(list) {
     return Table.create(list);
 }
 
-/** @todo: Mongoose here */
+/**
+ * @async
+ * @function createIngredient 
+ * @param {Object} ingredient
+ * @returns {Promise} 
+ */
 function createIngredient(ingredient) {
     return Ingredient.create(ingredient);
 }
 
+/**
+ * @async
+ * @function addToTable
+ * @param {String} tableId 
+ * @param {Array<IngredientDoc>} ingredientDocs 
+ */
 // Adds a variable number of ingredients to the table
 function addToTable(tableId, ingredientDocs) {
     return Table.findById(tableId).exec()
@@ -41,6 +72,12 @@ function addToTable(tableId, ingredientDocs) {
     })
 }
 
+
+/**
+ * @async
+ * @function addToMain
+ * @param {Array<IngredientDoc>} ingredientDocs 
+ */
 function addToMain(ingredientDocs) {
     
     return Table.findOne({name:"Main"}).exec()
@@ -56,7 +93,6 @@ function addToMain(ingredientDocs) {
             ingredients:newIngredients}).exec();
     })
 }
-
 
 
 module.exports = {

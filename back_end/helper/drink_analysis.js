@@ -1,3 +1,16 @@
+//@ts-check
+/**
+ * @file
+ * @author Alexandre Falardeau
+ * 
+ * @typedef {import("../models/Recipe").RecipeDoc} RecipeDoc
+ * @typedef {import("../models/Ingredient").IngredientDoc} IngredientDoc
+ */
+
+/**
+ * @function drinkAbv
+ * @param {RecipeDoc} recipe 
+ */ 
 function drinkAbv(recipe) {
     let abv = 0;
     let drinkVolume = 0;
@@ -13,12 +26,20 @@ function drinkAbv(recipe) {
     return abv/drinkVolume;
 } 
 
+function convert(a,b,c) {
+    return null;
+}
+
+/**
+ * 
+ * @param {RecipeDoc} recipe 
+ */
 function drinkPrice(recipe) {
     
     let price = 0;
     recipe.ingredients.forEach((ingredient)=>{
         let ingredientCost = ingredient.ingredient.price.cost * ingredient.quantity;
-        if (ingredient.unitOfMeasue != ingredient.ingredient.price.unitOfMeasue)
+        if (ingredient.unitOfMeasure != ingredient.ingredient.price.unitOfMeasue)
             ingredientCost = convert(ingredient.ingredient.price.unitOfMeasue,
                 ingredient.unitOfMeasue, 
                 ingredient.ingredient.price.cost ) *ingredient.quantity;

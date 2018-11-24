@@ -5,7 +5,6 @@ let inventoryDb = require("../db_interaction/inventory.js");
 
 
 function exec() {
-
     // Seeds used for the creation insertion of db data
     let ingredientsMain = require("./seeds/ingredients_gin.json");
     let recipesMain = [
@@ -20,6 +19,7 @@ function exec() {
     .then((res)=>seedMain(ingredientsMain))
     .then((res)=>seedMenu(menuTemplate, recipesMain));    
 }
+
 
 module.exports = {
     exec:exec}

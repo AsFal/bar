@@ -1,3 +1,4 @@
+//@ts-check
 var mongoose =  require("mongoose");
 
 var ingredientSchema = new mongoose.Schema({
@@ -11,6 +12,26 @@ var ingredientSchema = new mongoose.Schema({
   quantity:Number
 });
 
-var Ingredient = mongoose.model("Ingredient", ingredientSchema)
 
+/**
+ * @typedef {Object} IngredientPrice
+ * @prop {Number} cost
+ * @prop {String} unitOfMeasure
+ */
+
+/**
+ * @typedef {Object} IngredientDoc - This is the format of a mongoose Ingredient Document
+ * @property {IngredientPrice} [price]
+ * @property {String} [name]
+ * @property {String} [type]
+ * @property {Number} [abv]
+ * @prop {Number} [quantity]
+ * @prop {String} [_v]
+ * @prop {mongoose.Schema.Types.ObjectId} [_id]
+ */
+
+ /**
+  * @module Ingredient
+  */
+var Ingredient = mongoose.model("Ingredient", ingredientSchema)
 module.exports = Ingredient;
