@@ -36,6 +36,7 @@ var recipeSchema = new mongoose.Schema({
  * @prop {Array<RecipeIngredient>} ingredients
  * @prop {Array<String>} instructions 
  * @prop {Number} portions 
+ * @prop {String} [_id]
  */
 var Recipe = mongoose.model("Recipe", recipeSchema)
 

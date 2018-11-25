@@ -27,7 +27,7 @@ var ingredientSchema = new mongoose.Schema({
  * @property {Number} [abv]
  * @prop {Number} [quantity]
  * @prop {String} [_v]
- * @prop {mongoose.Schema.Types.ObjectId} [_id]
+ * @prop {String} [_id]
  */
 
  /**

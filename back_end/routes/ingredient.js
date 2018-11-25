@@ -3,6 +3,7 @@ var router = express.Router();
 
 var inventoryDb = require("../db_interaction/inventory.js");
 
+
 //  This needs to be redone, since the React App will get responses when is sends a post request
 // The response will include the ingredient _id, which will be used to organise the ingredients
 // in the table.
@@ -25,7 +26,6 @@ var inventoryDb = require("../db_interaction/inventory.js");
  * Have a way to send this information to db
  */
 
-/** GET request to generate the page the first time */
 router.get("/", (req, res)=> {
     // Will require some kind of parser to convert json body to object
     inventoryDb.fetchLists()
@@ -59,7 +59,7 @@ router.get("/:list_id", (req,res) =>{
     });
 });
 
-router.post("/ingredient", (req, res)=>{
+router.post("/", (req, res)=>{
     let ingredient = req.body;
     // let addToMain = req.query.addToMain == "true";
     let tableId = req.query.tableId;
@@ -79,21 +79,7 @@ router.post("/ingredient", (req, res)=>{
     })
 })
 
-router.post("/list", (req, res)=> {
-    // "Validation Could be done on the fron-end or the back-end"
-    /** @todo: research best spot for this */
-    let list = req.body;
-    inventoryDb.createList(list)
-    .then((listDoc)=>{
-        res.json(listDoc)
-    })
-    .catch((err)=>{
-        console.log(err);
-        res.send(err);
-    })
 
-
-})
 
 
 

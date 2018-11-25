@@ -32,6 +32,15 @@ function fetchMenu(menuId) {
 
 /**
  * @async
+ * @function fetchMenus
+ * @returns {Promise<Array<MenuDoc>>}
+ */
+function fetchMenus() {
+    return Menu.find({}).exec();
+}
+
+/**
+ * @async
  * @function createRecipe
  * @param {RecipeDoc} recipe - A recipe object received from from front-end
  * @returns {PromiseLike<RecipeDoc>}
@@ -66,5 +75,6 @@ module.exports = {
     fetchMenu : fetchMenu,
     createRecipe: createRecipe,
     createMenu : createMenu,
-    updateMenu : updateMenu
+    updateMenu : updateMenu,
+    fetchMenus : fetchMenus
 }

@@ -32,6 +32,7 @@ let menuSchema = new mongoose.Schema(
  * @prop {String} season
  * @prop {RecipeDoc |String } drinks
  * @prop {IngredientDoc | String} ingredients
+ * @prop {String} [_id]
  */
 
 let Menu = mongoose.model("Menu", menuSchema);

@@ -1,5 +1,6 @@
 let express = require("express");
 let router = express.Router();
+
 let inventoryDb = require("../db_interaction/inventory.js");
 let recipeDb = require("../db_interaction/recipe.js");
 
@@ -14,36 +15,22 @@ router.get("/:recipe_id", function(req,res){
     // })
 })
 
-router.get("/menu/:menu_id", function(req,res){
-    recipeDb.fetchMenu(req.params.menu_id)
-    .then((menuDoc)=>{
-        res.json(menuDoc);
-    })
-    // .catch((err)=>{
-    //     res.json(err);
-    // })
-})
-
-// functional
-// Receives object of form
-// 
 router.post("/", function(req,res){
     // Recipe will need to be added to the recipe book
     let recipe=req.body;
-    console.log(recipe);
-    let ingredients = recipe.ingredients;
 
     let ingredientCreationPromises = [];
-    ingredients.forEach((ingredient)=>{
-        if(!ingredient._id) {
+    recipe.ingredients.forEach((ingredient)=>{
+        if(ingredient.ingredient.name) {
             // Make mongodb ingredient function with this in mind
-            ingredientCreationPromises.push(inventoryDb.createIngredient(ingredient)
+            ingredientCreationPromises.push(inventoryDb.createIngredient(ingredient.ingredient)
             .then((ingredientDoc)=>{
                 // theoretically points to the same ingredient contained in recipe
-                ingredient._id = ingredientDoc._id;
+                ingredient.ingredient = ingredientDoc._id;
             }));
         }
     })
+    console.log(ingredientCreationPromises);
     // This calls for a small refactor: we should avoid modifying state and instead 
     // use the promiseAnswer method to fill in
     Promise.all(ingredientCreationPromises)
@@ -58,7 +45,9 @@ router.post("/", function(req,res){
         // Price drink here
         // Calculate ABV
         // Fill recip with pertinent information
-        return recipeDb.createRecipe(recipe._id);
+        console.log("=======================");
+        console.log(recipe)
+        return recipeDb.createRecipe(recipe);
     })
     .then((recipeDoc)=>{
         res.json(recipeDoc);

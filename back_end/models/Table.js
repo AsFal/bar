@@ -23,6 +23,7 @@ let tableSchema = new mongoose.Schema(
    * @prop {String} name
    * @prop {Array<String>} filters
    * @prop {IngredientDoc | String } ingredients
+   * @prop {String} [_id]
    */
   let Table = mongoose.model("Table", tableSchema);
 

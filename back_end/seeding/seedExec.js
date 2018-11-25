@@ -1,4 +1,6 @@
+
 let seedMain = require("./seedMain.js");
+let seedMenu = require("./seedMenu");
 let cleanDb = require("./cleanDb.js");
 let inventoryDb = require("../db_interaction/inventory.js");
 
@@ -22,5 +24,4 @@ function exec() {
 
 
 module.exports = {
-    exec:exec}
-    ;
+    exec:exec};

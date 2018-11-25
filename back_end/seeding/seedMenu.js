@@ -3,7 +3,11 @@ let recipesDb = require("../db_interaction/recipe");
 
 
 function seedRecipes(recipeListJson) {
-    return Promise.all(recipeListJson.map((recipe)=>recipesDb.createRecipe(recipe)));
+    return Promise.all(recipeListJson.map((recipe)=>{
+        // Should modify the createRecipe so it can create recipes of multiple Formats
+        recipe.ingredients = [];
+        return recipesDb.createRecipe(recipe);
+    }));
 }
 
 
@@ -15,7 +19,7 @@ function seedMenu(menuJson, recipesListJson) {
             let recipeIds = recipeDocs.map((recipe)=>recipe._id);
             let oldRecipeIds = menuDoc.drinks;
             let newRecipeIds = oldRecipeIds.slice();
-            newRecipeIds.concat(recipeIds);
+            newRecipeIds = newRecipeIds.concat(recipeIds);
             return recipesDb.updateMenu(menuDoc._id, {
                 drinks: newRecipeIds
             })
@@ -23,4 +27,4 @@ function seedMenu(menuJson, recipesListJson) {
     })
 }
 
-modules.exports = seedMenu;
+module.exports = seedMenu;

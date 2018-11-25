@@ -1,5 +1,5 @@
 const config = {
-  seed:true
+  seed:false
 }
 
 var createError = require('http-errors');
@@ -10,8 +10,10 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 
-var inventoryRouter = require('./routes/inventory.js');
-var recipesRouter = require('./routes/recipes.js');
+const ingredientRouter = require('./routes/ingredient');
+const ingredientListRouter = require("./routes/ingredient_list");
+const recipeRouter = require("./routes/recipe");
+const menuRouter = require("./routes/menu");
 
 var app = express();
 
@@ -24,6 +26,7 @@ db.once('open', function() {
   if(config.seed) {
     const seed = require("./seeding/seedExec");
     seed.exec()
+    .then(()=>{console.log("Database has been seeded")})
     .catch((err)=>{
       // console.log("caught");
       console.log(err);
@@ -38,8 +41,13 @@ app.use(bodyParser.json())
 // app.use(cookieParser());
 
 
-app.use('/api/inventory', inventoryRouter);
-app.use('/api/recipes', recipesRouter);
+app.use('/api/ingredient', ingredientRouter);
+app.use('/api/ingredient_list', ingredientListRouter);
+app.use('/api/menu', menuRouter);
+app.use('/api/recipe', recipeRouter);
+
+let testSetupRoute = require("./tests/postman_envs/setup_route");
+app.use('/api', testSetupRoute);
 
 
 // catch 404 and forward to error handler
