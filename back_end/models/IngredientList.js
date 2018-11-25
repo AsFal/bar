@@ -5,10 +5,9 @@
  * 
  * @typedef {import("./Ingredient").IngredientDoc} IngredientDoc
  */
-let Ingredient = require("./Ingredient.js");
 let mongoose = require("mongoose");
 
-let tableSchema = new mongoose.Schema(
+let ingredientListSchema = new mongoose.Schema(
   {
     name: String,
     filters: [String],
@@ -19,12 +18,12 @@ let tableSchema = new mongoose.Schema(
   });
 
   /**
-   * @typedef {Object} TableDoc
+   * @typedef {Object} IngredientListDoc
    * @prop {String} name
    * @prop {Array<String>} filters
    * @prop {IngredientDoc | String } ingredients
    * @prop {String} [_id]
    */
-  let Table = mongoose.model("Table", tableSchema);
+  let IngredientList = mongoose.model("Table", ingredientListSchema);
 
-  module.exports = Table;
+  module.exports = IngredientList;

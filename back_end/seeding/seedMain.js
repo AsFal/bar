@@ -1,5 +1,5 @@
 //@ts-check
-let Table = require("../models/Table.js");
+let IngredientList = require("../models/IngredientList.js");
 let inventoryDb = require("../db_interaction/inventory.js");
 
 

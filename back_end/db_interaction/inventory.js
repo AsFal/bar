@@ -2,22 +2,22 @@
 /**
  * @file
  * @typedef {import("../models/Ingredient.js").IngredientDoc} IngredientDoc
- * @typedef {import("../models/Table.js").TableDoc} TableDoc
+ * @typedef {import("../models/IngredientList.js").IngredientListDoc} IngredientListDoc
  */
 /// <reference path="../models/Ingredient.js" />
 
 var Ingredient = require("../models/Ingredient.js");
-var Table = require("../models/Table.js");
+var IngredientList = require("../models/IngredientList.js");
 
 // Making interfaces of types in typescript
 /**
  * @async
  * @function fetchList
- * @returns {Promise<Array<TableDoc>>}
+ * @returns {Promise<Array<IngredientListDoc>>}
  */
 function fetchLists() {
     // Should return all lists
-    return Table.find({}).exec()
+    return IngredientList.find({}).exec()
 }
 
 /**
@@ -27,7 +27,7 @@ function fetchLists() {
  * @returns {Promise}
  */
 function fetchIngredientList(listId) {
-    return Table.findById(listId).populate("ingredients").exec()
+    return IngredientList.findById(listId).populate("ingredients").exec()
     .then((listDoc)=>{
         return listDoc.ingredients});
 }
@@ -39,7 +39,7 @@ function fetchIngredientList(listId) {
  * @returns {Promise} 
  */
 function createList(list) {
-    return Table.create(list);
+    return IngredientList.create(list);
 }
 
 /**
@@ -60,14 +60,14 @@ function createIngredient(ingredient) {
  */
 // Adds a variable number of ingredients to the table
 function addToTable(tableId, ingredientDocs) {
-    return Table.findById(tableId).exec()
+    return IngredientList.findById(tableId).exec()
     .then((tableDoc)=>{
         const oldIngredients = tableDoc.ingredients;
         let newIngredients = oldIngredients.slice();
         ingredientDocs.forEach((ingredientDoc)=>{
             newIngredients.push(ingredientDoc._id);
         })
-        return Table.findByIdAndUpdate(tableDoc._id, {
+        return IngredientList.findByIdAndUpdate(tableDoc._id, {
             ingredients:newIngredients}).exec();
     })
 }
