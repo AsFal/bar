@@ -3,6 +3,11 @@ import IngredientAdd from "./IngredientAdd.jsx";
 // import IngredientAdd from "./IngredientAdd.jsx";
 
 import "../../styles/IngredientList.css"
+// import { connect } from "net";
+import { bindActionCreators } from "redux";
+import {connect} from "react-redux";
+
+
 
 let IngredientRow = (props)=>{
     return (
@@ -15,8 +20,7 @@ let IngredientRow = (props)=>{
     )
 }
 
-
-export default class IngredientList extends  Component {
+class IngredientList extends  Component {
     
     constructor(props) {
         super(props);
@@ -34,7 +38,7 @@ export default class IngredientList extends  Component {
             let listKey = props.listKey;
 
             console.log(props);
-            fetch(`/api/inventory/${listKey}`, {
+            fetch(`/api/ingredient_list/${listKey}`, {
                 method: 'GET',
             })
             .then(res=>res.json())
@@ -107,80 +111,26 @@ export default class IngredientList extends  Component {
             ingredients: newIngredients
         })
     }
-
-    // handleIngredientAdd(event) {
-    //     event.preventDefault();
-
-    //     let form = event.target;
-    //     let ingredient = this.extractIngredientFromForm(form);
-
-    //     fetch("/api/inventory/ingredient", {
-    //         method: "POST",
-    //         headers : {
-    //             "Content-Type" : "application/json ; charset=utf-8 "
-    //         },
-    //         body: JSON.stringify(ingredient)
-    //     })
-    //     .then(res=>res.json())
-    //     .then((ingredientDoc)=>{
-    //         let oldIngredients = this.state.ingredients;
-    //         let newIngredients = oldIngredients.slice();
-    //         newIngredients.push(ingredientDoc);
-    //         this.setState({
-    //             ingredients: newIngredients
-    //         })
-    //     })
-    //     .catch((err)=>{
-    //         // I need better error handling
-    //         console.log(err)
-    //     })
-    // }
-    
-    // extractIngredientFromForm(formNode) {
-    //     return {
-    //         name: formNode.name.value,
-    //         type: formNode.type.value,
-    //         abv : formNode.abv.value,
-    //         quantity : formNode.quantity.value
-    //     }
-    // }
-
-
-
-
 }
 
- // // main
-        // if (listKey == "b75bi345") {
-        //     return  [
-        //         {
-        //             name: "Test Ingredient",
-        //             type: "Vodka",
-        //             abv : "40%",
-        //             quantity: 5,
-        //             _id: "f9faljf9f"
-        //         }
-        //     ];
-        // //second
-        // } else if (listKey == "lk3j4h5") {
-        //     return  [
-        //         {
-        //             name: "Not Main",
-        //             type: "Gin",
-        //             abv : "40%",
-        //             quantity: 5,
-        //             _id: "33o4ufi398f4"
-        //         }
-        //     ]
-        // //myNeckHurts
-        // } else if (listKey == "rl2kj432lkb") {
-        //     return [
-        //         {
-        //             name: "Neck reliever",
-        //             type: "Absynthe",
-        //             abv : "90%",
-        //             quantity: 3,
-        //             _id: "f90fdslf09f"
-        //         }
-        //     ]
-        // }
+ const mapStateToProps = state => ({
+    list : state.activeList,
+    user: state.user
+});
+
+
+function updateList(){
+    return;
+}
+// Need to update List
+const mapActionsToProps = (dispatch, props)=>{
+    // need to use a bing actions creator
+    return bindActionCreators({
+        onUpdateList : updateList
+    }, dispatch)
+}
+// the binding seems to be useful when
+
+export default connect(mapStateToProps,mapActionsToProps)(IngredientList);
+
+

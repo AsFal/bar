@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Recipe from "./Recipe.jsx";
 import AddRecipe from "./AddRecipe.jsx";
 
-export default class RecipeBook extends Component {
+export default class Menu extends Component {
     constructor(props) {
         super(props);
         this.state = {

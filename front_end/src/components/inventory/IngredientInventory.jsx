@@ -105,7 +105,7 @@ export default class IngredientIventory extends Component {
     
     componentDidMount() {
 
-        fetch("/api/inventory")
+        fetch("/api/ingredient_list")
         .then(res=>res.json())
         .then((listDocs)=>{
             //need a for loop that breaks to find the main key
