@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import {Formik, Field, Form, FieldArray, ErrorMessage, yupToFormErrors} from 'formik';
-
 import * as Yup from "yup";
 
 export default class IngredientAdd extends Component {

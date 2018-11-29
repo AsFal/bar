@@ -1,4 +1,6 @@
 import React, {Component} from "react";
+import {Formik, Field, Form, FieldArray, ErrorMessage, yupToFormErrors} from 'formik';
+import * as Yup from "yup";
 
 export class RecipeIngredient {
     constructor(quantity=0, unitOfMeasure="mL", name="", _id = 0) {
@@ -23,61 +25,67 @@ export default class AddRecipe extends Component{
     }
 
     render() {
-
-        let style = {
-            border: "1px solid black"
-        }
-
-        let emptyRecipeIngredient = new RecipeIngredient();
-        delete emptyRecipeIngredient._id;
-        let ingredientKeys = Object.keys(emptyRecipeIngredient);
-        let ingredientInputs = [];
-        // Once I'm done making it so all of the ingredients get added to the main 
-        // I should have this pull suggestions from there and filter the suggestions
-        for (let index = 0; index < this.state.ingredients.length; index++) {
-            ingredientInputs.push(
-                <div style={style} key={index.toString()}>
-                    {
-                        ingredientKeys.map((key)=>(
-                            <input type="text" name={"ingredient-"+key} index = {index.toString()}
-                            value={this.state.ingredients[index][key]} placeholder={key+"..."}
-                            onChange={this.onChange} key={key}/>
-                        ))
-                    }
-                </div>
-            )
-        }
-
-        let  instructionInputs = [];
-        for (let index = 0; index < this.state.instructions.length; index++) {
-            instructionInputs.push(
-                <div style={style} key={index.toString()}>
-                    <input type="text" name="instruction" index = {index.toString()}
-                    value={this.state.instructions[index]} placeholder="Instruction..."
-                    onChange={this.onChange} />
-                </div>
-            )
-        }
-
-        return (
+        return(
             <div className="recipe">
                 <div className="frame"></div>
                 <h3>New Recipe</h3>
-                
-                <form name="newRecipe" onSubmit={this.submitRecipe}>
-                    <div>
-                        <input type="text" name="name" placeholder="Name..."
-                        value={this.state.name} onChange={this.onChange}/>
-                        <h4>Ingredients</h4>
-                            {ingredientInputs}
-                            <button onClick={this.newInput} name="ingredient">New Ingredient</button>
-                        <h4>Instructions</h4>
-                            {instructionInputs}
-                            <button onClick={this.newInput} name="instruction">New Instructions</button>
-                        <button type="submit">Submit Me Ah oui Ah oui</button>
-                    </div>
+                <Formik
+                initialValues = {{
+                    name:"",
+                    ingredients: [
+                        {name:"",
+                        quantity:0,
+                        unitOfMeasure:"mL",
+                        _id:""}
+                    ]
+                }}
+                validationSchema = {
+                    Yup.object({
+                        name: Yup.string().required("Required"),
+                        ingredients: Yup.array().of(
+                            Yup.object(
+                                {
+                                    name: Yup.string().required("Required"),
+                                    quantity: Yup.number().required("Required"),
+                                    unitOfMeasure: Yup.string().required("Required"),
+                                    _id: Yup.string()
+                                }
+                            )
+                        ).required("Must have at least one ingredient"),
+                        instructions: Yup.array().of(
+                            Yup.string().required("Missing Instruction")
+                        ).required("Need instructions")
+                    })
+                }
+                onSubmit = {(values)=>{alert(values)}}
+                render = {({isSubmitting, values})=>(
+                    <Form>
+                        <Field name="name" type="text"/>
+                        <FieldArray name="ingredients"
+                        render={(arrayHelpers)=>
+                            <React.Fragment>
+                                {
+                                    values.ingredients.map((ingredient, index)=>{
+                                        <div key={index}>
+                                            <Field name={`ingredients[${index}].name`}  type="text"/>
+                                            <Field name={`ingredients[${index}].quantity` } type="number"/>
+                                            <Field name={`ingredients[${index}].unitOfMeasure`} type="text" />
+                                        </div>
 
-                </form>
+                                    })
+                                }
+                                <button> onClick={()=>{
+                                arrayHelpers.push({name:"",
+                                quantity:0,
+                                unitOfMeasure:"mL",
+                                _id:""});
+                                }}>Add Ingredient</button>
+                            </React.Fragment>
+                        }/>
+                        <button type="submit" disabled={isSubmitting}></button>
+                    </Form>
+                )}
+                />
             </div>
         )
     }
@@ -164,3 +172,4 @@ export default class AddRecipe extends Component{
 
 
 }
+
