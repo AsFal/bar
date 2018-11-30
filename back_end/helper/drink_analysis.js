@@ -39,9 +39,9 @@ function drinkPrice(recipe) {
     let price = 0;
     recipe.ingredients.forEach((ingredient)=>{
         let ingredientCost = ingredient.ingredient.price.cost * ingredient.quantity;
-        if (ingredient.unitOfMeasure != ingredient.ingredient.price.unitOfMeasue)
-            ingredientCost = convert(ingredient.ingredient.price.unitOfMeasue,
-                ingredient.unitOfMeasue, 
+        if (ingredient.unitOfMeasure != ingredient.ingredient.price.unitOfMeasure)
+            ingredientCost = convert(ingredient.ingredient.price.unitOfMeasure,
+                ingredient.unitOfMeasure, 
                 ingredient.ingredient.price.cost ) *ingredient.quantity;
         price += ingredientCost;
     })

@@ -20,7 +20,9 @@ var app = express();
 mongoose.connect("mongodb://localhost/bar_app", { useNewUrlParser: true });
 
 var db = mongoose.connection;
+
 db.on('error', console.error.bind(console, 'connection error:'));
+
 db.once('open', function() {
   console.log("connected to database");
   if(config.seed) {

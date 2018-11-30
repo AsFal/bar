@@ -1,63 +1,23 @@
+//@ts-check
 var express = require("express");
 var router = express.Router();
 
 var inventoryDb = require("../db_interaction/inventory.js");
 
 
-//  This needs to be redone, since the React App will get responses when is sends a post request
-// The response will include the ingredient _id, which will be used to organise the ingredients
-// in the table.
-// This way when a get is being made, we send the ingredient Id to the Db to increase efficiency
 
-
-/**
- * @event: A GET request to handle the page init (needs to send back all of the group names)
- * @event: A GET request that receives a table name and returns a list of ingredients
- * @event: a POST request that creates a new object (need  database for this)
- * @event: a POST request to create a new empty catategory
- * @todo: a PUT request that modifies an ingredient
- * @todo: a PUT request for a table
- * @todo: a DELETE request for an ingredient
- * @todo: a DELETE request for a table
- * 
- * All ingredients should be in the main page
- * Have an ingredient selection option (with search filtering capacities) so the user can create
- * an object that already exists
- * Have a way to send this information to db
- */
-
-router.get("/", (req, res)=> {
-    // Will require some kind of parser to convert json body to object
-    inventoryDb.fetchLists()
-    .then((lists)=>{
-        listNames = lists.map((list)=>{
-            return {
-                name: list.name,
-                _id: list._id
-            }
-        });
-        
-        res.json(listNames);
+router.get("/:ingredient_id", (req,res)=>{
+    let ingredientId = req.params.ingredient_id;
+    
+    inventoryDb.fetchIngredient(ingredientId)
+    .then((ingredientDoc)=>{
+        res.json(ingredientDoc);
     })
-    .catch(err=>{
-        console.log(err);
-        send(err);
+    .catch((err)=>{
+        res.status(422).json("Ingredient not found");
     })
-    // Look in book to find out more about error handling
-});
+})
 
-router.get("/:list_id", (req,res) =>{
-
-    inventoryDb.fetchIngredientList(req.params.list_id)
-    .then((ingredientList)=>{
-        res.json(ingredientList)
-    })
-    .catch(err=>{
-        console.log(err);
-        res.status(422).json({errorMessage: err});
-        // Look in book to find out more about error handling
-    });
-});
 
 router.post("/", (req, res)=>{
     let ingredient = req.body;
@@ -76,6 +36,54 @@ router.post("/", (req, res)=>{
     .catch((err)=>{
         console.log(err);
         res.status(422).json({errorMessage: err});
+    })
+})
+
+router.delete("/:ingredient_id", (req,res)=>{
+    let listId = req.query.listId;
+    let ingredientId = req.query.ingredientId
+    inventoryDb.removeIngredientFromList(listId, ingredientId)
+    .then((listDoc)=>{
+        if(listDoc.name == "Main") {
+            console.log("main");
+            return inventoryDb.fetchLists();
+        } else {
+            res.json("success");
+            // code might continue
+        }
+    })
+    .then((listDocs)=>{
+        // What happens when you delete and id does not exist (siltently fail??)
+        /** @type {Array<Promise<any>>} */
+        let removalPromises = listDocs.map((listDoc)=>
+        inventoryDb.removeIngredientFromList(listDoc._id, ingredientId));
+        removalPromises.push(inventoryDb.deleteIngredient(ingredientId));
+        return Promise.all(removalPromises);
+    })
+    .then((newListDocs)=>{
+
+        console.log(newListDocs);
+        res.json("success");
+    })
+    .catch((err)=>{
+        console.log(err);
+        res.status(422).json("Error while updating deleting ingredient");
+    })
+        // Check if the current list is the main
+        // If current list is main delete ingredient and remove from all list
+    // if deletion is from the main, we have to delete all instances of ingredient
+});
+
+// Does not return the new ingredient, need to check if thats a mongoose thing or just me
+router.put("/:ingredient_id", (req,res)=>{
+    let ingredientUpdate = req.body;
+    let ingredientId = req.params.ingredient_id;
+    inventoryDb.updateIngredient(ingredientId, ingredientUpdate)
+    .then((newIngredientDoc)=>{
+        res.json(newIngredientDoc);
+    })
+    .catch((err)=>{
+        res.status(422).json(err);
     })
 })
 

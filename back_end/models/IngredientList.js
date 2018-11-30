@@ -25,5 +25,4 @@ let ingredientListSchema = new mongoose.Schema(
    * @prop {String} [_id]
    */
   let IngredientList = mongoose.model("Table", ingredientListSchema);
-
   module.exports = IngredientList;

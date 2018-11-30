@@ -48,8 +48,33 @@ router.post("/", (req, res)=> {
         console.log(err);
         res.send(err);
     })
+})
 
+router.put("/:ingredient_list_id", (req,res)=>{
+    listUpdate = req.body;
+    console.log(listUpdate);
+    return Promise.all(
+    listUpdate.ingredients.map((ingredient)=>inventoryDb.updateIngredient(ingredient._id, ingredient)))
+    .then((ingredientDocs)=>inventoryDb.updateIngredientList(req.params.ingredient_list_id, 
+        {
+            name:listUpdate.name
+        }))
+    .then((newIngredientListDoc)=>{
+        res.json(newIngredientListDoc)
+    })
+    .catch((err)=>{
+        res.status(422).json(err);
+    })
+})
 
+router.delete("/:ingredient_list_id", (req,res)=>{
+    inventoryDb.deleteIngredientList(req.params.ingredient_list_id)
+    .then((ingredientListId)=>{
+        res.json("success");
+    })
+    .catch((err)=>{
+        res.status(422).json(err);
+    })
 })
 
 module.exports = router;

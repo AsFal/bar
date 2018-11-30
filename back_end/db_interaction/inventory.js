@@ -72,7 +72,6 @@ function addToTable(tableId, ingredientDocs) {
     })
 }
 
-
 /**
  * @async
  * @function addToMain
@@ -80,7 +79,7 @@ function addToTable(tableId, ingredientDocs) {
  */
 function addToMain(ingredientDocs) {
     
-    return Table.findOne({name:"Main"}).exec()
+    return IngredientList.findOne({name:"Main"}).exec()
     .then((mainTableDoc)=>{
 
         const oldIngredients = mainTableDoc.ingredients;
@@ -89,10 +88,80 @@ function addToMain(ingredientDocs) {
             newIngredients.push(ingredientDoc._id);
         })
 
-        return Table.findByIdAndUpdate(mainTableDoc._id, {
+        return IngredientList.findByIdAndUpdate(mainTableDoc._id, {
             ingredients:newIngredients}).exec();
     })
 }
+
+/**
+ * @async
+ * @function removeIngredientFromList
+ * @param {String} listId 
+ * @param {String} ingredientId 
+ * @returns {Promise<IngredientListDoc>}
+ */
+function removeIngredientFromList(listId, ingredientId){
+    return IngredientList.findById(listId).exec()
+    .then((listDoc)=>{
+        
+        // Removes ingredient of given id
+        console.log(listDoc._id);
+        console.log(listDoc.ingredients.toString());
+        
+        let filteredIngredients = listDoc.ingredients.filter((ingredient)=>ingredientId != ingredient._id.toString());
+        console.log(filteredIngredients);
+        return IngredientList.findByIdAndUpdate(listDoc._id, {
+            ingredients: filteredIngredients
+        }).exec()
+    })
+}
+
+/**
+ * @async
+ * @function deleteIngredient
+ * @param {String} ingredientId 
+ * @returns {Promise<IngredientDoc>}
+ */
+function deleteIngredient(ingredientId){
+    return Ingredient.findByIdAndDelete(ingredientId).exec();
+}
+
+/**
+ * @async
+ * @function updateIngredient
+ * @param {String} ingredientId 
+ * @param {IngredientDoc} updateIngredient - The body of the new ingredient (without Id)
+ * @return {Promise<IngredientDoc>} 
+ */
+function updateIngredient(ingredientId, updateIngredient) {
+    return Ingredient.findByIdAndUpdate(ingredientId, updateIngredient).exec();
+}
+
+function fetchIngredient(ingredientId) {
+    return Ingredient.findById(ingredientId).exec();
+}
+
+/**
+ * @async
+ * @function updateingredientList
+ * @param {String} ingredientListId 
+ * @param {IngredientListDoc} updateIngredientList 
+ * @returns {Promise<IngredientListDoc>}
+ */
+function updateIngredientList(ingredientListId, updateIngredientList) {
+    return IngredientList.findByIdAndUpdate(ingredientListId, updateIngredientList).exec();
+}
+
+/**
+ * @async
+ * @function deleteIngredientList
+ * @param {String} ingredientListId
+ * @returns {Promise<IngredientListDoc>} 
+ */
+function deleteIngredientList(ingredientListId) {
+    return IngredientList.findByIdAndDelete(ingredientListId).exec();
+}
+
 
 
 module.exports = {
@@ -101,5 +170,11 @@ module.exports = {
     createIngredient: createIngredient,
     addToTable:addToTable,
     addToMain:addToMain,
-    createList:createList
+    createList:createList,
+    deleteIngredient: deleteIngredient,
+    removeIngredientFromList: removeIngredientFromList,
+    updateIngredient:updateIngredient,
+    fetchIngredient:fetchIngredient,
+    updateIngredientList: updateIngredientList,
+    deleteIngredientList: deleteIngredientList
 }
