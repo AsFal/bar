@@ -26,8 +26,7 @@ export default class AddRecipe extends Component{
 
     render() {
         return(
-            <div className="recipe">
-                <div className="frame"></div>
+            <div>
                 <h3>New Recipe</h3>
                 <Formik
                 initialValues = {{
@@ -57,35 +56,39 @@ export default class AddRecipe extends Component{
                         ).required("Need instructions")
                     })
                 }
-                onSubmit = {(values)=>{alert(values)}}
+                onSubmit = {(values)=>{
+                    console.log("this is being called")
+                    alert(values)}}
                 render = {({isSubmitting, values})=>(
                     <Form>
                         <Field name="name" type="text"/>
-                        <FieldArray name="ingredients"
-                        render={(arrayHelpers)=>
-                            <React.Fragment>
-                                {
-                                    values.ingredients.map((ingredient, index)=>{
-                                        <div key={index}>
-                                            <Field name={`ingredients[${index}].name`}  type="text"/>
-                                            <Field name={`ingredients[${index}].quantity` } type="number"/>
-                                            <Field name={`ingredients[${index}].unitOfMeasure`} type="text" />
-                                        </div>
-
-                                    })
-                                }
-                                <button> onClick={()=>{
-                                arrayHelpers.push({name:"",
-                                quantity:0,
-                                unitOfMeasure:"mL",
-                                _id:""});
-                                }}>Add Ingredient</button>
-                            </React.Fragment>
-                        }/>
-                        <button type="submit" disabled={isSubmitting}></button>
+                        <FieldArray name="ingredients">
+                            (arrayHelpers)=> 
+                                <React.Fragment>
+                                    {
+                                        values.ingredients.map((ingredient, index)=>{
+                                            return <div key={index}>
+                                                <Field name={`ingredients[${index}].name`}  type="text"/>
+                                                <Field name={`ingredients[${index}].quantity` } type="number"/>
+                                                <Field name={`ingredients[${index}].unitOfMeasure`} type="text" />
+                                            </div>
+                                        })
+                                    }
+                                    <button 
+                                    type="button"
+                                    onClick={()=>{
+                                    console.log(values);
+                                    arrayHelpers.push({name:"",
+                                    quantity:0,
+                                    unitOfMeasure:"mL",
+                                    _id:""});
+                                    }}> Add Ingredient</button>
+                                </React.Fragment>
+                            }
+                        </FieldArray>
+                        <button type="submit" disabled={isSubmitting}>Create the recipe</button>
                     </Form>
-                )}
-                />
+                )}/>
             </div>
         )
     }
@@ -169,7 +172,5 @@ export default class AddRecipe extends Component{
             console.log(err);
         })
     }
-
-
 }
 

@@ -108,6 +108,7 @@ export default class IngredientIventory extends Component {
         fetch("/api/ingredient_list")
         .then(res=>res.json())
         .then((listDocs)=>{
+            console.log(listDocs);
             //need a for loop that breaks to find the main key
             // Put main key here, else the view change will not work
             
@@ -150,31 +151,34 @@ export default class IngredientIventory extends Component {
         })
     }
 
-    handleNewList(event) {
+
+    async handleNewList(event) {
 
         event.preventDefault();
         let newName = this.state.newListName;
-        fetch("/api/inventory/list", {
-            method: "POST",
-            headers: {"Content-Type": "application/json; charset=utf-8"},
-            body: JSON.stringify({name:newName})
-        })
-        .then((res)=>res.json())
-        .then((listDoc)=>{
+        try {
+            let res = await fetch("/api/ingredient_list", {
+                method: "POST",
+                headers: {"Content-Type": "application/json; charset=utf-8"},
+                body: JSON.stringify({name:newName})
+            });
+            
+            let listDoc = await res.json();
+
             let oldLists = this.state.lists;
             let newLists = oldLists.slice();
             newLists.push(listDoc);
+
             this.setState(
                 {
                     newListName: "",
                     lists: newLists
                 }
             )
-        })
-        .catch((err)=>{
+        } catch(err){
             // I need better erro handling
             console.log(err);
-        })
+        }
     }
 
     getMainId(listDocs) {

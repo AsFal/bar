@@ -1,6 +1,8 @@
 import React, {Component} from "react";
 import Recipe from "./Recipe.jsx";
 import AddRecipe from "./AddRecipe.jsx";
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 
 export default class Menu extends Component {
     constructor(props) {
@@ -86,12 +88,18 @@ export default class Menu extends Component {
         }
         // {recipes}
         return (
-            <div className="recipe-book">
-                <div className="book-strap"></div>
-                <AddRecipe newRecipeId={this.newRecipeId}/>
-                <button onClick={this.nextRecipe}> NextRecipe</button>
-            </div>
-            
+                <Grid container spacing={16}>
+                    <Grid item lg={2}>
+                        <Recipe></Recipe>
+                    </Grid>
+                    <Grid item lg={2}>
+                        <Recipe></Recipe>
+                    </Grid>
+                </Grid>
+            // <div className="recipe-book">
+            //     <div className="book-strap"></div>
+            //     <button onClick={this.nextRecipe}> NextRecipe</button>
+            // </div>
         ) 
     }
 

@@ -9,7 +9,6 @@
 var Recipe = require("../models/Recipe.js");
 var Menu = require("../models/Menu.js");
 
-
 /**
  * @async
  * @function fetchRecipe
@@ -70,11 +69,25 @@ function updateMenu(menuId, updateObject) {
     return Menu.findByIdAndUpdate(menuId, updateObject).exec();
 }
 
+/**
+ * @async
+ * @function updateRecipe
+ * @param {String} recipeId 
+ * @param {RecipeDoc} updateRecipe 
+ * @returns {Promise<RecipeDoc>}
+ */
+function updateRecipe(recipeId, updateRecipe) {
+    return Recipe.findByIdAndUpdate(recipeId, updateRecipe).exec();
+}
+
+
+
 module.exports = {
-    fetchRecipe : fetchRecipe,
-    fetchMenu : fetchMenu,
-    createRecipe: createRecipe,
-    createMenu : createMenu,
-    updateMenu : updateMenu,
-    fetchMenus : fetchMenus
+    fetchRecipe,
+    fetchMenu,
+    createRecipe,
+    createMenu,
+    updateMenu,
+    fetchMenus,
+    updateRecipe
 }

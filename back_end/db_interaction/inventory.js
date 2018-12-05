@@ -165,16 +165,16 @@ function deleteIngredientList(ingredientListId) {
 
 
 module.exports = {
-    fetchLists : fetchLists,
-    fetchIngredientList: fetchIngredientList,
-    createIngredient: createIngredient,
-    addToTable:addToTable,
-    addToMain:addToMain,
-    createList:createList,
-    deleteIngredient: deleteIngredient,
-    removeIngredientFromList: removeIngredientFromList,
-    updateIngredient:updateIngredient,
-    fetchIngredient:fetchIngredient,
-    updateIngredientList: updateIngredientList,
-    deleteIngredientList: deleteIngredientList
+    fetchLists,
+    fetchIngredientList,
+    createIngredient,
+    addToTable,
+    addToMain,
+    createList,
+    deleteIngredient,
+    removeIngredientFromList,
+    updateIngredient,
+    fetchIngredient,
+    updateIngredientList,
+    deleteIngredientList
 }

@@ -35,7 +35,19 @@ The second is the creation of recipes and manipulation of recipe books. A user c
 
 ## Project Demo
 
+[](/readme-images/home.png?raw=true)
+
+[](/readme-images/inventory.png?raw=true)
+
+[](/readme-images/menu.png?raw=true)
+
 ## Running the Project
+
+- Clone the project by running `git clone https://github.com/AsFal/bar` in a local repository
+- Go to the back-end folder and run `npm install`
+- Run `npm start` to then start the bar API locally
+- Go to the front-end folder and run `npm install`
+- `npm start` to then start the web application locally
 
 ## Semantical Definitions
 - An Ingredient List is a list of ingredients displayed as a table of ingredients

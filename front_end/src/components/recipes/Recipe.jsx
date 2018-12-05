@@ -2,7 +2,9 @@ import React, {Component} from "react";
 import RecipeIngredients from "./RecipeIngredients.jsx";
 import RecipeInstructions from "./RecipeInstructions.jsx";
 import { PassThrough } from "stream";
-
+import Card from '@material-ui/core/Card'
+import CardHeader from '@material-ui/core/CardHeader';
+import CardContent from '@material-ui/core/CardContent';
 import "../../styles/Recipe.css";
 
 
@@ -11,8 +13,29 @@ export default class Recipe extends Component {
         super(props);
         this.state = {
             recipeId : props._id,
-            ingredientList: [],
-            instructionList: []
+            ingredientList: [
+                {
+                    name:'Vodka',
+                    unitOfMeasure: 'mL',
+                    quantity: 50, 
+                },
+                {
+                    name:'Orange Juice',
+                    unitOfMeasure: 'mL',
+                    quantity: 75, 
+                },
+                {
+                    name:'ice',
+                    unitOfMeasure: 'cubes',
+                    quantity: 6, 
+                }
+            ],
+            instructionList: [
+                "Place the liquids in a glass",
+                "Shake",
+                "Serve with ice",
+                "Drink responsibly"
+            ]
         }
     }
 
@@ -28,40 +51,32 @@ export default class Recipe extends Component {
     // We only need to check for prop change, because every new recipe will get mounted
     // Check if state has changed
     // shouldComponentUpdate(newProps, newState) {
-
     // }
 
     componentDidMount() {
-        this.getRecipe(this.state)
-        .then((recipe)=>{
-            this.setState({
-                ingredientList: recipe.ingredientList,
-                instructionList: recipe.instructionList
-            })
-        });
+        // this.getRecipe(this.state)
+        // .then((recipe)=>{
+        //     this.setState({
+        //         ingredientList: recipe.ingredientList,
+        //         instructionList: recipe.instructionList
+        //     })
+        // });
     }
 
     render() {
         console.log("rendering")
         console.log(this.state);
         return (
-            <div className="recipe">
-                <div>
-                    <div className="recipe-image"></div>
-                    <div className="seperator"></div>
-                    <div className="recipe-title">Some Random Title</div>
-                    <div className="recipe-analytics">
-                        <div className="analytics-price">5$</div>
-                        <div className="analytics-portions">6</div>
-                        <div className="analytics-abv">70%</div>
-                    </div>
+            <Card>
+                <CardHeader title='ScrewDriver'>    
+                </CardHeader>
+                <CardContent>
                     <div className="other">
                         <RecipeIngredients ingredientList = {this.state.ingredientList}/>
                         <RecipeInstructions instructionList = {this.state.instructionList}/>
                     </div>
-                </div>
-   
-        </div>
+                </CardContent>
+            </Card>
         );
     }
 
