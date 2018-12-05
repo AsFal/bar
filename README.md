@@ -35,11 +35,11 @@ The second is the creation of recipes and manipulation of recipe books. A user c
 
 ## Project Demo
 
-[](/readme-images/home.png?raw=true)
+![](/readme-images/home.png?raw=true)
 
-[](/readme-images/inventory.png?raw=true)
+![](/readme-images/inventory.png?raw=true)
 
-[](/readme-images/menu.png?raw=true)
+![](/readme-images/menu.png?raw=true)
 
 ## Running the Project
 
