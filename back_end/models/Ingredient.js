@@ -2,6 +2,7 @@
 var mongoose =  require("mongoose");
 
 var ingredientSchema = new mongoose.Schema({
+  // should be switched to rate
   price: {
     cost: Number,
     unitOfMeasure: String

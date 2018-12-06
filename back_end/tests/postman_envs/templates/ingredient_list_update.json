@@ -1,0 +1,16 @@
+{
+    "name": "Update List",
+    "filters" : [],
+    "ingredients" : [
+        {
+            "name": "Newer",
+            "price": {
+                "cost": 0.01,
+                "unitOfMeasure" : "mL"
+            },
+            "type": "Random, I guess",
+            "abv" : 58,
+            "quantity": 700
+        }
+    ]
+}

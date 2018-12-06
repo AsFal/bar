@@ -1,0 +1,10 @@
+{
+    "name": "Fancy",
+    "price": {
+        "cost": 0.18,
+        "unitOfMeasure" : "mL"
+    },
+    "type": "Gin",
+    "abv" : 44,
+    "quantity": 750
+}

@@ -1,0 +1,82 @@
+{
+    "definitions": {},
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://example.com/root.json",
+    "type": "array",
+    "title": "The Root Schema",
+    "items": {
+      "$id": "#/items",
+      "type": "object",
+      "title": "The Items Schema",
+      "required": [
+        "price",
+        "_id",
+        "name",
+        "type",
+        "abv",
+        "quantity"
+      ],
+      "properties": {
+        "price": {
+          "$id": "#/items/properties/price",
+          "type": "object",
+          "title": "The Price Schema",
+          "required": [
+            "cost",
+            "unitOfMeasure"
+          ],
+          "properties": {
+            "cost": {
+              "$id": "#/items/properties/price/properties/cost",
+              "type": "number",
+              "title": "The Cost Schema",
+              "default": 0.0
+            },
+            "unitOfMeasure": {
+              "$id": "#/items/properties/price/properties/unitOfMeasure",
+              "type": "string",
+              "title": "The Unitofmeasure Schema",
+              "default": "",
+              "examples": [
+                "mL"
+              ],
+              "pattern": "^(.*)$"
+            }
+          }
+        },
+        "_id": {
+          "$id": "#/items/properties/_id",
+          "type": "string",
+          "title": "The _id Schema",
+          "default": "",
+          "pattern": "^(.*)$"
+        },
+        "name": {
+          "$id": "#/items/properties/name",
+          "type": "string",
+          "title": "The Name Schema",
+          "default": "",
+          "pattern": "^(.*)$"
+        },
+        "type": {
+          "$id": "#/items/properties/type",
+          "type": "string",
+          "title": "The Type Schema",
+          "default": "",
+          "pattern": "^(.*)$"
+        },
+        "abv": {
+          "$id": "#/items/properties/abv",
+          "type": "integer",
+          "title": "The Abv Schema",
+          "default": 0
+        },
+        "quantity": {
+          "$id": "#/items/properties/quantity",
+          "type": "integer",
+          "title": "The Quantity Schema",
+          "default": 0
+        }
+      }
+    }
+  }

@@ -5,7 +5,7 @@
     "ingredients": [
         {
             "quantity":30,
-            "unitOfMeasure": "ml",
+            "unitOfMeasure": "mL",
             "ingredient":{
                 "name": "Malibu Coconut",
                 "price": {
@@ -19,7 +19,7 @@
         },
         {
             "quantity":30,
-            "unitOfMeasure": "ml",
+            "unitOfMeasure": "mL",
             "ingredient": {
                 "name": "Jamaican Strong",
                 "price": {
@@ -33,7 +33,7 @@
         },
         {
             "quantity":30,
-            "unitOfMeasure": "ml",
+            "unitOfMeasure": "mL",
             "ingredient": {
                 "name": "Kraken",
                 "price": {

@@ -13,6 +13,7 @@ var recipeSchema = new mongoose.Schema({
     {
       unitOfMeasure: String,
       quantity: Number,
+      // Should be switched to description
       ingredient: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Ingredient"

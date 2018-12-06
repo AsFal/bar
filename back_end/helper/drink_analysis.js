@@ -35,7 +35,6 @@ function convert(a,b,c) {
  * @param {RecipeDoc} recipe 
  */
 function drinkPrice(recipe) {
-    
     let price = 0;
     recipe.ingredients.forEach((ingredient)=>{
         let ingredientCost = ingredient.ingredient.price.cost * ingredient.quantity;

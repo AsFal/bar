@@ -54,12 +54,12 @@ function createIngredient(ingredient) {
 
 /**
  * @async
- * @function addToTable
+ * @function addToIngredientList
  * @param {String} tableId 
  * @param {Array<IngredientDoc>} ingredientDocs 
  */
 // Adds a variable number of ingredients to the table
-function addToTable(tableId, ingredientDocs) {
+function addToIngredientList(tableId, ingredientDocs) {
     return IngredientList.findById(tableId).exec()
     .then((tableDoc)=>{
         const oldIngredients = tableDoc.ingredients;
@@ -168,7 +168,7 @@ module.exports = {
     fetchLists,
     fetchIngredientList,
     createIngredient,
-    addToTable,
+    addToIngredientList,
     addToMain,
     createList,
     deleteIngredient,

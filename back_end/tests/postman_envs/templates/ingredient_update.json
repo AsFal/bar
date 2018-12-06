@@ -1,0 +1,10 @@
+{
+    "name": "New",
+    "price": {
+        "cost": 0.07,
+        "unitOfMeasure" : "mL"
+    },
+    "type": "Random",
+    "abv" : 48,
+    "quantity": 70
+}
