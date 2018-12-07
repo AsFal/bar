@@ -1,16 +1,26 @@
 //@ts-check
+/** @typedef {import("./seeding/ingredient-test").ReturnData} TestData */
+// Module that is being tested
 var inventoryDb = require("../db_interaction/inventory.js");
-var seed = require("../seeding/ingredient");
+// Seed script
+var seed = require("./seeding/ingredient-test");
+// for db init
 var mongoose = require("mongoose");
 
-let testData;
+/** @type {TestData} */
+var testData;
 
-beforeAll(async () => {
-    await mongoose.connect("mongodb://localhost/bar_app", { useNewUrlParser: true }); 
-    testData = await seed.exec();
-    
+beforeAll(async (done) => {
+    try{
+        await mongoose.connect("mongodb://localhost/bar_app", { useNewUrlParser: true })
+        testData = await seed.exec()
+    } catch(err) {
+        console.log(err);
+    }
+    done()
     // pass information from here to the environment
 });
+
 
 afterAll(async ()=>{
     await mongoose.disconnect();
@@ -19,44 +29,45 @@ afterAll(async ()=>{
 // Function should be switched so it adds to db and to given list, creation is a bit redundant to test
 
 test("Ingredient is properly created", ()=>{
-    let testIngredient = require("../seeding/seeds/ingredients_gin.json")[0];
-    delete testIngredient._id;
+
+    let ingredientTemplate = testData.ingredientTemplates[0]
 
     expect.assertions(7);
-    return inventoryDb.createIngredient(testIngredient)
+    return inventoryDb.createIngredient(ingredientTemplate)
     .then((ingredientDoc)=>{
-        expect(ingredientDoc.name).toBe(testIngredient.name);
-        expect(ingredientDoc.quantity).toBe(testIngredient.quantity);
-        expect(ingredientDoc.price).toEqual(testIngredient.price);
-        expect(ingredientDoc.abv).toBe(testIngredient.abv);
-        expect(ingredientDoc.price.cost).toBe(testIngredient.price.cost);
-        expect(ingredientDoc.price.unitOfMeasure).toBe(testIngredient.price.unitOfMeasure);
+        expect(ingredientDoc.name).toBe(ingredientTemplate.name);
+        expect(ingredientDoc.quantity).toBe(ingredientTemplate.quantity);
+        expect(ingredientDoc.price).toEqual(ingredientTemplate.price);
+        expect(ingredientDoc.abv).toBe(ingredientTemplate.abv);
+        expect(ingredientDoc.price.cost).toBe(ingredientTemplate.price.cost);
+        expect(ingredientDoc.price.unitOfMeasure).toBe(ingredientTemplate.price.unitOfMeasure);
         expect(ingredientDoc._id).toBeDefined();
     })
 });
 
-
 test("Ingredient Deletion from Table", async ()=>{
     
-    await inventoryDb.removeIngredientFromList(testData.tableIds[0], testData.ingredientId)
-    let ingredientList = await inventoryDb.fetchList(testData.tableIds[0])
+    await inventoryDb.removeIngredientFromList(testData.listIds[0], testData.ingredientId)
+    let ingredientList = await inventoryDb.fetchIngredientList(testData.listIds[0])
     let deleteIngredient = await inventoryDb.fetchIngredient(testData.ingredientId)
     expect(deleteIngredient).not.toBeNull();
-    expect(ingredientList).not.toContain(deleteIngredient);
+    /** */
+    expect(ingredientList.map((ingredient)=>ingredient._id.toString())).not.toContain(deleteIngredient._id.toString());
 })
 
 test("Ingredient Deletion from Main", async ()=>{
 
     let deleteIngredient = await inventoryDb.fetchIngredient(testData.ingredientId)
-    await inventoryDb.removeIngredientFromList(testData.tableIds[0], testData.ingredientId)
-    let mainIngredientList = await inventoryDb.fetchIngredientList(testData.mainId)
-    let ingredientList = await inventoryDb.fetchIngredientList(testData.tableIds[1])
+    await inventoryDb.removeIngredientFromMain(testData.ingredientId)
+    let newListDocs = await Promise.all([
+        inventoryDb.fetchIngredientList(testData.mainId),
+        inventoryDb.fetchIngredientList(testData.listIds[1])
+    ])
     let ingredientAfterDeletion =  await inventoryDb.fetchIngredient(testData.ingredientId)
 
-    expect(mainIngredientList).not.toContain(deleteIngredient)
-    expect(ingredientList).not.toContain(deleteIngredient)
+
+    expect(newListDocs[0].map((ingredient)=>ingredient._id.toString())).not.toContain(deleteIngredient._id.toString())
+    expect(newListDocs[1].map((ingredient)=>ingredient._id.toString())).not.toContain(deleteIngredient._id.toString())
     expect(ingredientAfterDeletion).toBeNull()
 
 })
-
-test("Ingredient Deletion")

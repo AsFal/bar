@@ -162,6 +162,24 @@ function deleteIngredientList(ingredientListId) {
     return IngredientList.findByIdAndDelete(ingredientListId).exec();
 }
 
+/**
+ * @async
+ * @function removeIngredientFromMain
+ * @param {String} ingredientId 
+ * @returns {Promise<Boolean>}
+ */
+async function removeIngredientFromMain(ingredientId){
+    let allIngredientLists = await fetchLists()
+    let deleteIngredientFromListPromises =[]
+    allIngredientLists.forEach(async (list)=>{
+        list.ingredients.forEach(async (listIngredientId)=>{
+            if(ingredientId == listIngredientId.toString())
+                await removeIngredientFromList(list._id, ingredientId)
+        })
+    })
+    deleteIngredient(ingredientId)
+    return true
+}
 
 
 module.exports = {
@@ -176,5 +194,6 @@ module.exports = {
     updateIngredient,
     fetchIngredient,
     updateIngredientList,
-    deleteIngredientList
+    deleteIngredientList,
+    removeIngredientFromMain
 }

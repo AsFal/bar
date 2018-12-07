@@ -1,6 +1,4 @@
-let recipesDb = require("../db_interaction/recipe");
-
-
+let recipesDb = require("../../db_interaction/recipe");
 
 function seedRecipes(recipeListJson) {
     return Promise.all(recipeListJson.map((recipe)=>{

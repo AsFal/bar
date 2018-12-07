@@ -1,7 +1,7 @@
-var Ingredient = require("../models/Ingredient.js");
-var IngredientList = require("../models/IngredientList.js");
-var Menu = require("../models/Menu.js");
-var Recipe = require("../models/Recipe.js");
+var Ingredient = require("../../models/Ingredient.js");
+var IngredientList = require("../../models/IngredientList.js");
+var Menu = require("../../models/Menu.js");
+var Recipe = require("../../models/Recipe.js");
 
 
 function cleanDataBase() {

@@ -1,5 +1,5 @@
 //@ts-check
-let inventoryDb = require("../db_interaction/inventory");
+let inventoryDb = require("../../db_interaction/inventory");
 
 async function seedMain(listSeed) {
 

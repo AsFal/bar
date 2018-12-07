@@ -21,7 +21,7 @@ let ingredientListSchema = new mongoose.Schema(
    * @typedef {Object} IngredientListDoc
    * @prop {String} name
    * @prop {Array<String>} filters
-   * @prop {IngredientDoc | String } ingredients
+   * @prop {Array<IngredientDoc>} ingredients
    * @prop {String} [_id]
    */
   let IngredientList = mongoose.model("Table", ingredientListSchema);

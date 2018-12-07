@@ -1,8 +1,8 @@
 //@ts-check
 /**
- * @typedef {import("../models/Ingredient").IngredientDoc} IngredientDoc
+ * @typedef {import("../../models/Ingredient").IngredientDoc} IngredientDoc
  */
-let inventoryDb = require("../db_interaction/inventory");
+let inventoryDb = require("../../db_interaction/inventory");
 
 /**
  * @async
@@ -36,7 +36,7 @@ async function seedList(listId, ingredients) {
     inventoryDb.createIngredient(ingredient)))
     let mainId = await inventoryDb.addToIngredientList(listId, ingredientDocs);
     return {
-        ingredientId: ingredientDocs[0]._id,
+        ingredientIds: ingredientDocs.map((ingredientDoc)=>ingredientDoc._id),
         listId: mainId
     }
 }

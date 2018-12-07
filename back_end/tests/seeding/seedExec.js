@@ -2,7 +2,7 @@
 let seedMain = require("./seedMain.js");
 let seedMenu = require("./seedMenu");
 let cleanDb = require("./cleanDb.js");
-let inventoryDb = require("../db_interaction/inventory.js");
+let inventoryDb = require("../../db_interaction/inventory.js");
 
 
 

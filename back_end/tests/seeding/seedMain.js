@@ -1,6 +1,6 @@
 //@ts-check
-let IngredientList = require("../models/IngredientList.js");
-let inventoryDb = require("../db_interaction/inventory.js");
+let IngredientList = require("../../models/IngredientList.js");
+let inventoryDb = require("../../db_interaction/inventory.js");
 
 
 
