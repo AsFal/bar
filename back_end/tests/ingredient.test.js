@@ -22,8 +22,9 @@ beforeAll(async (done) => {
 });
 
 
-afterAll(async ()=>{
+afterAll(async done=>{
     await mongoose.disconnect();
+    done()
 })
 
 // Function should be switched so it adds to db and to given list, creation is a bit redundant to test

@@ -21,11 +21,14 @@ var recipeSchema = new mongoose.Schema({
     }
   ],
   instructions : [String],
-  portions: Number
+  portions: Number,
+  // refers to the price per portion
+  price: Number,
+  abv: Number
 });
 
 /**
- * @typedef {Object} RecipeIngredient
+ * @typedef {Object|String} RecipeIngredient
  * @prop {String} unitOfMeasure
  * @prop {Number} quantity
  * @prop {IngredientDoc} ingredient
@@ -34,10 +37,12 @@ var recipeSchema = new mongoose.Schema({
 /**
  * @typedef {Object} RecipeDoc
  * @prop {String} name
- * @prop {Array<RecipeIngredient>} ingredients
+ * @prop {Array<(RecipeIngredient)>} ingredients
  * @prop {Array<String>} instructions 
  * @prop {Number} portions 
- * @prop {String} [_id]
+ * @prop {String} _id
+ * @prop {Number} price
+ * @prop {Number} abv
  */
 var Recipe = mongoose.model("Recipe", recipeSchema)
 

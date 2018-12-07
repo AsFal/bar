@@ -29,7 +29,8 @@ function fetchLists() {
 function fetchIngredientList(listId) {
     return IngredientList.findById(listId).populate("ingredients").exec()
     .then((listDoc)=>{
-        return listDoc.ingredients});
+        return listDoc.ingredients
+    });
 }
 
 /**

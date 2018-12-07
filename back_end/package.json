@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www localhost 3000",
-    "test": "jest",
+    "test": "jest --runInBand",
     "postmanEnv" : "node tests/postman_envs/add_schemas_to_env.js"
   },
   "dependencies": {

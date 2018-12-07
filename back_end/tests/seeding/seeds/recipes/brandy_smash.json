@@ -1,5 +1,6 @@
 {
     "price": 16.8,
+    "abv": 36,
     "name" : "Rum Smash",
     "portions": 1,
     "ingredients": [
@@ -7,43 +8,40 @@
             "quantity":30,
             "unitOfMeasure": "mL",
             "ingredient":{
-                "name": "Malibu Coconut",
+                "name": "Brandy one",
                 "price": {
                     "cost": 0.23,
                     "unitOfMeasure" : "mL"
                 },
                 "type": "Rum",
-                "abv" : 21,
-                "quantity": 750,
-                "_id" : "1klj13"}
+                "abv" : 20,
+                "quantity": 750}
         },
         {
             "quantity":30,
             "unitOfMeasure": "mL",
             "ingredient": {
-                "name": "Jamaican Strong",
+                "name": "Brandy two",
                 "price": {
                     "cost": 0.15,
                     "unitOfMeasure" : "mL"
                 },
                 "type": "Rum",
                 "abv" : 40,
-                "quantity": 750,
-                "_id": "2gkvsdj1"}
+                "quantity": 750}
         },
         {
             "quantity":30,
             "unitOfMeasure": "mL",
             "ingredient": {
-                "name": "Kraken",
+                "name": "Brandy three",
                 "price": {
                     "cost": 0.18,
                     "unitOfMeasure" : "mL"
                 },
                 "type": "Rum",
                 "abv" : 48,
-                "quantity": 750,
-                "_id": "23lfj2"}
+                "quantity": 750}
         }
     ],
     "instructions":

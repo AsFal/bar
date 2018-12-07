@@ -1,0 +1,53 @@
+{
+    "price": 16.8,
+    "abv": 36,
+    "name" : "Rum Smash",
+    "portions": 1,
+    "ingredients": [
+        {
+            "quantity":30,
+            "unitOfMeasure": "mL",
+            "ingredient":{
+                "name": "Malibu Coconut",
+                "price": {
+                    "cost": 0.23,
+                    "unitOfMeasure" : "mL"
+                },
+                "type": "Rum",
+                "abv" : 20,
+                "quantity": 750}
+        },
+        {
+            "quantity":30,
+            "unitOfMeasure": "mL",
+            "ingredient": {
+                "name": "Jamaican Strong",
+                "price": {
+                    "cost": 0.15,
+                    "unitOfMeasure" : "mL"
+                },
+                "type": "Rum",
+                "abv" : 40,
+                "quantity": 750}
+        },
+        {
+            "quantity":30,
+            "unitOfMeasure": "mL",
+            "ingredient": {
+                "name": "Kraken",
+                "price": {
+                    "cost": 0.18,
+                    "unitOfMeasure" : "mL"
+                },
+                "type": "Rum",
+                "abv" : 48,
+                "quantity": 750}
+        }
+    ],
+    "instructions":
+    [
+        "Step one is to give up trying to look cool",
+        "sTep two is to start using the word suave",
+        "Step three is to count the days until block hacks"
+    ]
+}

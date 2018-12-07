@@ -14,7 +14,7 @@ let menuSchema = new mongoose.Schema(
     name:String,
     theme:String,
     season:String,
-    drinks: [{
+    recipes: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Recipe"
     }],
@@ -30,7 +30,7 @@ let menuSchema = new mongoose.Schema(
  * @prop {String} name
  * @prop {String} theme
  * @prop {String} season
- * @prop {RecipeDoc |String } drinks
+ * @prop {Array<RecipeDoc>} recipes
  * @prop {IngredientDoc | String} ingredients
  * @prop {String} [_id]
  */
