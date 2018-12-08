@@ -3,9 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www localhost 3000",
+    "start": "npm run serve",
+    "build": "npm run build-sass && npm run build-ts && npm run tslint && npm run copy-static-assets",
+    "serve": "nodemon ./bin/www localhost 3000",
     "test": "jest --runInBand",
-    "postmanEnv" : "node tests/postman_envs/add_schemas_to_env.js"
+    "watch-test": "npm run test -- --watchAll",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "postmanEnv": "node tests/postman_envs/add_schemas_to_env.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
@@ -27,7 +33,14 @@
     "jest": {}
   },
   "devDependencies": {
+    "@types/mongoose": "^5.3.4",
+    "@types/node": "^10.12.12",
     "jest": "^23.6.0",
-    "jsdocs": "^1.0.0"
+    "jsdocs": "^1.0.0",
+    "nodemon": "^1.18.7",
+    "ts-jest": "^23.10.5",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
+    "typescript": "^3.2.2"
   }
 }
