@@ -1,7 +1,7 @@
 import { Router, Request, Response } from "express";
 const router = Router();
-import * as inventoryDb from "../db_interaction/inventory";
-import { IIngredientModel } from "../models/Ingredient";
+import * as inventoryDb from "../mongo/interaction/inventory";
+import { IIngredient } from "../interfaces/IIngredient";
 
 router.get("/:ingredient_id", async (req: Request, res: Response) => {
 
@@ -20,7 +20,7 @@ router.get("/:ingredient_id", async (req: Request, res: Response) => {
  * @todo Abstract the above functionality into a db_interaction function
  */
 router.post("/", async (req: Request, res: Response) => {
-    const ingredient: IIngredientModel = req.body;
+    const ingredient: IIngredient = req.body;
     const tableId: String = req.query.tableId;
 
     try {

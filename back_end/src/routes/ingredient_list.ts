@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
-import * as inventoryDb from "../db_interaction/inventory";
-import { IIngredientListModel } from "../models/IngredientList";
-
+import * as inventoryDb from "../mongo/interaction/inventory";
+import { IIngredientList } from "../interfaces/IIngredientList";
+// make and interfacce so we don't have to import from the models
 const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
@@ -31,7 +31,7 @@ router.get("/:list_id", async (req: Request, res: Response) => {
 
 router.post("/", async (req: Request, res: Response) => {
     try {
-        const list: IIngredientListModel = req.body;
+        const list: IIngredientList = req.body;
         const newListDoc = await inventoryDb.createList(list);
     } catch (err) {
         res.status(422).json(err);
@@ -44,7 +44,7 @@ router.post("/", async (req: Request, res: Response) => {
  * Ingredients update themselves
  */
 router.put("/:ingredient_list_id", async (req: Request, res: Response) => {
-    const listUpdate: IIngredientListModel = req.body;
+    const listUpdate: IIngredientList = req.body;
     try {
         const updatedListDoc = await inventoryDb.updateIngredientList(req.params.list_id, listUpdate);
         res.json(updatedListDoc);

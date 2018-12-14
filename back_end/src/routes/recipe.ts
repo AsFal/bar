@@ -1,7 +1,6 @@
 import { Request, Response, Router } from "express";
-import * as inventoryDb from "../db_interaction/inventory";
-import * as menuDb from "../db_interaction/recipe";
-import { IRecipeModel } from "../models/Recipe";
+import * as menuDb from "../mongo/interaction/recipe";
+import { IRecipe } from "../interfaces/IRecipe";
 
 const router = Router();
 
@@ -21,7 +20,7 @@ router.get("/:recipe_id", async (req: Request, res: Response) => {
  */
 router.post("/", async (req: Request, res: Response) => {
     // Recipe will need to be added to the recipe book
-    const recipe: IRecipeModel = req.body;
+    const recipe: IRecipe = req.body;
     try {
         const newRecipe = await menuDb.createRecipe(recipe);
         res.json(newRecipe);
@@ -33,7 +32,7 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.put("/:recipe_id", async (req: Request, res: Response) => {
 
-    const recipe: IRecipeModel = req.body;
+    const recipe: IRecipe = req.body;
     try {
         const updatedRecipe = await menuDb.updateRecipe(req.params.recipe_id, recipe);
         res.json(updatedRecipe);
