@@ -68,7 +68,7 @@ Promise<IIngredientListModel> {
         });
         return IngredientList.findByIdAndUpdate(tableDoc._id, {
             ingredients: newIngredients
-        }).exec();
+        }, {new: true}).exec();
     });
 }
 
@@ -87,7 +87,7 @@ export function addToMain(ingredientDocs: IIngredientModel[]): Promise<IIngredie
             newIngredients.push(ingredientDoc._id);
         });
         return IngredientList.findByIdAndUpdate(mainTableDoc._id, {
-            ingredients: newIngredients}).exec();
+            ingredients: newIngredients}, {new: true}).exec();
     });
 }
 
@@ -108,7 +108,7 @@ Promise<IIngredientListModel> {
 
         return IngredientList.findByIdAndUpdate(listDoc._id, {
             ingredients: filteredIngredients
-        }).exec();
+        }, {new: true}).exec();
     });
 }
 
@@ -131,7 +131,7 @@ export function deleteIngredient(ingredientId: String): Promise<IIngredientModel
  */
 export function updateIngredient(ingredientId: String, updateIngredient: IIngredient):
 Promise<IIngredientModel> {
-    return Ingredient.findByIdAndUpdate(ingredientId, updateIngredient).exec();
+    return Ingredient.findByIdAndUpdate(ingredientId, updateIngredient, {new: true}).exec();
 }
 
 
@@ -145,7 +145,7 @@ Promise<IIngredientModel> {
 export function updateIngredientList(ingredientListId: String,
 updateIngredientList: IIngredientList): Promise<IIngredientListModel> {
 
-    return IngredientList.findByIdAndUpdate(ingredientListId, updateIngredientList).exec();
+    return IngredientList.findByIdAndUpdate(ingredientListId, updateIngredientList, {new: true}).exec();
 }
 
 /**

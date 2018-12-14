@@ -72,7 +72,7 @@ export function createMenu(menu: IMenu): Promise<IMenuModel> {
  */
 export function updateMenu(menuId: String, updateObject: IMenu): Promise<IMenuModel> {
     // Put the creation logic with the ingredients and what not here
-    return Menu.findByIdAndUpdate(menuId, updateObject).exec();
+    return Menu.findByIdAndUpdate(menuId, updateObject, {new: true}).exec();
 }
 
 /**
@@ -158,7 +158,7 @@ export async function removeRecipeFromMenu(menuId: String, recipeId: String): Pr
     });
     return Menu.findByIdAndUpdate(menuDoc._id, {
         recipes: filteredRecipes
-    }).exec();
+    }, {new: true}).exec();
 }
 
 /**
@@ -184,4 +184,8 @@ export async function removeRecipeFromMain(recipeId: String): Promise<IRecipeMod
 
 export function deleteRecipe(recipeId: String): Promise<IRecipeModel> {
     return Recipe.findByIdAndDelete(recipeId).exec();
+}
+
+export function deleteMenu(menuId: String): Promise<IMenuModel> {
+    return Menu.findByIdAndDelete(menuId).exec();
 }

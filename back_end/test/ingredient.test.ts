@@ -9,7 +9,6 @@ import mongoose  from "mongoose";
 let testData;
 
 beforeAll(async (done: Function) => {
-    console.log("in ingredient");
     try {
         await mongoose.connect("mongodb://localhost/bar_app", { useNewUrlParser: true });
         testData = await seed.exec();
