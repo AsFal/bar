@@ -1,14 +1,15 @@
 import { Router, Request, Response } from "express";
 const router = Router();
-import * as inventoryDb from "../mongo/interaction/inventory";
+import * as ingredientDb from "../mongo/interaction/ingredient";
+import * as ingredientListDb from "../mongo/interaction/ingredientList";
 import { IIngredient } from "../interfaces/IIngredient";
+import { checkJwt } from "../config/auth";
 
 router.get("/:ingredient_id", async (req: Request, res: Response) => {
 
-    const ingredientId: String = req.params.ingredient_id;
-
+    const ingredientId: string = req.params.ingredient_id;
     try {
-        const ingredientDoc = await inventoryDb.fetchIngredient(ingredientId);
+        const ingredientDoc = await ingredientDb.fetchIngredient(ingredientId);
         res.json(ingredientDoc);
     } catch (err) {
         res.status(422).json("Ingredient not found");
@@ -20,14 +21,16 @@ router.get("/:ingredient_id", async (req: Request, res: Response) => {
  * @todo Abstract the above functionality into a db_interaction function
  */
 router.post("/", async (req: Request, res: Response) => {
+    console.log("this");
+    console.log(req.body);
     const ingredient: IIngredient = req.body;
-    const tableId: String = req.query.tableId;
-
+    const tableId: string = req.query.tableId;
     try {
-        const ingredientDoc = await inventoryDb.createIngredient(ingredient);
-        await inventoryDb.addToIngredientList(tableId, [ingredientDoc]);
+        const ingredientDoc = await ingredientDb.createIngredient(ingredient);
+        await ingredientDb.addToIngredientList(tableId, ingredientDoc);
         res.json(ingredientDoc);
     } catch (err) {
+        console.log(err);
         res.status(422).json(err);
     }
 });
@@ -37,22 +40,22 @@ router.post("/", async (req: Request, res: Response) => {
  * that way i can make the check to see if the returned list is the main or not
  */
 router.delete("/:ingredient_id", async (req: Request, res: Response) => {
-    const listId: String = req.query.listId;
-    const ingredientId: String = req.query.ingredientId;
+    const listId: string = req.query.listId;
+    const ingredientId: string = req.query.ingredientId;
     try {
-        const listDoc = await inventoryDb.fetchIngredientList(listId);
+        const listDoc = await ingredientListDb.fetchIngredientList(listId);
         if (listDoc.name === "Main")
             /**
              * If the deletion is from the main, the ingredient will not only be deleted from
              * the main, but also from the other lists and the database
              */
-            await inventoryDb.removeIngredientFromMain(ingredientId);
+            await ingredientDb.removeIngredientFromMain(ingredientId);
         else
             /**
              * If the deletion is not from the main, the ingredient will only be deleted from
              * the corresponding list
              */
-            await inventoryDb.removeIngredientFromList(listId, ingredientId);
+            await ingredientDb.removeIngredientFromList(listId, ingredientId);
         res.json("Deleted");
     } catch (err) {
         res.status(422).json(err);
@@ -62,7 +65,7 @@ router.delete("/:ingredient_id", async (req: Request, res: Response) => {
 router.put("/:ingredient_id", (req: Request, res: Response) => {
     const ingredientUpdate = req.body;
     const ingredientId = req.params.ingredient_id;
-    inventoryDb.updateIngredient(ingredientId, ingredientUpdate)
+    ingredientDb.updateIngredient(ingredientId, ingredientUpdate)
     .then((newIngredientDoc) => {
         res.json(newIngredientDoc);
     })

@@ -21,18 +21,18 @@ const ingredientSchema: Schema = new Schema({
 /**
  * @typedef {Object} IngredientPrice
  * @prop {Number} cost
- * @prop {String} unitOfMeasure
+ * @prop {string} unitOfMeasure
  */
 
 /**
  * @typedef {Object} IngredientDoc - This is the format of a mongoose Ingredient Document
  * @property {IngredientPrice} [price]
- * @property {String} [name]
- * @property {String} [type]
+ * @property {string} [name]
+ * @property {string} [type]
  * @property {Number} [abv]
  * @prop {Number} [quantity]
- * @prop {String} [_v]
- * @prop {String} [_id]
+ * @prop {string} [_v]
+ * @prop {string} [_id]
  */
 
 let Ingredient: Model<IIngredientModel>;

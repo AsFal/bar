@@ -1,6 +1,7 @@
-import * as inventoryDb from "../interaction/inventory";
+import * as ingredientDb from "../interaction/ingredient";
 import { IIngredient } from "../../interfaces/IIngredient";
 import { IIngredientList } from "../../interfaces/IIngredientList";
+import { IIngredientModel } from "../models/Ingredient";
 
 
 /**
@@ -8,14 +9,15 @@ import { IIngredientList } from "../../interfaces/IIngredientList";
  * @function seedMain
  * @param {Array<IngredientDoc>} ingredients
  * @returns {Promise<Object>}
- * @prop {String} ingredientId
- * @prop {String} mainId
+ * @prop {string} ingredientId
+ * @prop {string} mainId
  */
 export async function seedMain(ingredients: IIngredient[]) {
 
     const ingredientDocs = await Promise.all(ingredients.map((ingredient) =>
-    inventoryDb.createIngredient(ingredient)));
-    const mainList = await inventoryDb.addToMain(ingredientDocs);
+    ingredientDb.createIngredient(ingredient)));
+    const mainMenuCopies = await Promise.all(ingredientDocs.map((ingredientDoc) => ingredientDb.addToMain(ingredientDoc)));
+    const mainList = mainMenuCopies[0];
     return {
         ingredientIds: ingredientDocs.map(ingredientDoc => ingredientDoc._id),
         mainId: mainList._id
@@ -30,10 +32,12 @@ export async function seedMain(ingredients: IIngredient[]) {
  * @prop {ingredientIds}
  * @prop {listId}
  */
-export async function seedList(listId: String, ingredients: IIngredient[]) {
+export async function seedList(listId: string, ingredients: IIngredient[]) {
     const ingredientDocs = await Promise.all(ingredients.map((ingredient) =>
-    inventoryDb.createIngredient(ingredient)));
-    const list = await inventoryDb.addToIngredientList(listId, ingredientDocs);
+    ingredientDb.createIngredient(ingredient)));
+    const listCopies = await Promise.all(ingredientDocs.map((ingredientDoc) =>
+    ingredientDb.addToIngredientList(listId, ingredientDoc)));
+    const list = listCopies[0];
     return {
         ingredientIds: ingredientDocs.map((ingredientDoc) => ingredientDoc._id),
         listId: list._id

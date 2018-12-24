@@ -1,7 +1,7 @@
 import { IIngredient } from "./IIngredient";
 
 export interface IIngredientList {
-    name: String;
-    filters?: String[];
-    ingredients?: (IIngredient | String)[];
+    name: string;
+    filters?: string[];
+    ingredients?: (IIngredient | string)[];
 }

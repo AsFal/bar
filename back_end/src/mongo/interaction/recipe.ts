@@ -6,39 +6,20 @@
 import { Recipe, IRecipeModel } from "../models/Recipe";
 import { IRecipe } from "../../interfaces/IRecipe";
 import { Menu, IMenuModel } from "../models/Menu";
-import { IMenu } from "../../interfaces/IMenu";
 import { IIngredientModel } from "../models/Ingredient";
-import { IIngredient, instanceOfIIngredient } from "../../interfaces/IIngredient";
-import * as inventoryDb from "./inventory";
+import { instanceOfIIngredient } from "../../interfaces/IIngredient";
+import * as ingredientDb from "./ingredient";
 import * as recipeAnalytics from "../../helper/drink_analysis";
-
+import { removeDocumentFromContainer, addDocumentToContainer } from "./helper";
+import { fetchMenus } from "./menu";
 /**
  * @async
  * @function fetchRecipe
- * @param {String} recipeId
+ * @param {string} recipeId
  * @returns {Promise<RecipeDoc>}
  */
-export function fetchRecipe(recipeId: String): Promise<IRecipeModel> {
+export function fetchRecipe(recipeId: string): Promise<IRecipeModel> {
     return Recipe.findById(recipeId).exec();
-}
-
-/**
- * @async
- * @function fetchMenu
- * @param {String} menuId
- * @returns {Promise<MenuDoc>}
- */
-export function fetchMenu(menuId: String): Promise<IMenuModel> {
-    return Menu.findById(menuId).exec();
-}
-
-/**
- * @async
- * @function fetchMenus
- * @returns {Promise<Array<MenuDoc>>}
- */
-export function fetchMenus(): Promise<IMenuModel[]> {
-    return Menu.find({}).exec();
 }
 
 /**
@@ -53,36 +34,22 @@ export async function createRecipe(recipe: IRecipe): Promise<IRecipeModel> {
     return Recipe.create(convertedRecipe);
 }
 
-/**
- * @async
- * @function createMenu
- * @param {MenuDoc} menu - A menu like object received from front-end
- * @returns {PromiseLike<MenuDoc>}
- */
-export function createMenu(menu: IMenu): Promise<IMenuModel> {
-    return Menu.create(menu);
+export async function addRecipeToMenu(menuId: string, recipeId: string): Promise<IMenuModel> {
+    return addDocumentToContainer(Menu, menuId, "recipes", recipeId);
 }
 
-/**
- * @async
- * @function updateMenu
- * @param {String} menuId
- * @param {Object} updateObject - Contains property of menu to be updated
- * @returns {Promise<MenuDoc>}
- */
-export function updateMenu(menuId: String, updateObject: IMenu): Promise<IMenuModel> {
-    // Put the creation logic with the ingredients and what not here
-    return Menu.findByIdAndUpdate(menuId, updateObject, {new: true}).exec();
-}
+// export async function addRecipeToMain(recipeId: string): Promise<IMenuModel> {
+    // const mainMenu = Menu.findOne({name: "Main"});
+// }
 
 /**
  * @async
  * @function updateRecipe
- * @param {String} recipeId
+ * @param {string} recipeId
  * @param {RecipeDoc} updateRecipe
  * @returns {Promise<RecipeDoc>}
  */
-export async function updateRecipe(recipeId: String, updateRecipe: IRecipe): Promise<IRecipeModel> {
+export async function updateRecipe(recipeId: string, updateRecipe: IRecipe): Promise<IRecipeModel> {
     // if all recipe ingredient descriptions are ids, no need to convert here
     const convertedRecipe = await convertRecipe(updateRecipe);
     return Recipe.findByIdAndUpdate(recipeId, convertedRecipe, {new: true}).exec();
@@ -100,16 +67,16 @@ export async function updateRecipe(recipeId: String, updateRecipe: IRecipe): Pro
 export async function convertRecipe(recipe: IRecipe): Promise<IRecipe> {
     // Bad code here
     const ingredientCreationPromises:
-    Promise<{quantity: number, unitOfMeasure: String, description: IIngredientModel}>[] = [];
+    Promise<{quantity: number, unitOfMeasure: string, description: IIngredientModel}>[] = [];
     const existingIngredientPromises:
-    Promise<{quantity: number, unitOfMeasure: String, description: IIngredientModel}>[] = [];
+    Promise<{quantity: number, unitOfMeasure: string, description: IIngredientModel}>[] = [];
     // This first section makes sure all the ingredients are created and populated the recipe
     recipe.ingredients.forEach((ingredient) => {
         // If they sent ingredient information, then there will be a  name
         if (instanceOfIIngredient(ingredient.description)) {
             // Make mongodb ingredient function with this in mind
             // This might break
-            ingredientCreationPromises.push(inventoryDb.createIngredient(ingredient.description)
+            ingredientCreationPromises.push(ingredientDb.createIngredient(ingredient.description)
             .then((ingredientDoc) => ({
                 quantity: ingredient.quantity,
                 unitOfMeasure: ingredient.unitOfMeasure,
@@ -117,7 +84,7 @@ export async function convertRecipe(recipe: IRecipe): Promise<IRecipe> {
             })));
         } else {
             // If there is no information, then the ingredient information contained is an Id
-            existingIngredientPromises.push(inventoryDb.fetchIngredient(ingredient.description)
+            existingIngredientPromises.push(ingredientDb.fetchIngredient(ingredient.description)
             .then((ingredientDoc) => ({
                 quantity: ingredient.quantity,
                 unitOfMeasure: ingredient.unitOfMeasure,
@@ -146,28 +113,20 @@ export async function convertRecipe(recipe: IRecipe): Promise<IRecipe> {
 /**
  * @async
  * @function removeRecipeFromMenu
- * @param {String} menuId
- * @param {String} recipeId
+ * @param {string} menuId
+ * @param {string} recipeId
  * @returns {Promise<MenuDoc>}
  */
-export async function removeRecipeFromMenu(menuId: String, recipeId: String): Promise<IMenuModel> {
-    const menuDoc = await Menu.findById(menuId).exec();
-    const filteredRecipes = menuDoc.recipes.filter((recipe) => {
-        const recipeModel = <IRecipeModel>recipe;
-        recipeId.toString() != recipeModel._id.toString();
-    });
-    return Menu.findByIdAndUpdate(menuDoc._id, {
-        recipes: filteredRecipes
-    }, {new: true}).exec();
+export async function removeRecipeFromMenu(menuId: string, recipeId: string): Promise<IMenuModel> {
+    return removeDocumentFromContainer(Menu, menuId, "recipes", recipeId);
 }
-
 /**
  * @async
  * @function removeRecipeFromMain
- * @param {String} recipeId
+ * @param {string} recipeId
  * @returns {Promise<any>}
  */
-export async function removeRecipeFromMain(recipeId: String): Promise<IRecipeModel> {
+export async function removeRecipeFromMain(recipeId: string): Promise<IRecipeModel> {
     const allMenus = await fetchMenus();
     const deleteIngredientFromListPromises = [];
 
@@ -182,10 +141,6 @@ export async function removeRecipeFromMain(recipeId: String): Promise<IRecipeMod
     return deleteRecipe(recipeId);
 }
 
-export function deleteRecipe(recipeId: String): Promise<IRecipeModel> {
+export function deleteRecipe(recipeId: string): Promise<IRecipeModel> {
     return Recipe.findByIdAndDelete(recipeId).exec();
-}
-
-export function deleteMenu(menuId: String): Promise<IMenuModel> {
-    return Menu.findByIdAndDelete(menuId).exec();
 }

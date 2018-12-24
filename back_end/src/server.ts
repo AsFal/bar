@@ -11,12 +11,18 @@ const logger = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+
+
 const ingredientRouter = require("./routes/ingredient");
 const ingredientListRouter = require("./routes/ingredient_list");
 const recipeRouter = require("./routes/recipe");
 const menuRouter = require("./routes/menu");
+import { checkJwt } from "./config/auth";
 
 const app = express();
+
+app.use(checkJwt);
+
 
 mongoose.connect("mongodb://localhost/bar_app", { useNewUrlParser: true });
 
@@ -30,7 +36,7 @@ db.once("open", function() {
     const seed = require("./seeding/seedExec");
     seed.exec()
     .then(() => {console.log("Database has been seeded"); })
-    .catch((err: String) => {
+    .catch((err: string) => {
       console.log(err);
     });
   }

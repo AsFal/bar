@@ -24,7 +24,7 @@ export function drinkAbv(recipe: IRecipe): number {
     return abv / drinkVolume;
 }
 
-function convert(a: String, b: String, c: number): number {
+function convert(a: string, b: string, c: number): number {
     return 1;
 }
 

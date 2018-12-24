@@ -19,10 +19,10 @@ const ingredientListSchema = new Schema({
 
   /**
    * @typedef {Object} IngredientListDoc
-   * @prop {String} name
-   * @prop {Array<String>} filters
+   * @prop {string} name
+   * @prop {Array<string>} filters
    * @prop {Array<IngredientDoc>} ingredients
-   * @prop {String} [_id]
+   * @prop {string} [_id]
    */
 
 let IngredientList: Model<IIngredientListModel>;

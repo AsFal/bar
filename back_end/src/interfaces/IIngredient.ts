@@ -1,10 +1,10 @@
 export interface IIngredient {
     rate: {
         cost: number,
-        unitOfMeasure: String
+        unitOfMeasure: string
       };
-      name: String;
-      type: String;
+      name: string;
+      type: string;
       abv: number;
       quantity: number;
 }

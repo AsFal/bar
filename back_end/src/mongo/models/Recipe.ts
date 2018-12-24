@@ -27,19 +27,19 @@ const recipeSchema = new Schema({
 });
 
 /**
- * @typedef {Object|String} RecipeIngredient
- * @prop {String} unitOfMeasure
+ * @typedef {Object|string} RecipeIngredient
+ * @prop {string} unitOfMeasure
  * @prop {Number} quantity
  * @prop {IngredientDoc} ingredient
  */
 
 /**
  * @typedef {Object} RecipeDoc
- * @prop {String} name
+ * @prop {string} name
  * @prop {Array<(RecipeIngredient)>} ingredients
- * @prop {Array<String>} instructions
+ * @prop {Array<string>} instructions
  * @prop {Number} portions
- * @prop {String} _id
+ * @prop {string} _id
  * @prop {Number} price
  * @prop {Number} abv
  */

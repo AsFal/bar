@@ -1,15 +1,15 @@
 import { IIngredient } from "./IIngredient";
 
 export interface IRecipe {
-    name: String;
+    name: string;
     ingredients:
       {
-        unitOfMeasure: String,
+        unitOfMeasure: string,
         quantity: number,
         // Should be switched to description
-        description: IIngredient | String
+        description: IIngredient | string
       }[];
-    instructions: String[];
+    instructions: string[];
     portions: number;
     // refers to the price per portion
     price: number;

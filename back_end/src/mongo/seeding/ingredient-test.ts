@@ -1,5 +1,5 @@
 import * as seedLists from "./ingredient-list";
-import * as inventoryDb from "../../mongo/interaction/inventory";
+import * as ingredientListDb from "../../mongo/interaction/ingredientList";
 import cleanDb  from "./cleanDb";
 
 const ingredientTemplates = [require("./seeds/ingredients/sample-ingredient-1.json")];
@@ -10,18 +10,18 @@ const ingredientTemplates = [require("./seeds/ingredients/sample-ingredient-1.js
  * @async
  * @function exec
  * @typedef {Object} ReturnData
- * @prop {String} mainId
- * @prop {Array<String>} listIds
- * @prop {String} ingredientId
+ * @prop {string} mainId
+ * @prop {Array<string>} listIds
+ * @prop {string} ingredientId
  * @prop {Array<Object>} ingredientTemplates
  * @returns {Promise<ReturnData>}
  */
 export async function exec() {
 
     await cleanDb();
-    const mainIngredientList = await inventoryDb.createList({name: "Main"});
-    const otherIngredientLists = await Promise.all([inventoryDb.createList({name: "Shank"}),
-        inventoryDb.createList({name: "Shanked"})]);
+    const mainIngredientList = await ingredientListDb.createList({name: "Main"});
+    const otherIngredientLists = await Promise.all([ingredientListDb.createList({name: "Shank"}),
+        ingredientListDb.createList({name: "Shanked"})]);
 
     const data = await seedLists.seedList(mainIngredientList._id, ingredientTemplates);
     await seedLists.seedList(otherIngredientLists[0]._id, ingredientTemplates);

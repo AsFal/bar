@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import * as menuDb from "../mongo/interaction/recipe";
+import * as menuDb from "../mongo/interaction/menu";
 import { IMenuModel } from "../mongo/models/Menu";
 
 const router = Router();
