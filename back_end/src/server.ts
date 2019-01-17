@@ -1,16 +1,19 @@
 const config = {
-  seed: false
+  seed: true,
+  cleanAndNewUser: true,
+  clean: true
 };
 
 const createError = require("http-errors");
 const express = require("express");
 import { Request, Response } from "express";
+import cleanDb, { testUser } from "./mongo/seeding/cleanDb";
+import * as seed from "./mongo/seeding/dbInit";
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-
 
 
 const ingredientRouter = require("./routes/ingredient");
@@ -23,20 +26,26 @@ const app = express();
 
 app.use(checkJwt);
 
-
 mongoose.connect("mongodb://localhost/bar_app", { useNewUrlParser: true });
 
 const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "connection error:"));
 
-db.once("open", function() {
+db.once("open", async function() {
   console.log("connected to database");
+  if (config.clean) {
+    await cleanDb();
+  }
+  if (config.cleanAndNewUser) {
+    await testUser();
+  }
   if (config.seed) {
-    const seed = require("./seeding/seedExec");
+    console.log("statement");
     seed.exec()
     .then(() => {console.log("Database has been seeded"); })
     .catch((err: string) => {
+      console.log("err");
       console.log(err);
     });
   }

@@ -14,6 +14,10 @@
     "postmanEnv": "node tests/postman_envs/add_schemas_to_env.js"
   },
   "dependencies": {
+    "@types/jest": "^23.3.12",
+    "@types/mongodb": "^3.1.18",
+    "@types/mongoose": "^5.3.7",
+    "@types/node": "^10.12.18",
     "body-parser": "^1.18.3",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
@@ -21,8 +25,10 @@
     "express-jwt": "^5.3.1",
     "http-errors": "~1.6.2",
     "jwks-rsa": "^1.3.0",
-    "mongoose": "^5.3.7",
-    "morgan": "~1.9.0"
+    "mongoose": "^5.4.3",
+    "morgan": "~1.9.0",
+    "nodemon": "^1.18.9",
+    "tslint": "^5.12.1"
   },
   "nodemonConfig": {
     "ignore": [

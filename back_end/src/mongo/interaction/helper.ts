@@ -15,6 +15,9 @@ export async function removeDocumentFromContainer<T extends Document>(containerM
     const filteredDocuments = container[documentRef].filter((document: Document) => documentId.toString()
     != document._id.toString());
     if (filteredDocuments.length == container[documentRef].length) {
+        console.log(filteredDocuments);
+        console.log(container[documentRef]);
+        console.log(documentId);
         throw new Error("The request document to be deleted is not part of the container.");
     }
     return containerModel.findByIdAndUpdate(container._id, {
@@ -30,5 +33,4 @@ export async function addDocumentToContainer<T extends Document>(containerModel:
         return containerModel.findByIdAndUpdate(containerId, {
             [arrayRef]: newDocuments
         }, {new: true}).exec();
-        
-    }
+}

@@ -15,7 +15,7 @@ router.get("/:menu_id", async (req: Request, res: Response) => {
 
 router.post("/", async (req: Request, res: Response) => {
     try {
-        const newMenuDoc = await menuDb.createMenu(req.body);
+        const newMenuDoc = await menuDb.createMenu("sampleroute", req.body);
         res.json(newMenuDoc);
     } catch (err) {
         res.status(422).json(err);

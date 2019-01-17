@@ -23,35 +23,6 @@ export function createIngredient(ingredient: IIngredient): Promise<IIngredientMo
 
 /**
  * @async
- * @function addToIngredientList
- * @param {string} tableId
- * @param {Array<IngredientDoc>} ingredientDocs
- */
-// Adds a variable number of ingredients to the table
-export function addToIngredientList(ingredientListId: string, ingredientDoc: IIngredientModel):
-Promise<IIngredientListModel> {
-    return addDocumentToContainer(IngredientList, ingredientListId, "ingredients", ingredientDoc._id);
-}
-
-
-/**
- * @async
- * @function addToMain
- * @param {Array<IngredientDoc>} ingredientDocs
- */
-export function addToMain(ingredientDoc: IIngredientModel): Promise<IIngredientListModel> {
-
-    return IngredientList.findOne({name: "Main"}).exec()
-    .then((mainTableDoc) => {
-        const oldIngredients = mainTableDoc.ingredients;
-        const newIngredients = oldIngredients.concat([ingredientDoc._id]);
-        return IngredientList.findByIdAndUpdate(mainTableDoc._id, {
-            ingredients: newIngredients}, {new: true}).exec();
-    });
-}
-
-/**
- * @async
  * @function removeIngredientFromList
  * @param {string} listId
  * @param {string} ingredientId
@@ -68,8 +39,9 @@ Promise<IIngredientListModel> {
  * @param {string} ingredientId
  * @returns {Promise<IngredientDoc>}
  */
-export function deleteIngredient(ingredientId: string): Promise<IIngredientModel> {
+export async function deleteIngredient(ingredientId: string): Promise<any> {
     return Ingredient.findByIdAndDelete(ingredientId).exec();
+    // return {};
 }
 
 /**
@@ -84,9 +56,16 @@ Promise<IIngredientModel> {
     return Ingredient.findByIdAndUpdate(ingredientId, updateIngredient, {new: true}).exec();
 }
 
-export async function removeIngredientFromMain(ingredientId: string): Promise<IIngredientModel> {
-    const allIngredientLists = await fetchLists();
-    const deleteIngredientFromListPromises = [];
+export async function removeIngredientFromMain(userIdentifier: string, ingredientId: string): Promise<IIngredientModel> {
+    // here the ingredient lists are populate
+    // get all the list ids from the user, and then remove it from the list
+    // also need to remove from main
+    // na that would stop the flow, can't stop the flow
+    const allIngredientLists = await fetchLists(userIdentifier);
+    // /**
+    //  * @todo: this code is not pretty, fix it
+    //  */
+    console.log(allIngredientLists);
     allIngredientLists.forEach(async (list) => {
         list.ingredients.forEach(async (listIngredientId) => {
             if (ingredientId == listIngredientId.toString())

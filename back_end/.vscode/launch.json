@@ -19,7 +19,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Debug Server",
             "program": "${workspaceRoot}/bin/www"
         }
     ]

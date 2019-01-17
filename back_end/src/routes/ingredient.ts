@@ -27,7 +27,7 @@ router.post("/", async (req: Request, res: Response) => {
     const tableId: string = req.query.tableId;
     try {
         const ingredientDoc = await ingredientDb.createIngredient(ingredient);
-        await ingredientDb.addToIngredientList(tableId, ingredientDoc);
+        await ingredientListDb.addToIngredientList(tableId, ingredientDoc);
         res.json(ingredientDoc);
     } catch (err) {
         console.log(err);
@@ -49,7 +49,10 @@ router.delete("/:ingredient_id", async (req: Request, res: Response) => {
              * If the deletion is from the main, the ingredient will not only be deleted from
              * the main, but also from the other lists and the database
              */
-            await ingredientDb.removeIngredientFromMain(ingredientId);
+            /**
+             * @todo: fix this mistake
+             */
+            await ingredientDb.removeIngredientFromMain("TBD", ingredientId);
         else
             /**
              * If the deletion is not from the main, the ingredient will only be deleted from

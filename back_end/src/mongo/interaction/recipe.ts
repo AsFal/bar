@@ -34,10 +34,6 @@ export async function createRecipe(recipe: IRecipe): Promise<IRecipeModel> {
     return Recipe.create(convertedRecipe);
 }
 
-export async function addRecipeToMenu(menuId: string, recipeId: string): Promise<IMenuModel> {
-    return addDocumentToContainer(Menu, menuId, "recipes", recipeId);
-}
-
 // export async function addRecipeToMain(recipeId: string): Promise<IMenuModel> {
     // const mainMenu = Menu.findOne({name: "Main"});
 // }
@@ -126,10 +122,9 @@ export async function removeRecipeFromMenu(menuId: string, recipeId: string): Pr
  * @param {string} recipeId
  * @returns {Promise<any>}
  */
-export async function removeRecipeFromMain(recipeId: string): Promise<IRecipeModel> {
-    const allMenus = await fetchMenus();
-    const deleteIngredientFromListPromises = [];
 
+export async function removeRecipeFromMain(userIdentifier: string, recipeId: string): Promise<IRecipeModel> {
+    const allMenus = await fetchMenus(userIdentifier);
     const removalPromises: Promise<IMenuModel>[] = [];
     allMenus.forEach(async (menuDoc) => {
         menuDoc.recipes.forEach(async (fetchedRecipeId) => {

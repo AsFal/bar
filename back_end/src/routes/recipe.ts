@@ -47,7 +47,7 @@ router.delete("/:recipe_id", async (req: Request, res: Response) => {
     try {
         const menuDoc = await menuDb.fetchMenu(req.query.menuId);
         if (menuDoc.name === "Main")
-            recipeDb.removeRecipeFromMain(req.params.recipe_id);
+            menuDb.addRecipeToMenu("menuId", req.params.recipe_id);
         else
             recipeDb.removeRecipeFromMenu(req.query.menuId, req.params.recipe_id);
         res.json("Deletion is successful");

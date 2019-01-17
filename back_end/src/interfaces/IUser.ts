@@ -1,18 +1,10 @@
 import { IMenu } from "./IMenu";
+import { IIngredientList } from "./IIngredientList";
+import { IUserInfo } from "./IUserInfo";
 
-export interface IUser {
-    identifier: string;
-    menus: IMenu| string ;
-    mainMenu : {
-        type: Schema.Types.ObjectId,
-        ref: "Menu"
-    },
-    ingredientLists : [{
-        type : Schema.Types.ObjectId,
-        ref: "IngredientList"
-    }],
-    mainIngredientList : {
-        type: Schema.Types.ObjectId,
-        ref: "IngredientList"
-    }
+export interface IUser extends IUserInfo {
+    menus: IMenu[] | string[] ;
+    mainMenu: IMenu | string;
+    ingredientLists: IIngredientList[] | string[];
+    mainIngredientList: IIngredientList | string;
 }

@@ -1,6 +1,8 @@
 import * as ingredientDb from "../interaction/ingredient";
+import * as ingredientListDb from "../interaction/ingredientList";
 import { IIngredient } from "../../interfaces/IIngredient";
 import { IIngredientList } from "../../interfaces/IIngredientList";
+import { IIngredientListModel } from "../models/IngredientList";
 import { IIngredientModel } from "../models/Ingredient";
 
 
@@ -16,7 +18,7 @@ export async function seedMain(ingredients: IIngredient[]) {
 
     const ingredientDocs = await Promise.all(ingredients.map((ingredient) =>
     ingredientDb.createIngredient(ingredient)));
-    const mainMenuCopies = await Promise.all(ingredientDocs.map((ingredientDoc) => ingredientDb.addToMain(ingredientDoc)));
+    const mainMenuCopies = await Promise.all(ingredientDocs.map((ingredientDoc) => ingredientListDb.addToMain("testAccount", ingredientDoc)));
     const mainList = mainMenuCopies[0];
     return {
         ingredientIds: ingredientDocs.map(ingredientDoc => ingredientDoc._id),
@@ -35,9 +37,13 @@ export async function seedMain(ingredients: IIngredient[]) {
 export async function seedList(listId: string, ingredients: IIngredient[]) {
     const ingredientDocs = await Promise.all(ingredients.map((ingredient) =>
     ingredientDb.createIngredient(ingredient)));
-    const listCopies = await Promise.all(ingredientDocs.map((ingredientDoc) =>
-    ingredientDb.addToIngredientList(listId, ingredientDoc)));
-    const list = listCopies[0];
+    /**
+     * @todo: BAD CODE, MUST EVENTUALLY FIND A WAY TO CHANGE OR DEPRECATE
+     */
+    let list: IIngredientListModel;
+    for (const ingredientDoc of ingredientDocs) {
+        list = await ingredientListDb.addToIngredientList(listId, ingredientDoc._id);
+    }
     return {
         ingredientIds: ingredientDocs.map((ingredientDoc) => ingredientDoc._id),
         listId: list._id

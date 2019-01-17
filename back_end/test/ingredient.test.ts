@@ -11,7 +11,11 @@ let testData;
 
 beforeAll(async (done: Function) => {
     try {
-        await mongoose.connect("mongodb://localhost/bar_app", { useNewUrlParser: true });
+        const options = {
+
+            useNewUrlParser: true
+        };
+        await mongoose.connect("mongodb://localhost/bar_app", options);
         testData = await seed.exec();
     } catch (err) {
         console.log(err);
@@ -22,7 +26,7 @@ beforeAll(async (done: Function) => {
 
 
 afterAll(async (done: Function) => {
-    await mongoose.disconnect();
+    // await mongoose.disconnect();
     done();
 });
 
@@ -45,30 +49,32 @@ test("Ingredient is properly created", () => {
     });
 });
 
-test("Ingredient Deletion from Table", async () => {
+test("Ingredient Deletion from IngredientList", async (done: Function) => {
 
-    await ingredientDb.removeIngredientFromList(testData.listIds[0], testData.ingredientId);
+    await ingredientDb.removeIngredientFromList(testData.listIds[0], testData.ingredientIdList0);
     const ingredientList = await ingredientListDb.fetchIngredientList(testData.listIds[0]);
-    const ignredients = ingredientList.ingredients;
+    const ingredients = ingredientList.ingredients;
     const deleteIngredient = await ingredientDb.fetchIngredient(testData.ingredientId);
     expect(deleteIngredient).not.toBeNull();
     /** */
     // make sure this maps properly
-    expect(ignredients.map((ingredient: string) => ingredient.toString())).not.toContain(deleteIngredient._id.toString());
+    expect(ingredients.map((ingredient: string) => ingredient.toString())).not.toContain(deleteIngredient._id.toString());
+    done();
 });
 
-test("Ingredient Deletion from Main", async () => {
+test("Ingredient Deletion from Main", async (done: Function) => {
 
+    // expect.assertions(1);
     const deleteIngredient = await ingredientDb.fetchIngredient(testData.ingredientId);
-    await ingredientDb.removeIngredientFromMain(testData.ingredientId);
+    await ingredientDb.removeIngredientFromMain("testAccount", testData.ingredientId);
     const newListDocs = await Promise.all([
         ingredientListDb.fetchIngredientList(testData.mainId),
         ingredientListDb.fetchIngredientList(testData.listIds[1])
     ]);
     const ingredientAfterDeletion =  await ingredientDb.fetchIngredient(testData.ingredientId);
 
-
     expect(newListDocs[0].ingredients.map((ingredientId: string) => ingredientId.toString())).not.toContain(deleteIngredient._id.toString());
     expect(newListDocs[1].ingredients.map((ingredientId: string) => ingredientId.toString())).not.toContain(deleteIngredient._id.toString());
     expect(ingredientAfterDeletion).toBeNull();
+    done();
 });

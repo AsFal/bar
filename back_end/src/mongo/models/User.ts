@@ -1,7 +1,7 @@
 import { model, Model, Schema, Document } from "mongoose";
 import { IUser } from "../../interfaces/IUser";
 
-interface IUserModel extends Document, IUser {}
+export interface IUserModel extends Document, IUser {}
 
 const userSchema = new Schema({
     identifier: String,
@@ -9,7 +9,7 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Menu"
     }],
-    mainMenu : {
+    mainMenu: {
         type: Schema.Types.ObjectId,
         ref: "Menu"
     },

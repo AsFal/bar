@@ -10,7 +10,10 @@ router.get("/", async (req: Request, res: Response) => {
     // Will require some kind of parser to convert json body to object
     console.log("what");
     try {
-        const listDocs = await ingredientListDb.fetchLists();
+        /**
+         * @todo: Mistake is introduced and needs to be fixed
+         */
+        const listDocs = await ingredientListDb.fetchLists("TBD");
         const listNames = listDocs.map((list) => (
             {
                 name: list.name,
@@ -36,7 +39,10 @@ router.post("/", checkJwt, async (req: Request, res: Response) => {
 console.log(req.body);
     try {
         const list: IIngredientList = req.body;
-        const newListDoc = await ingredientListDb.createList(list);
+        /**
+         * @todo: Needs to be fixed
+         */
+        const newListDoc = await ingredientListDb.createIngredientList("TBD", list);
     } catch (err) {
         res.status(422).json(err);
     }
@@ -59,7 +65,10 @@ router.put("/:ingredient_list_id", checkJwt, async (req: Request, res: Response)
 
 router.delete("/:ingredient_list_id", checkJwt, async (req: Request, res: Response) => {
     try {
-        await ingredientListDb.deleteIngredientList(req.params.ingredient_list_id);
+        /**
+         * @todo: Mistake needs to be fixed
+         */
+        await ingredientListDb.deleteIngredientList("TBD", req.params.ingredient_list_id);
         res.json("Ingredient List Deleted");
     } catch (err) {
         res.status(422).json(err);
