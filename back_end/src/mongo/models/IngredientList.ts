@@ -8,6 +8,14 @@ import { IIngredientList } from   "../../interfaces/IIngredientList";
 
 export interface IIngredientListModel extends IIngredientList, Document {}
 
+export function isIngredientListModel(arg: IIngredientList | string): arg is IIngredientListModel {
+    return !(typeof arg === "string");
+}
+
+export function isIngredientListModelArray(arr: (IIngredientList | string)[]): arr is IIngredientListModel[] {
+    return arr.reduce((acc, ingredientList) => acc && typeof ingredientList !== "string", true);
+}
+
 const ingredientListSchema = new Schema({
     name: String,
     filters: [String],

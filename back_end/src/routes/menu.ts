@@ -41,4 +41,4 @@ router.put("/menu_id", async (req: Request, res: Response) => {
     }
 });
 
-module.exports = router;
+export { router };

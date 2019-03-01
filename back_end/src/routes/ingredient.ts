@@ -1,9 +1,10 @@
 import { Router, Request, Response } from "express";
 const router = Router();
-import * as ingredientDb from "../mongo/interaction/ingredient";
-import * as ingredientListDb from "../mongo/interaction/ingredientList";
+
 import { IIngredient } from "../interfaces/IIngredient";
-import { checkJwt } from "../config/auth";
+import { Database } from "./driverConfig";
+
+
 
 router.get("/:ingredient_id", async (req: Request, res: Response) => {
 

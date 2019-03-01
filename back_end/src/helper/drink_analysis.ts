@@ -1,46 +1,41 @@
 import { IRecipe } from "../interfaces/IRecipe";
+import { IRecipeAnalysis } from "../interfaces/IRecipeAnalysis";
 import { IIngredient } from "../interfaces/IIngredient";
-/**
- * @file
- * @author Alexandre Falardeau
- */
+import { Ingredient } from "../mongo/models/Ingredient";
 
-/**
- * @function drinkAbv
- * @param {IRecipeModel} recipe
- */
-export function drinkAbv(recipe: IRecipe): number {
-    let abv = 0;
-    let drinkVolume = 0;
-    recipe.ingredients.forEach((ingredient) => {
-        /**
-         * @todo: make conversion verifications
-         */
-        drinkVolume += ingredient.quantity;
-        const ingredientDesc = ingredient.description;
-        abv += (<IIngredient>ingredientDesc).abv * ingredient.quantity;
-        // console.log(ingredient);
-    });
-    return abv / drinkVolume;
-}
+const RecipeAnalysis: () => IRecipeAnalysis =
+() => {
+    const convertIngredient: (IIngredient) => (IIngredient) =
+    (ingredient: IIngredient) => {
+        return ingredient;
+    };
 
-function convert(a: string, b: string, c: number): number {
-    return 1;
-}
+    return {
+        abv(recipe: IRecipe): number {
+            const recipeIngredients = recipe.ingredients
+            .map((ingredient) =>
+                ({
+                    quantity: ingredient.quantity,
+                    unitOfMeasure: ingredient.unitOfMeasure,
+                    description: convertIngredient(ingredient.description),
+             } ) );
 
-/**
- * @param {RecipeDoc} recipe
- */
-export function drinkPrice(recipe: IRecipe): number {
-    let price = 0;
-    recipe.ingredients.forEach((ingredient) => {
-        const ingredientDesc = ingredient.description;
-        let ingredientCost = (<IIngredient>ingredientDesc).rate.cost * ingredient.quantity;
-        if (ingredient.unitOfMeasure != (<IIngredient>ingredientDesc).rate.unitOfMeasure)
-            ingredientCost = convert((<IIngredient>ingredientDesc).rate.unitOfMeasure,
-                ingredient.unitOfMeasure,
-                (<IIngredient>ingredientDesc).rate.cost ) * ingredient.quantity;
-        price += ingredientCost;
-    });
-    return price / recipe.portions;
-}
+            const drinkVolume: number = recipe.ingredients.reduce((volume, ingredient) => volume + ingredient.quantity, 0);
+            return recipe.ingredients.reduce((abv, ingredient) => 
+                abv + (<IIngredient>ingredient.description).abv * ingredient.quantity / drinkVolume, 0);
+
+        },
+
+        price(recipe: IRecipe): number {
+            return recipe.ingredients
+            .map((ingredient) =>
+                ({
+                    quantity: ingredient.quantity,
+                    unitOfMeasure: ingredient.unitOfMeasure,
+                    description: convertIngredient(ingredient.description),
+             }))
+             .reduce((price, ingredient) => price + ingredient.quantity * (<IIngredient>ingredient.description).rate.cost, 0);
+
+        },
+    }
+};

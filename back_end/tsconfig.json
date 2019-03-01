@@ -5,7 +5,8 @@
         "module"                      : "commonjs",
         "outDir"                      : "./dist",
         "resolveJsonModule"           : true,
-        "target"                      : "es6"
+        "target"                      : "es6",
+        "lib": ["esnext", "es2018"]
     },
     "include": [
         "src/**/*"

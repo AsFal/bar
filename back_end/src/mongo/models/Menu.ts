@@ -8,6 +8,14 @@ import { IMenu } from "../../interfaces/IMenu";
 
 export interface IMenuModel extends IMenu, Document {}
 
+export function isMenuModel(arg: IMenu | string): arg is IMenuModel {
+    return typeof arg !== "string";
+}
+
+export function isMenuModelArray(arr: (IMenu | string)[]): arr is IMenuModel[] {
+    return arr.reduce((acc, menu) => acc && typeof menu !== "string", true);
+}
+
 const menuSchema = new Schema(
   {
     name: String,
